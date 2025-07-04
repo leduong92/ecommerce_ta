@@ -35,9 +35,13 @@
         public virtual ProductCategory ProductCategory { get; set; }= null!;
         public int? ProductShippingProfileId { get; set; }
         public ProductShippingProfile? ProductShippingProfile { get; set; }
+        public virtual ICollection<ProductRegionAvailability>? RegionAvailabilities { get; set; }
         public virtual ICollection<ProductVariant> ProductVariants { get; set; }
         public virtual ICollection<ProductTranslation> ProductTranslations { get; set; }
-        public virtual ICollection<ProductPrice> ProductPrices { get; set; }
+        public virtual ICollection<ProductPrice> Prices { get; set; }
+        // NEW: Add this collection to link Product to its InventoryItems
+        // A product can exist in inventory at multiple warehouses.
+        public ICollection<InventoryItem>? InventoryItems { get; set; }
         public virtual ICollection<Care> Cares { get; set; }
     }
 }

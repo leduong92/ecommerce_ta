@@ -21,8 +21,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 builder.Services.AddScoped<ShippingCalculatorService>();
+builder.Services.AddScoped<WarehouseService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>(); // NEW
 builder.Services.AddScoped<IOrderService, OrderService>(); // NEW
+builder.Services.AddScoped<IProductService, ProductService>(); // NEW
 
 // Configure Session
 builder.Services.AddDistributedMemoryCache(); // Required for session

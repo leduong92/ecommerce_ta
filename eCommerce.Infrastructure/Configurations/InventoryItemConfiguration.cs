@@ -14,10 +14,11 @@ namespace eCommerce.Infrastructure.Configurations
             // OPTIONAL: Explicitly configure RowVersion, though [Timestamp] attribute usually suffices
             builder.Property(ii => ii.RowVersion).IsRowVersion(); // Or .IsConcurrencyToken();
 
-            builder.HasOne(ii => ii.Product).WithMany().HasForeignKey(ii => ii.ProductId);
+            builder.HasOne(ii => ii.Product).WithMany(p => p.InventoryItems).HasForeignKey(ii => ii.ProductId).OnDelete(DeleteBehavior.Restrict); ;
             builder.HasOne(ii => ii.Warehouse).WithMany(w => w.InventoryItems).HasForeignKey(ii => ii.WarehouseId);
 
             builder.HasIndex(ii => new { ii.ProductId, ii.WarehouseId }).IsUnique();
+
         }
     }
 }

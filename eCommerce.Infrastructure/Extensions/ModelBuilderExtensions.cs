@@ -713,12 +713,13 @@ namespace eCommerce.Infrastructure.Extensions
             );
 
             modelBuilder.Entity<Warehouse>().HasData(
-                new Warehouse { Id = 1, Name = "Ho Chi Minh City Main Warehouse (VN)", Address = "123 ABC St", City = "Ho Chi Minh City", StateProvince = "Ho Chi Minh City", ZipCode = "70000", CountryCode = "VN", Latitude = 10.762622, Longitude = 106.660172, ShippingZoneId = 104 },
-                new Warehouse { Id = 2, Name = "Shenzhen Export Hub (CN)", Address = "789 Export Zone", City = "Shenzhen", StateProvince = "Guangdong", ZipCode = "518000", CountryCode = "CN", Latitude = 22.543099, Longitude = 114.057868, ShippingZoneId = null }, // Assume general China Export Zone or create one
-                new Warehouse { Id = 3, Name = "Los Angeles Fulfillment Center (US)", Address = "789 LA Blvd", City = "Los Angeles", StateProvince = "CA", ZipCode = "90001", CountryCode = "US", Latitude = 34.052235, Longitude = -118.243683, ShippingZoneId = 103 },
-                new Warehouse { Id = 4, Name = "Singapore Global Hub (SG)", Address = "1 SG Trade Ln", City = "Singapore", StateProvince = "Singapore", ZipCode = "01000", CountryCode = "SG", Latitude = 1.290270, Longitude = 103.851959, ShippingZoneId = null }, // Create SG Zone if needed
-                new Warehouse { Id = 5, Name = "Moscow Distribution Center (RU)", Address = "2 RU Logistics Pk", City = "Moscow", StateProvince = "Moscow Oblast", ZipCode = "101000", CountryCode = "RU", Latitude = 55.755825, Longitude = 37.617298, ShippingZoneId = null }, // Create RU Zone
-                new Warehouse { Id = 6, Name = "Jakarta Warehouse (ID)", Address = "3 ID Industrial Ctr", City = "Jakarta", StateProvince = "Jakarta", ZipCode = "10000", CountryCode = "ID", Latitude = -6.208763, Longitude = 106.845599, ShippingZoneId = null } // Create ID Zone
+                new Warehouse { Id = 1, Name = "US West Coast Hub", Address1 = "1000 Logistics Way", City = "Los Angeles", StateProvince = "CA", ZipCode = "90001", CountryCode = "US", Latitude = 34.0522, Longitude = -118.2437, RegionId = 1, IsPrimaryWarehouseForRegion = true },
+                new Warehouse { Id = 2, Name = "Vietnam Central Depot", Address1 = "50 Cong Hoa", City = "Ho Chi Minh City", StateProvince = "SG", ZipCode = "70000", CountryCode = "VN", Latitude = 10.762622, Longitude = 106.660172, RegionId = 2, IsPrimaryWarehouseForRegion = true }, // Updated with HCMC coords
+                new Warehouse { Id = 3, Name = "UK Midlands Distribution", Address1 = "1 Distribution Park", City = "Birmingham", StateProvince = "ENG", ZipCode = "B1 1AA", CountryCode = "GB", Latitude = 52.4862, Longitude = -1.8904, RegionId = 3, IsPrimaryWarehouseForRegion = true },
+                new Warehouse { Id = 4, Name = "Singapore Main Warehouse", Address1 = "1 Tuas Link", City = "Singapore", StateProvince = "", ZipCode = "638596", CountryCode = "SG", Latitude = 1.3521, Longitude = 103.8198, RegionId = 4, IsPrimaryWarehouseForRegion = true },
+                new Warehouse { Id = 5, Name = "China Shanghai Logistics", Address1 = "888 Logistics Road", City = "Shanghai", StateProvince = "SH", ZipCode = "200000", CountryCode = "CN", Latitude = 31.2304, Longitude = 121.4737, RegionId = 5, IsPrimaryWarehouseForRegion = true },
+                new Warehouse { Id = 6, Name = "Russia Moscow Hub", Address1 = "1 Kremlin St", City = "Moscow", StateProvince = "", ZipCode = "101000", CountryCode = "RU", Latitude = 55.7558, Longitude = 37.6173, RegionId = 6, IsPrimaryWarehouseForRegion = true },
+                new Warehouse { Id = 7, Name = "Indonesia Jakarta Depot", Address1 = "1 Sudirman Rd", City = "Jakarta", StateProvince = "JK", ZipCode = "10220", CountryCode = "ID", Latitude = -6.2088, Longitude = 106.8456, RegionId = 7, IsPrimaryWarehouseForRegion = true }
             );
 
             modelBuilder.Entity<ShippingRateRule>().HasData(
@@ -927,6 +928,12 @@ namespace eCommerce.Infrastructure.Extensions
                 }
             );
 
+            modelBuilder.Entity<Language>().HasData(
+                new Language { Id = 1, Name = "English - EN", Code = "en", IsDefault  = 1 },
+                new Language { Id = 2, Name = "Vietnamese - VN", Code = "vi", IsDefault = 1 },
+                new Language { Id = 3, Name = "中文 (简体) - ZH", Code = "zh", IsDefault = 1 }
+           );
+
             modelBuilder.Entity<ProductOption>().HasData(
                 new ProductOption { Id = 1, Name = "Color"},
                 new ProductOption { Id = 2, Name = "Size" }
@@ -997,6 +1004,33 @@ namespace eCommerce.Infrastructure.Extensions
                 new Product { Id = 2, CollectionId = 8, RoomId = 1, TypeId = 29, LifeStyleId = 4, StyleId = 9,Sku = "TA51059.C301", Slug = "catalina-cocktail-table-ta51059-c301", Name = "Catalina Cocktail Table", NetWeightKg = 38m, Depth = 71.1m, Width = 122m, Height = 41.9m, ProductCategoryId = 102, ProductShippingProfileId = 202 },
                 new Product { Id = 3, CollectionId = 8, RoomId = 3, TypeId = 20, LifeStyleId = 4, StyleId = 9, Sku = "TA84012.C306", Slug = "catalina-upholstered-california-king-bed-ta84012-c306", Name = "Designer Vase", NetWeightKg = 2m, Depth = 30m, Width = 20m, Height = 20m, ProductCategoryId = 103, ProductShippingProfileId = 203 }
             );
+
+            modelBuilder.Entity<ProductRegionAvailability>().HasData(
+                // Product 1 (Dining Table) available in US, VN, UK, SG, CN, RU, ID
+                new ProductRegionAvailability { Id = 1, ProductId = 1, RegionId = 1 }, // US
+                new ProductRegionAvailability { Id = 2, ProductId = 1, RegionId = 2 }, // VN
+                new ProductRegionAvailability { Id = 3, ProductId = 1, RegionId = 3 }, // UK
+                new ProductRegionAvailability { Id = 4, ProductId = 1, RegionId = 4 }, // SG
+                new ProductRegionAvailability { Id = 5, ProductId = 1, RegionId = 5 }, // CN
+                new ProductRegionAvailability { Id = 6, ProductId = 1, RegionId = 6 }, // RU
+                new ProductRegionAvailability { Id = 7, ProductId = 1, RegionId = 7 }, // ID
+
+                // Product 2 (Cocktail Table) available in US, VN, UK, SG
+                new ProductRegionAvailability { Id = 8, ProductId = 2, RegionId = 1 }, // US
+                new ProductRegionAvailability { Id = 9, ProductId = 2, RegionId = 2 }, // VN
+                new ProductRegionAvailability { Id = 10, ProductId = 2, RegionId = 3 }, // UK
+                new ProductRegionAvailability { Id = 11, ProductId = 2, RegionId = 4 }, // SG
+
+                // Product 3 (Designer Vase) available in all regions
+                new ProductRegionAvailability { Id = 12, ProductId = 3, RegionId = 1 }, // US
+                new ProductRegionAvailability { Id = 13, ProductId = 3, RegionId = 2 }, // VN
+                new ProductRegionAvailability { Id = 14, ProductId = 3, RegionId = 3 }, // UK
+                new ProductRegionAvailability { Id = 15, ProductId = 3, RegionId = 4 }, // SG
+                new ProductRegionAvailability { Id = 16, ProductId = 3, RegionId = 5 }, // CN
+                new ProductRegionAvailability { Id = 17, ProductId = 3, RegionId = 6 }, // RU
+                new ProductRegionAvailability { Id = 18, ProductId = 3, RegionId = 7 }  // ID
+            );
+
             modelBuilder.Entity<ProductCategory>().HasData(
                 new ProductCategory { Id = 101, Name = "Large Furniture", IsBulky = true, RequiresAssembly = true, IsFragile = false, DefaultDimensionalFactor = 6000 },
                 new ProductCategory { Id = 102, Name = "Medium Furniture", IsBulky = true, RequiresAssembly = false, IsFragile = false, DefaultDimensionalFactor = 5000 },
@@ -1005,7 +1039,7 @@ namespace eCommerce.Infrastructure.Extensions
 
             modelBuilder.Entity<ProductShippingProfile>().HasData(
                 new ProductShippingProfile { Id = 201, Name = "Dining Table (Freight)", Description = "Requires freight shipping, often palletized", IsBulky = true, RequiresPallet = true, RequiresSpecialEquipment = true, DefaultDimensionalFactor = 6000 },
-                new ProductShippingProfile { Id = 202, Name = "Coffee Table (Freight/Parcel)", Description = "Can be shipped as large parcel or small freight", IsBulky = false, RequiresPallet = false, RequiresSpecialEquipment = false, DefaultDimensionalFactor = 5000 },
+                new ProductShippingProfile { Id = 202, Name = "Cocktail Table (Freight/Parcel)", Description = "Can be shipped as large parcel or small freight", IsBulky = false, RequiresPallet = false, RequiresSpecialEquipment = false, DefaultDimensionalFactor = 5000 },
                 new ProductShippingProfile { Id = 203, Name = "Standard Parcel", Description = "Small, non-bulky items, suitable for courier", IsBulky = false, RequiresPallet = false, RequiresSpecialEquipment = false, DefaultDimensionalFactor = 4000 }
             );
 
