@@ -19,7 +19,7 @@ namespace eCommerce.Application.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = registrationRequestDto,
-                Url = SD.AuthAPIBase + "/api/auth/AssignRole"
+                Url = SD.ApiBaseUrl + "/api/auth/AssignRole"
             });
         }
 
@@ -28,7 +28,7 @@ namespace eCommerce.Application.Services
             return await _baseService.SendAsync<List<RegionDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.AuthAPIBase + "/api/auth/region"
+                Url = SD.ApiBaseUrl + "/api/auth/region"
             });
         }
 
@@ -38,7 +38,7 @@ namespace eCommerce.Application.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = loginRequestDto,
-                Url = SD.AuthAPIBase + "/api/auth/login"
+                Url = SD.ApiBaseUrl + "/api/auth/login"
             }, withBearer: false);
         }
 
@@ -48,7 +48,7 @@ namespace eCommerce.Application.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = registrationRequestDto,
-                Url = SD.AuthAPIBase + "/api/auth/register"
+                Url = SD.ApiBaseUrl + "/api/auth/register"
             }, withBearer: false);
         }
     }

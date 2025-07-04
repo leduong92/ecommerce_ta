@@ -28,5 +28,6 @@ namespace eCommerce.Application.Dtos
 
         // User's chosen shipping option (from a list provided by ShippingCalculatorService)
         public string ChosenShippingServiceLevelName { get; set; } = string.Empty;
+        public List<OrderItemDetailsDto> OrderItemDetails { get; set; } = new List<OrderItemDetailsDto>();
     }
 }

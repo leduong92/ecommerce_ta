@@ -19,7 +19,7 @@ namespace eCommerce.Application.Services
 			{
 				ApiType = SD.ApiType.POST,
 				Data = couponDto,
-				Url = SD.CouponAPIBase + "/api/coupon"
+				Url = SD.ApiBaseUrl + "/api/coupon"
 			});
 		}
 
@@ -28,7 +28,7 @@ namespace eCommerce.Application.Services
             return await _baseApiClient.SendAsync<List<CouponDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.CouponAPIBase + "/api/coupon"
+                Url = SD.ApiBaseUrl + "/api/coupon"
             });
         }
 
@@ -37,7 +37,7 @@ namespace eCommerce.Application.Services
             return await _baseApiClient.SendAsync<CouponDto>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.CouponAPIBase + "/api/coupon/GetByCode/" + couponCode
+                Url = SD.ApiBaseUrl + "/api/coupon/GetByCode/" + couponCode
             });
         }
     }

@@ -14,7 +14,7 @@ namespace eCommerce.Infrastructure.Configurations
             builder.Property(x => x.Price).HasDefaultValue(0m).HasColumnType("decimal(18,2)");
             builder.Property(x => x.Currency).HasMaxLength(24);
 
-            builder.HasOne(pp => pp.Product).WithMany(p => p.ProductPrices).HasForeignKey(pp => pp.ProductId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(pp => pp.Product).WithMany(p => p.Prices).HasForeignKey(pp => pp.ProductId).OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(pp => pp.Region).WithMany().HasForeignKey(pp => pp.RegionId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasIndex(pp => new { pp.ProductId, pp.RegionId, pp.EffectiveDate }).IsUnique();

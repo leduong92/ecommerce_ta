@@ -1,0 +1,177 @@
+﻿@model CheckoutRequest
+
+@{
+    ViewData["Title"] = SharedLocalizer["Checkout"];
+    var cartItems = ViewBag.CartItems as IEnumerable<CartItemDto>;
+    var subtotal = ViewBag.Subtotal;
+    var shippingOptions = ViewBag.ShippingOptions as IEnumerable<ShippingOptionDto>;
+}
+
+<h1 class="my-4">@SharedLocalizer["Checkout"]</h1>
+
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="mb-3">@SharedLocalizer["ShippingInformation"]</h3>
+        <form asp-action="CalculateShipping" method="post">
+            <input type="hidden" asp-for="SessionId" />
+            <input type="hidden" asp-for="UserId" />
+
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label asp-for="ShippingFirstName" class="form-label">@SharedLocalizer["FirstName"]</label>
+                    <input asp-for="ShippingFirstName" class="form-control" />
+                    <span asp-validation-for="ShippingFirstName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="ShippingLastName" class="form-label">@SharedLocalizer["LastName"]</label>
+                    <input asp-for="ShippingLastName" class="form-control" />
+                    <span asp-validation-for="ShippingLastName" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ShippingAddress1" class="form-label">@SharedLocalizer["Address1"]</label>
+                    <input asp-for="ShippingAddress1" class="form-control" placeholder="1234 Main St" />
+                    <span asp-validation-for="ShippingAddress1" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ShippingAddress2" class="form-label">@SharedLocalizer["Address2"] <span class="text-muted">(Optional)</span></label>
+                    <input asp-for="ShippingAddress2" class="form-control" placeholder="Apartment or suite" />
+                </div>
+                <div class="col-md-5">
+                    <label asp-for="ShippingCity" class="form-label">@SharedLocalizer["City"]</label>
+                    <input asp-for="ShippingCity" class="form-control" value="Los Angeles" />
+                    <span asp-validation-for="ShippingCity" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="ShippingStateProvince" class="form-label">@SharedLocalizer["StateProvince"]</label>
+                    <input asp-for="ShippingStateProvince" class="form-control" value="CA" />
+                    <span asp-validation-for="ShippingStateProvince" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="ShippingZipCode" class="form-label">@SharedLocalizer["ZipCode"]</label>
+                    <input asp-for="ShippingZipCode" class="form-control" value="90001" />
+                    <span asp-validation-for="ShippingZipCode" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ShippingCountryCode" class="form-label">@SharedLocalizer["Country"]</label>
+                    <input asp-for="ShippingCountryCode" class="form-control" value="US" />
+                    <span asp-validation-for="ShippingCountryCode" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ShippingLatitude" class="form-label">@SharedLocalizer["Latitude"]</label>
+                    <input asp-for="ShippingLatitude" class="form-control" value="34.0522" />
+                    <span asp-validation-for="ShippingLatitude" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ShippingLongitude" class="form-label">@SharedLocalizer["Longitude"]</label>
+                    <input asp-for="ShippingLongitude" class="form-control" value="-118.2437" />
+                    <span asp-validation-for="ShippingLongitude" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ShippingPhoneNumber" class="form-label">@SharedLocalizer["PhoneNumber"]</label>
+                    <input asp-for="ShippingPhoneNumber" class="form-control" value="555-123-4567" />
+                    <span asp-validation-for="ShippingPhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ShippingFloorNumber" class="form-label">@SharedLocalizer["FloorNumber"] <span class="text-muted">(Optional)</span></label>
+                    <input asp-for="ShippingFloorNumber" class="form-control" />
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="ShippingIsRuralArea">
+                        <label class="form-check-label" asp-for="ShippingIsRuralArea">@SharedLocalizer["RuralArea"]</label>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <button class="w-100 btn btn-primary btn-lg" type="submit">@SharedLocalizer["CalculateShipping"]</button>
+        </form>
+
+        @if (shippingOptions != null && shippingOptions.Any())
+        {
+            <h3 class="mb-3 mt-4">@SharedLocalizer["ShippingOptions"]</h3>
+            <form asp-action="PlaceOrder" method="post">
+                <input type="hidden" asp-for="SessionId" />
+                <input type="hidden" asp-for="UserId" />
+                <input type="hidden" asp-for="ShippingFirstName" />
+                <input type="hidden" asp-for="ShippingLastName" />
+                <input type="hidden" asp-for="ShippingAddress1" />
+                <input type="hidden" asp-for="ShippingAddress2" />
+                <input type="hidden" asp-for="ShippingCity" />
+                <input type="hidden" asp-for="ShippingStateProvince" />
+                <input type="hidden" asp-for="ShippingZipCode" />
+                <input type="hidden" asp-for="ShippingCountryCode" />
+                <input type="hidden" asp-for="ShippingLatitude" />
+                <input type="hidden" asp-for="ShippingLongitude" />
+                <input type="hidden" asp-for="ShippingPhoneNumber" />
+                <input type="hidden" asp-for="ShippingFloorNumber" />
+                <input type="hidden" asp-for="ShippingIsRuralArea" />
+                <input type="hidden" asp-for="ChosenShippingServiceLevelName" id="chosenServiceLevel" />
+
+                @foreach (var option in shippingOptions.OrderBy(o => o.TotalCost))
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="chosenOption" id="shippingOption_@option.ServiceLevelName.Replace(" ", "_")" value="@option.ServiceLevelName"
+                               onchange="document.getElementById('chosenServiceLevel').value = this.value;"
+                        @(option == shippingOptions.OrderBy(o => o.TotalCost).First() ? "checked" : "")>
+                        <label class="form-check-label" for="shippingOption_@option.ServiceLevelName.Replace(" ", "_")">
+                            <strong>@option.ServiceLevelName</strong> - @option.TotalCost.ToString("N2") USD
+                            (@SharedLocalizer["EstimatedDelivery"]: @option.EstimatedDeliveryDaysMin - @option.EstimatedDeliveryDaysMax @SharedLocalizer["days"])
+                            <br /><small class="text-muted">@SharedLocalizer["FulfillingFrom"] @option.OriginWarehouse.Name (@option.RouteDescription)</small>
+                        </label>
+                    </div>
+                }
+                <hr class="my-4">
+                <button class="w-100 btn btn-success btn-lg" type="submit">@SharedLocalizer["PlaceOrder"]</button>
+            </form>
+        }
+        else if (Model.ShippingCountryCode != null)
+        {
+            <div class="alert alert-warning mt-4">@SharedLocalizer["NoShippingOptionsFound"]</div>
+        }
+    </div>
+
+    <div class="col-md-5">
+        <h3 class="mb-3">@SharedLocalizer["YourCart"]</h3>
+        <ul class="list-group mb-3">
+            @if (cartItems != null)
+            {
+                @foreach (var item in cartItems)
+                {
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">@item.ProductName</h6>
+                            <small class="text-muted">@SharedLocalizer["Quantity"]: @item.Quantity</small>
+                        </div>
+                        <span class="text-muted">@item.TotalPrice.ToString("N2")</span>
+                    </li>
+                }
+            }
+            <li class="list-group-item d-flex justify-content-between">
+                <span>@SharedLocalizer["Subtotal"] (USD)</span>
+                <strong>@subtotal.ToString("N2")</strong>
+            </li>
+            @if (shippingOptions != null && shippingOptions.Any())
+            {
+                var chosenOption = shippingOptions.FirstOrDefault(opt => opt.ServiceLevelName == Model.ChosenShippingServiceLevelName) ??
+                shippingOptions.OrderBy(opt => opt.TotalCost).FirstOrDefault();
+                if (chosenOption != null)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@SharedLocalizer["ShippingCost"] (@(chosenOption.ServiceLevelName))</span>
+                        <strong>@chosenOption.TotalCost.ToString("N2")</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@SharedLocalizer["Total"] (USD)</span>
+                        <strong>@(subtotal + chosenOption.TotalCost).ToString("N2")</strong>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

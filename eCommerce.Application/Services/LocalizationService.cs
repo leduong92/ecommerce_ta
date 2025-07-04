@@ -17,7 +17,7 @@ namespace eCommerce.Application.Services
             return await _baseApiClient.SendAsync<List<LanguageDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.LocalizationAPIBase + "/api/localization"
+                Url = SD.ApiBaseUrl + "/api/localization"
             });
         }
     }

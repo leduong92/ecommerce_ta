@@ -12,7 +12,8 @@ namespace eCommerce.Infrastructure.Configurations
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Id).UseIdentityColumn();
             builder.Property(x => x.Name).HasMaxLength(64);
-            builder.Property(x => x.Address).HasMaxLength(512);
+            builder.Property(x => x.Address1).HasMaxLength(512);
+            builder.Property(x => x.Address2).HasMaxLength(512);
             builder.Property(x => x.City).HasMaxLength(64);
             builder.Property(x => x.StateProvince).HasMaxLength(64);
             builder.Property(x => x.ZipCode).HasMaxLength(24);

@@ -28,7 +28,7 @@ namespace eCommerce.Application.Services
             }
 
             // Start building the query for a single product
-            var productQuery = _context.Products
+            IQueryable<Product> productQuery = _context.Products
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Prices!.Where(pp => pp.RegionId == region.Id && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
                 .Include(p => p.RegionAvailabilities!.Where(ra => ra.RegionId == region.Id));
@@ -47,7 +47,7 @@ namespace eCommerce.Application.Services
             // Conditionally include InventoryItems for the specific product detail
             if (nearestWarehouse != null)
             {
-                productQuery = (Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Product, IEnumerable<ProductRegionAvailability>>)productQuery.Include(p => p.InventoryItems!.Where(ii => ii.WarehouseId == nearestWarehouse.Id));
+                productQuery = productQuery.Include(p => p.InventoryItems!.Where(ii => ii.WarehouseId == nearestWarehouse.Id));
             }
 
             var product = await productQuery.FirstOrDefaultAsync(p => p.Id == productId);
@@ -107,7 +107,7 @@ namespace eCommerce.Application.Services
             }
             // If still null, we might not be able to show accurate stock. Handle gracefully.
 
-            var productsQuery = _context.Products
+            IQueryable<Product> productsQuery = _context.Products
                             .Where(p => p.RegionAvailabilities!.Any(ra => ra.RegionId == region.Id))
                             .Include(p => p.Prices!.Where(pp => pp.RegionId == region.Id && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
                             .Include(p => p.ProductCategory); // This sets the base type of the IIncludableQueryable
@@ -117,7 +117,9 @@ namespace eCommerce.Application.Services
             {
                 // CORRECTED LINE: Chain the Include.
                 // This adds another Include to the existing productsQuery without changing its base type for the next Include.
-                productsQuery = (Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Product, ProductCategory>)productsQuery.Include(p => p.InventoryItems!.Where(ii => ii.WarehouseId == nearestWarehouse.Id));
+                productsQuery = productsQuery
+                       .Include(p => p.InventoryItems!
+                           .Where(ii => ii.WarehouseId == nearestWarehouse.Id));
             }
 
 

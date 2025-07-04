@@ -51,7 +51,7 @@ namespace eCommerce.Application.Services
         {
             var cart = await GetOrCreateCartAsync(sessionId, userId);
             var product = await _context.Products
-                .Include(p => p.ProductPrices)!
+                .Include(p => p.Prices)!
                     .ThenInclude(pp => pp.Region)
                 .Include(p => p.ProductCategory) // Still need this for dimensional factor fallback
                 .FirstOrDefaultAsync(p => p.Id == productId);
@@ -67,7 +67,7 @@ namespace eCommerce.Application.Services
 
             // NEW: Determine the correct price based on customerRegionCode
             // Prioritize exact match, then a default price if available (e.g., USD for international)
-            var productPrice = product.ProductPrices?
+            var productPrice = product.Prices?
                 .FirstOrDefault(pp => pp.Region.Code.Equals(customerRegionCode, StringComparison.OrdinalIgnoreCase) &&
                                       pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow));
 
@@ -75,7 +75,7 @@ namespace eCommerce.Application.Services
             {
                 // Fallback: Try to find a default price (e.g., US/USD or a globally defined default)
                 // You might want a more sophisticated fallback logic here (e.g., nearest region, global default)
-                productPrice = product.ProductPrices?
+                productPrice = product.Prices?
                     .FirstOrDefault(pp => pp.Region.Code == "US" && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow));
 
                 if (productPrice == null)

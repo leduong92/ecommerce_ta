@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = SharedLocalizer["OrderConfirmation"];
+}
+
+<div class="jumbotron text-center">
+    <h1 class="display-3 text-success">@SharedLocalizer["ThankYou"]</h1>
+    <p class="lead">@SharedLocalizer["OrderPlacedSuccessfully"]</p>
+    <p class="lead"><strong>@SharedLocalizer["OrderNumber"]: @ViewBag.OrderId</strong></p>
+    <hr class="my-4">
+    <p>@SharedLocalizer["ConfirmationMessage"]</p>
+    <p class="lead">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg" role="button">@SharedLocalizer["ContinueShopping"]</a>
+    </p>
+</div>

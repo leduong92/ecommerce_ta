@@ -929,9 +929,9 @@ namespace eCommerce.Infrastructure.Extensions
             );
 
             modelBuilder.Entity<Language>().HasData(
-                new Language { Id = 1, Name = "English - EN", Code = "en", IsDefault  = 1 },
-                new Language { Id = 2, Name = "Vietnamese - VN", Code = "vi", IsDefault = 1 },
-                new Language { Id = 3, Name = "中文 (简体) - ZH", Code = "zh", IsDefault = 1 }
+                new Language { Id = 1, Name = "English - EN", Code = "en", IsDefault  = true },
+                new Language { Id = 2, Name = "Vietnamese - VN", Code = "vi", IsDefault = false },
+                new Language { Id = 3, Name = "中文 (简体) - ZH", Code = "zh", IsDefault = false }
            );
 
             modelBuilder.Entity<ProductOption>().HasData(

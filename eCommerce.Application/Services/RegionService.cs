@@ -17,7 +17,7 @@ namespace eCommerce.Application.Services
             return await _baseApiClient.SendAsync<List<RegionDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.RegionAPIBase + "/api/region"
+                Url = SD.ApiBaseUrl + "/api/region"
             });
         }
     }
