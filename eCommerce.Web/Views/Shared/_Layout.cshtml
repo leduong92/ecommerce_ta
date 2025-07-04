@@ -1,4 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Localization
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var currentCulture = HttpContextAccessor.HttpContext?
+                        .Features.Get<IRequestCultureFeature>()?.RequestCulture.Culture.Name ?? "en";
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,12 +34,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">@SharedLocalizer["ShoppingCart"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@SharedLocalizer["Privacy"]</a>
                         </li>
                     </ul>
                     <div class="navbar-text d-flex align-items-center">
                         <form asp-controller="Home" asp-action="SetRegion" method="post" class="d-flex me-3">
-                            <span class="me-2">@SharedLocalizer["Region"]:</span>
+                            <span class="me-2">@SharedLocalizer["Deliver to"]:</span>
                             <select name="regionCode" onchange="this.form.submit()" class="form-select form-select-sm">
                                 @foreach (var region in ViewBag.Regions)
                                 {
@@ -40,28 +48,12 @@
                             </select>
                         </form>
 
-                        @* Language Selector *@
-                        @{
-                            var culture = Context.Features.Get<IRequestCultureFeature>();
-                            var currentCulture = culture.RequestCulture.UICulture;
-                            var cultureItems = new List<SelectListItem>
-                        {
-                        new SelectListItem { Value = "en-US", Text = "English", Selected = (currentCulture.Name == "en-US") },
-                        new SelectListItem { Value = "vi-VN", Text = "Tiếng Việt", Selected = (currentCulture.Name == "vi-VN") },
-                        new SelectListItem { Value = "zh-CN", Text = "简体中文", Selected = (currentCulture.Name == "zh-CN") }
-                        };
-                        }
-                        <form id="cultureForm" asp-controller="Home" asp-action="SetLanguage" method="post" class="d-flex">
-                            @* Truyền returnUrl bao gồm cả QueryString để giữ nguyên tham số *@
-                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-                            <span class="me-2">@SharedLocalizer["Language"]:</span>
-                            <select name="culture" onchange="this.form.submit()" class="form-select form-select-sm">
-                                @foreach (var cultureItem in cultureItems)
-                                {
-                                    <option value="@cultureItem.Value" selected="@cultureItem.Selected">@cultureItem.Text</option>
-                                }
-                            </select>
-                        </form>
+                        <div class="dropdown">
+                            <language-nav language-label="NativeName"
+                                          cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { cltr = "{0}", returnUrl = "{1}" })">
+                            </language-nav>
+                        </div>
+               
                     </div>
                 </div>
             </div>
@@ -101,25 +93,30 @@
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (navigator.geolocation && !sessionStorage.getItem('locationSet')) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-                    $.post('/Home/SetCustomerLocation', {
-                        latitude: latitude,
-                        longitude: longitude,
-                        currentRegion: '@ViewBag.CurrentRegion'
-                    }).done(function () {
-                        sessionStorage.setItem('locationSet', 'true');
-                        // No need to reload here, as location setting is less critical than currency/language
-                    }).fail(function () {
-                        console.error('Failed to send location to server.');
-                    });
-                }, function (error) {
-                    console.warn('Geolocation denied or failed:', error.message);
-                });
-            }
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     if (navigator.geolocation && !sessionStorage.getItem('locationSet')) {
+        //         navigator.geolocation.getCurrentPosition(function (position) {
+        //             var latitude = position.coords.latitude;
+        //             var longitude = position.coords.longitude;
+        //             $.post('/Home/SetCustomerLocation', {
+        //                 latitude: latitude,
+        //                 longitude: longitude,
+        //                 currentRegion: '@ViewBag.CurrentRegion'
+        //             }).done(function () {
+        //                 sessionStorage.setItem('locationSet', 'true');
+        //                 // No need to reload here, as location setting is less critical than currency/language
+        //             }).fail(function () {
+        //                 console.error('Failed to send location to server.');
+        //             });
+        //         }, function (error) {
+        //             console.warn('Geolocation denied or failed:', error.message);
+        //         });
+        //     }
+        // });
+
+        document.querySelectorAll('[data-toggle="dropdown"]').forEach(el => {
+            el.setAttribute('data-bs-toggle', 'dropdown');
+            el.removeAttribute('data-toggle');
         });
     </script>
 </body>

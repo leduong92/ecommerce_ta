@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.lang-dropdown .dropdown .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+}

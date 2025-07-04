@@ -1,7 +1,8 @@
-using eCommerce.Application.Interface;
+﻿using eCommerce.Application.Interface;
 using eCommerce.Application.Services;
 using eCommerce.Shared.Common;
-using eCommerce.Web.Resources;
+using eCommerce.Web.LocalizationResources;
+using LazZiya.ExpressLocalization;
 using Microservices.Web.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
@@ -10,42 +11,29 @@ using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- START: Add Localization Services (NEW) ---
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources"); // Specify where .resx files are located
-
-builder.Services.AddMvc()
-    .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix) // For shared resources and view-specific resources
-    .AddDataAnnotationsLocalization(options => { // For validating data annotations based on locale
-        options.DataAnnotationLocalizerProvider = (type, factory) =>
-            factory.Create(typeof(SharedResources)); // Use SharedResources for Data Annotations
-    });
-
-// Configure the supported cultures
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    var supportedCultures = new List<CultureInfo>
-    {
-        new CultureInfo("en-US"),
-        new CultureInfo("vi-VN"),
-        new CultureInfo("zh-CN")
-        // Add more cultures here based on your Language model
-    };
-
-    options.DefaultRequestCulture = new RequestCulture("en-US"); // Default culture
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-
-    // How to determine the culture:
-    // 1. Query string (e.g., ?culture=vi-VN)
-    // 2. Cookie (persistent across requests)
-    // 3. Accept-Language header
-    options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
-    options.RequestCultureProviders.Insert(1, new CookieRequestCultureProvider());
-    // The Accept-Language header provider is usually added by default and is typically last.
-});
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var cultures = new[]
+{
+    new CultureInfo("en-US"),
+    new CultureInfo("vi-VN"),
+    new CultureInfo("zh-CN"),
+};
+
+builder.Services.AddControllersWithViews()
+    .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
+    {
+        ops.UseAllCultureProviders = false;
+        ops.ResourcesPath = "LocalizationResources";
+        ops.RequestLocalizationOptions = o =>
+        {
+            o.SupportedCultures = cultures;
+            o.SupportedUICultures = cultures;
+            o.DefaultRequestCulture = new RequestCulture("en-US");
+        };
+    });
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddHttpClient("ApiClient", client =>
@@ -85,17 +73,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// --- START: Use Localization Middleware (NEW) ---
-var localizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>()?.Value;
-app.UseRequestLocalization(localizationOptions!);
-// --- END: Use Localization Middleware ---
+app.UseRequestLocalization();
 
 app.UseSession(); // IMPORTANT: Must be before UseAuthorization and MapControllers
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

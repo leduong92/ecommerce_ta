@@ -1,8 +1,10 @@
 ﻿@using eCommerce.Web
 @using eCommerce.Web.Models
-@using eCommerce.Web.Resources
 @using eCommerce.Shared
 @using eCommerce.Application.Dtos
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer // For view-specific resources
-@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResources> SharedLocalizer // For shared resources
+@using System.Globalization
+@using LazZiya.ExpressLocalization
+
+@addTagHelper *, LazZiya.TagHelpers
+@addTagHelper *, LazZiya.ExpressLocalization
+@inject ISharedCultureLocalizer SharedLocalizer
