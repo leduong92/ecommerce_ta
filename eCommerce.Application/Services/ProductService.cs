@@ -3,6 +3,7 @@ using eCommerce.Application.Dtos;
 using eCommerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using eCommerce.Domain.Entities;
+using eCommerce.Shared.Common;
 
 namespace eCommerce.Application.Services
 {
@@ -19,12 +20,12 @@ namespace eCommerce.Application.Services
             _warehouseService = warehouseService;
         }
 
-        public async Task<ProductDetailDto?> GetProductDetailsAsync(int productId, string regionCode, double? customerLatitude, double? customerLongitude)
+        public async Task<ApiResponse<ProductDetailDto>?> GetProductDetailsAsync(int productId, string regionCode, double? customerLatitude, double? customerLongitude)
         {
             var region = await _context.Regions.FirstOrDefaultAsync(r => r.Code == regionCode);
             if (region == null)
             {
-                throw new ArgumentException($"Region with code '{regionCode}' not found.");
+                return ApiResponse<ProductDetailDto>.Failure($"Region with code '{regionCode}' not found.");
             }
 
             // Start building the query for a single product
@@ -55,7 +56,7 @@ namespace eCommerce.Application.Services
 
             if (product == null || !product.RegionAvailabilities!.Any())
             {
-                return null;
+                return ApiResponse<ProductDetailDto>.Failure($"Product {productId} not found."); ;
             }
 
             // Note: inventory retrieval is already handled by the .Include above.
@@ -66,7 +67,7 @@ namespace eCommerce.Application.Services
             var price = product.Prices?.FirstOrDefault()?.Price;
             var currency = product.Prices?.FirstOrDefault()?.Currency;
 
-            return new ProductDetailDto
+            var result =  new ProductDetailDto
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -82,14 +83,15 @@ namespace eCommerce.Application.Services
                 FulfillingWarehouseName = nearestWarehouse?.Name,
                 FulfillingWarehouseAddress = nearestWarehouse != null ? $"{nearestWarehouse.Address1}, {nearestWarehouse.City}" : null
             };
+            return ApiResponse<ProductDetailDto>.Success(result);
         }
 
-        public async Task<IEnumerable<ProductListDto>> GetProductsByRegionAsync(string regionCode, double? customerLatitude, double? customerLongitude)
+        public async Task<ApiResponse<IEnumerable<ProductListDto>>> GetProductsByRegionAsync(string regionCode, double? customerLatitude, double? customerLongitude)
         {
-            var region = await _context.Regions.FirstOrDefaultAsync(r => r.Code == regionCode);
+            var region = await _context.Regions.Where(r => r.Code == regionCode).FirstOrDefaultAsync();
             if (region == null)
             {
-                throw new ArgumentException($"Region with code '{regionCode}' not found.");
+                return ApiResponse<IEnumerable<ProductListDto>>.Failure($"Region with code '{regionCode}' not found.");
             }
             // Find the nearest warehouse for this region/customer location to get relevant inventory.
             // This is crucial for displaying stock quantity.
@@ -149,7 +151,7 @@ namespace eCommerce.Application.Services
                 };
             }).ToList();
 
-            return productList;
+            return ApiResponse<IEnumerable<ProductListDto>>.Success(productList);
         }
     }
 }

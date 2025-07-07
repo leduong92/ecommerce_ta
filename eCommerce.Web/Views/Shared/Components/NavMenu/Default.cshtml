@@ -1,13 +1,13 @@
-﻿@*
+﻿@model NavMenuViewModel;
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Microservices.Web</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ECommerce</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -15,55 +15,34 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Products"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">@SharedLocalizer["ShoppingCart"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Coupon" asp-action="Index">Coupon</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@SharedLocalizer["Privacy"]</a>
                     </li>
-                    <form asp-controller="Settings" asp-action="SetRegion" method="post">
-                        <label>Deliver to:</label>
-                        <select name="regionCode" onchange="this.form.submit()">
-                            @foreach (var r in ViewBag.Regions as List<RegionDto>)
-                            {
-                                <option value="@r.Code" class="@(ViewBag.SelectedRegion == r.Code ? "selected" : "")">
-                                    @r.Name (@r.Currency)
-                                </option>
-                            }
-                        </select>
-                    </form>
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link " asp-controller="Auth" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-controller="Auth" asp-action="Register">Register</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link " href="#">Hello @User.Identity.Name</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-controller="Auth" asp-action="Logout">Logout</a>
-                        </li>
-                    }
-                    <form asp-controller="Settings" asp-action="SetLocalization" method="post">
-                        <label>Language:</label>
-                        <select name="languageCode" onchange="this.form.submit()">
-                            @foreach (var lang in ViewBag.Languages as List<LanguageDto>)
-                            {
-                                <option value="@lang.Code" class="@(ViewBag.SelectedLanguage == lang.Code ? "selected" : "")">
-                                    @lang.Code
-                                </option>
-                            }
-                        </select>
-                    </form>
                 </ul>
+                <div class="navbar-text d-flex align-items-center">
+                    <form asp-controller="Home" asp-action="SetRegion" method="post" class="region-container d-flex me-3">
+                        <span class="region-label me-2">@SharedLocalizer["Deliver to"]:</span>
+                        <select name="regionCode" onchange="this.form.submit()" class="form-select form-select-sm">
+                            @foreach (var region in Model.Regions)
+                            {
+                                <option value="@region.Code" selected="@(region.Code == ViewBag.CurrentRegion)">@region.Name</option>
+                            }
+                        </select>
+                    </form>
+
+                    <div class="dropdown">
+                        <language-nav language-label="NativeName"
+                                      class="fixed-width-dropdown"
+                                      cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { cltr = "{0}", returnUrl = "{1}" })">
+                        </language-nav>
+                    </div>
+
+                </div>
             </div>
         </div>
     </nav>

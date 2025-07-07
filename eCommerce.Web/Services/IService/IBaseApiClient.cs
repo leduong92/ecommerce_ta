@@ -1,6 +1,6 @@
 ﻿using eCommerce.Shared.Common;
 
-namespace eCommerce.Application.Interface
+namespace eCommerce.Web.Services.IService
 {
     public interface IBaseApiClient
     {

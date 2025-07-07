@@ -3,9 +3,9 @@
 using eCommerce.Shared.Common;
 using eCommerce.Application.Dtos;
 
-namespace eCommerce.Application.Interface
+namespace eCommerce.Web.Services.IService
 {
-    public interface ICouponService
+    public interface ICouponApiClient
     {
         Task<ApiResponse<CouponDto>> GetCouponAsync(string couponCode);
         Task<ApiResponse<List<CouponDto>>> GetAllCouponsAsync();

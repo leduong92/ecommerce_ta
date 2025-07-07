@@ -1,14 +1,15 @@
 ﻿using eCommerce.Application.Dtos;
-using eCommerce.Application.Interface;
 using eCommerce.Shared.Common;
+using eCommerce.Web.Services.IService;
 
-namespace eCommerce.Application.Services
+
+namespace eCommerce.Web.Services
 {
-    public class CouponService : ICouponService
+    public class CouponApiClient : ICouponApiClient
     {
         private readonly IBaseApiClient _baseApiClient;
 
-        public CouponService(IBaseApiClient baseApiClient)
+        public CouponApiClient(IBaseApiClient baseApiClient)
         {
             _baseApiClient = baseApiClient;
         }
@@ -19,7 +20,7 @@ namespace eCommerce.Application.Services
 			{
 				ApiType = SD.ApiType.POST,
 				Data = couponDto,
-				Url = SD.ApiBaseUrl + "/api/coupon"
+				Url = SD.ApiBaseUrl + "coupon"
 			});
 		}
 
@@ -28,7 +29,7 @@ namespace eCommerce.Application.Services
             return await _baseApiClient.SendAsync<List<CouponDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ApiBaseUrl + "/api/coupon"
+                Url = SD.ApiBaseUrl + "coupon"
             });
         }
 
@@ -37,7 +38,7 @@ namespace eCommerce.Application.Services
             return await _baseApiClient.SendAsync<CouponDto>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ApiBaseUrl + "/api/coupon/GetByCode/" + couponCode
+                Url = SD.ApiBaseUrl + "coupon/GetByCode/" + couponCode
             });
         }
     }

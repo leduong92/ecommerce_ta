@@ -1,6 +1,6 @@
-﻿using eCommerce.Application.Interface;
-using eCommerce.Application.Dtos;
+﻿using eCommerce.Application.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using eCommerce.Application.Interfaces;
 
 namespace eCommerce.BackendApi.Controllers
 {

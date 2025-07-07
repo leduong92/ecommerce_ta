@@ -28,7 +28,7 @@ namespace eCommerce.BackendApi.Controllers
             try
             {
                 var products = await _productService.GetProductsByRegionAsync(regionCode, latitude, longitude);
-                if (!products.Any())
+                if (!products.Data.Any())
                 {
                     return NotFound($"No products found for region '{regionCode}'.");
                 }

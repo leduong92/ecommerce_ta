@@ -7,15 +7,16 @@ using eCommerce.Shared.Common;
 using System.IdentityModel.Tokens.Jwt;
 using eCommerce.Application.Interface;
 using eCommerce.Application.Dtos;
+using eCommerce.Web.Services.IService;
 
 namespace eCommerce.Web.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IAuthService _authService;
+        private readonly IAuthApiClient _authService;
         private readonly ITokenProvider _tokenProvider;
 
-        public AuthController(IAuthService authService, ITokenProvider tokenProvider)
+        public AuthController(IAuthApiClient authService, ITokenProvider tokenProvider)
         {
             _authService = authService;
             _tokenProvider = tokenProvider;

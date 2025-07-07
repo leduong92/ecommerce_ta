@@ -7,11 +7,9 @@ using Newtonsoft.Json;
 using static eCommerce.Shared.Common.SD;
 using Newtonsoft.Json.Serialization;
 using eCommerce.Application.Interface;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
+using eCommerce.Web.Services.IService;
 
-namespace Microservices.Web.Services
+namespace eCommerce.Web.Services
 {
     public class BaseApiClient : IBaseApiClient
     {

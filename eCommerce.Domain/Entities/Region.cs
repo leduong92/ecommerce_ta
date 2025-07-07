@@ -2,7 +2,7 @@
 
 namespace eCommerce.Domain.Entities
 {
-    public class Region
+    public class Region 
     {
         public int Id { get; set; }
         public string? Code { get; set; } // ISO 3166-1 alpha-2 (e.g., VN, US)

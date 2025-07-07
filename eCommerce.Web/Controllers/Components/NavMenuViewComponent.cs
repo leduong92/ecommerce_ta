@@ -1,22 +1,24 @@
-﻿using eCommerce.Application.Interface;
+﻿using eCommerce.Web.Services;
+using eCommerce.Web.Services.IService;
+using eCommerce.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Web.Controllers.Components
 {
     public class NavMenuViewComponent : ViewComponent
     {
-        private readonly IRegionService _regionSevice;
-        private readonly ILocalizationService _localizationService;
+        private readonly IRegionApiClient _regionApiClient;
+        private readonly ILanguageApiClient _languageApiClient;
 
-        public NavMenuViewComponent(IRegionService regionSevice, ILocalizationService localizationService)
+        public NavMenuViewComponent(IRegionApiClient regionApiClient, ILanguageApiClient languageApiClient)
         {
-            _regionSevice = regionSevice;
-            _localizationService = localizationService;
+            _regionApiClient = regionApiClient;
+            _languageApiClient = languageApiClient;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var languages = await _localizationService.GetLocalizationsAsync();
-            var regions = await _regionSevice.GetRegionsAsync(); ;
+            var languages = await _languageApiClient.GetLanguagesAsync();
+            var regions = await _regionApiClient.GetRegionsAsync();
 
             ViewBag.SelectedLanguage = Request.Cookies["language"] ?? "en";
             ViewBag.SelectedRegion = Request.Cookies["region"] ?? "US";
@@ -24,7 +26,13 @@ namespace eCommerce.Web.Controllers.Components
             ViewBag.Languages = languages.Data;
             ViewBag.Regions = regions.Data;
 
-            return View();
+            var response = new NavMenuViewModel()
+            {
+                Languages = languages.Data,
+                Regions = regions.Data
+            };
+
+            return View(response);
         }
     }
 }

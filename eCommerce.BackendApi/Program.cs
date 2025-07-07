@@ -25,6 +25,8 @@ builder.Services.AddScoped<WarehouseService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>(); // NEW
 builder.Services.AddScoped<IOrderService, OrderService>(); // NEW
 builder.Services.AddScoped<IProductService, ProductService>(); // NEW
+builder.Services.AddScoped<ILanguageService, LanguageService>(); // NEW
+builder.Services.AddScoped<IRegionService, RegionService>(); // NEW
 
 // Configure Session
 builder.Services.AddDistributedMemoryCache(); // Required for session

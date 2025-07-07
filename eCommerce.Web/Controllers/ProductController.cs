@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text;
+using eCommerce.Web.Services.IService;
 
 namespace eCommerce.Web.Controllers
 {
@@ -10,13 +11,16 @@ namespace eCommerce.Web.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger<ProductController> _logger;
+        private readonly IProductApiClient _productApiClient;
         private readonly string _apiBaseUrl;
 
-        public ProductController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductController> logger)
+        public ProductController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductController> logger
+            , IProductApiClient productApiClient)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _logger = logger;
+            _productApiClient = productApiClient;
             _apiBaseUrl = configuration["ApiBaseUrl"] ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
         }
         [HttpGet]
@@ -24,38 +28,39 @@ namespace eCommerce.Web.Controllers
         {
             ViewBag.CurrentRegion = regionCode;
 
-            var client = _httpClientFactory.CreateClient("ApiClient");
+            //var client = _httpClientFactory.CreateClient("ApiClient");
             var latitude = HttpContext.Session.GetString("CustomerLatitude");
             var longitude = HttpContext.Session.GetString("CustomerLongitude");
 
-            string requestUrl = $"{_apiBaseUrl}Product/{id}/detail/{regionCode}";
-            if (!string.IsNullOrEmpty(latitude) && !string.IsNullOrEmpty(longitude))
+            //string requestUrl = $"{_apiBaseUrl}Product/{id}/detail/{regionCode}";
+            //if (!string.IsNullOrEmpty(latitude) && !string.IsNullOrEmpty(longitude))
+            //{
+            //    requestUrl += $"?latitude={latitude}&longitude={longitude}";
+            //}
+
+            //_logger.LogInformation($"Requesting product details from: {requestUrl}");
+
+            //var response = await client.GetAsync(requestUrl);
+            var response = await _productApiClient.GetProductDetail(id, regionCode, latitude, longitude);
+
+            if (response.IsSuccess)
             {
-                requestUrl += $"?latitude={latitude}&longitude={longitude}";
+                //var content = await response.Content.ReadAsStringAsync();
+                //var product = JsonSerializer.Deserialize<ProductDetailDto>(content, new JsonSerializerOptions
+                //{
+                //    PropertyNameCaseInsensitive = true
+                //});
+                return View(response.Data);
             }
-
-            _logger.LogInformation($"Requesting product details from: {requestUrl}");
-
-            var response = await client.GetAsync(requestUrl);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var product = JsonSerializer.Deserialize<ProductDetailDto>(content, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-                return View(product);
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            else if (response.StatusCode == 404)
             {
                 TempData["ErrorMessage"] = $"Product {id} not found or not available in region '{regionCode}'.";
                 return RedirectToAction("Index", "Home", new { regionCode = regionCode });
             }
             else
             {
-                TempData["ErrorMessage"] = $"Error fetching product details: {response.ReasonPhrase}";
-                _logger.LogError($"Error fetching product details: {response.StatusCode} - {response.ReasonPhrase}");
+                TempData["ErrorMessage"] = $"Error fetching product details: {response.Message}";
+                _logger.LogError($"Error fetching product details: {response.StatusCode} - {response.Message}");
                 return RedirectToAction("Index", "Home", new { regionCode = regionCode });
             }
         }
@@ -90,7 +95,7 @@ namespace eCommerce.Web.Controllers
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync($"{_apiBaseUrl}ShoppingCart/add", jsonContent);
+            var response = await client.PostAsync($"{_apiBaseUrl}cart/add", jsonContent);
 
             if (response.IsSuccessStatusCode)
             {

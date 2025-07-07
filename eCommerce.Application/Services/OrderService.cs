@@ -2,6 +2,7 @@
 using eCommerce.Application.Interfaces;
 using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
+using eCommerce.Shared.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Application.Services
@@ -25,14 +26,13 @@ namespace eCommerce.Application.Services
         /// </summary>
         /// <param name="checkoutRequest">DTO containing all checkout details.</param>
         /// <returns>The created Order object or null if processing fails.</returns>
-        public async Task<Order?> ProcessCheckoutAsync(CheckoutRequest checkoutRequest)
+        public async Task<ApiResponse<Order?>> ProcessCheckoutAsync(CheckoutRequest checkoutRequest)
         {
             // 1. Retrieve cart items
             var cartItems = await _cartService.GetCartItemsAsync(checkoutRequest.SessionId, checkoutRequest.UserId);
             if (!cartItems.Any())
             {
-                Console.WriteLine("Error: Cart is empty.");
-                return null;
+                return ApiResponse<Order?>.Failure("Error: Cart is empty.");
             }
             // Prepare order details for shipping calculation
             var orderItemDetails = cartItems.Select(ci => new OrderItemDetailsDto
@@ -58,8 +58,7 @@ namespace eCommerce.Application.Services
 
             if (!shippingOptions.Any())
             {
-                Console.WriteLine("Error: No shipping options available for this order and destination.");
-                return null;
+                return ApiResponse<Order?>.Failure("Error: No shipping options available for this order and destination.");
             }
 
             // 3. Select the chosen shipping option (e.g., lowest cost, or based on user's selected ServiceLevelName)
@@ -70,8 +69,7 @@ namespace eCommerce.Application.Services
 
             if (chosenOption == null)
             {
-                Console.WriteLine("Error: Chosen shipping service level not found among available options.");
-                return null;
+                return ApiResponse<Order?>.Failure("Error: Chosen shipping service level not found among available options.");
             }
 
             // 4.Validate and Allocate Inventory
@@ -98,7 +96,7 @@ namespace eCommerce.Application.Services
 
                         if (fulfillingWarehouse == null)
                         {
-                            throw new InvalidOperationException($"Fulfilling warehouse with ID {chosenOption.OriginWarehouse.Id} not found.");
+                            return ApiResponse<Order?>.Failure($"Fulfilling warehouse with ID {chosenOption.OriginWarehouse.Id} not found.");
                         }
 
                         // Check and reserve inventory
@@ -111,7 +109,7 @@ namespace eCommerce.Application.Services
                             // Kiểm tra tồn kho có sẵn (on hand - reserved)
                             if (inventoryItem == null || inventoryItem.AvailableQuantity < cartItem.Quantity) // AvailableQuantity = QuantityOnHand - QuantityReserved
                             {
-                                throw new InvalidOperationException($"Insufficient stock for product {cartItem.Product.Name} at {fulfillingWarehouse.Name}. Available: {inventoryItem?.AvailableQuantity ?? 0}, Requested: {cartItem.Quantity}");
+                                return ApiResponse<Order?>.Failure($"Insufficient stock for product {cartItem.Product.Name} at {fulfillingWarehouse.Name}. Available: {inventoryItem?.AvailableQuantity ?? 0}, Requested: {cartItem.Quantity}");
                             }
                             // Phân bổ (dự trữ) tồn kho bằng cách tăng QuantityReserved
                             inventoryItem.QuantityReserved += cartItem.Quantity;
@@ -173,7 +171,7 @@ namespace eCommerce.Application.Services
 
                         await transaction.CommitAsync(); // Commit all changes if everything is successful
                         Console.WriteLine($"Order {order.Id} created successfully. Total: {order.TotalAmount:C}. Shipping from {order.ChosenShippingOriginWarehouseName}.");
-                        return order;
+                        return ApiResponse<Order>.Success(order);
                     }
                     catch (DbUpdateConcurrencyException ex)
                     {
@@ -189,60 +187,62 @@ namespace eCommerce.Application.Services
                         }
                         if (i == maxRetries - 1)// If this was the last retry attempt
                         {
-                            Console.WriteLine("Maximum retries reached for concurrency conflict.");
                             // Re-throw or return null to indicate failure after all retries
-                            return null;
+                            //return null;
+                            return ApiResponse<Order?>.Failure($"Maximum retries reached for concurrency conflict.");
                         }
                         // Continue to next iteration for retry
                     }
                     catch (InvalidOperationException ex)
                     {
                         await transaction.RollbackAsync();
-                        Console.WriteLine($"Inventory issue during checkout: {ex.Message}");
-                        return null;
+                        return ApiResponse<Order?>.Failure($"Inventory issue during checkout: {ex.Message}");
+                        //return null;
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync(); // Rollback all changes on error
-                        Console.WriteLine($"Error during checkout process: {ex.Message}");
                         // Log the exception details (ex.ToString()) for debugging
-                        return null;
+                        return ApiResponse<Order?>.Failure($"Error during checkout process: {ex.Message}");
+                        //return null;
                     }
                 }
             }
-            return null; // Should only be reached if all retries fail
+            //return null; // Should only be reached if all retries fail
+            return ApiResponse<Order?>.Failure($"Should only be reached if all retries fail");
         }
         /// <summary>
         /// Updates the status of an order.
         /// </summary>
-        public async Task<bool> UpdateOrderStatusAsync(int orderId, OrderStatus newStatus)
+        public async Task<ApiResponse<bool>> UpdateOrderStatusAsync(int orderId, OrderStatus newStatus)
         {
             var order = await _context.Orders.FindAsync(orderId);
             if (order == null)
             {
-                return false;
+                return ApiResponse<bool>.Failure($"Order with Id=${orderId} not found");
             }
 
             order.Status = newStatus;
             await _context.SaveChangesAsync();
-            return true;
+            return ApiResponse<bool>.Success(true);
         }
 
         /// <summary>
         /// Gets an order by its ID, including its items and fulfilling warehouse.
         /// </summary>
-        public async Task<Order?> GetOrderByIdAsync(int orderId)
+        public async Task<ApiResponse<Order?>> GetOrderByIdAsync(int orderId)
         {
-            return await _context.Orders
+            var result = await _context.Orders
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Product)
                 .Include(o => o.FulfillingWarehouse)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
+            return ApiResponse<Order>.Success(result);
         }
         /// <summary>
         /// Confirms shipment and updates inventory. This typically happens after the order is picked and packed.
         /// </summary>
-        public async Task<bool> ConfirmShipmentAndUpdateInventoryAsync(int orderId)
+        public async Task<ApiResponse<bool>> ConfirmShipmentAndUpdateInventoryAsync(int orderId)
         {
             int maxRetries = 3;
             for (int i = 0; i < maxRetries; i++)
@@ -258,12 +258,12 @@ namespace eCommerce.Application.Services
 
                         if (order == null || order.Status != OrderStatus.Processing)
                         {
-                            throw new InvalidOperationException($"Order {orderId} not found or not in Processing status.");
+                            return ApiResponse<bool>.Failure($"Order {orderId} not found or not in Processing status.");
                         }
 
                         if (order.FulfillingWarehouse == null)
                         {
-                            throw new InvalidOperationException($"Order {orderId} does not have a fulfilling warehouse assigned.");
+                            return ApiResponse<bool>.Failure($"Order {orderId} does not have a fulfilling warehouse assigned.");
                         }
 
                         // Load inventory items that are specific to this order's products for the warehouse
@@ -280,7 +280,7 @@ namespace eCommerce.Application.Services
 
                             if (inventoryItem == null || inventoryItem.QuantityReserved < orderItem.Quantity)
                             {
-                                throw new InvalidOperationException($"Inconsistent inventory for product {orderItem.Product.Name} in order {orderId}. Reserved: {inventoryItem?.QuantityReserved ?? 0}, Shipped: {orderItem.Quantity}");
+                                return ApiResponse<bool>.Failure($"Inconsistent inventory for product {orderItem.Product.Name} in order {orderId}. Reserved: {inventoryItem?.QuantityReserved ?? 0}, Shipped: {orderItem.Quantity}");
                             }
 
                             // Reduce both reserved and on-hand quantities
@@ -296,7 +296,7 @@ namespace eCommerce.Application.Services
                         await _context.SaveChangesAsync();
                         await transaction.CommitAsync();
                         Console.WriteLine($"Order {orderId} shipped and inventory updated successfully.");
-                        return true;
+                        return ApiResponse<bool>.Success(true);
                     }
                     catch (DbUpdateConcurrencyException ex)
                     {
@@ -308,19 +308,17 @@ namespace eCommerce.Application.Services
                         }
                         if (i == maxRetries - 1)
                         {
-                            Console.WriteLine("Maximum retries reached for concurrency conflict on shipment.");
-                            return false;
+                            return ApiResponse<bool>.Failure("Maximum retries reached for concurrency conflict on shipment.");
                         }
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
-                        Console.WriteLine($"Error confirming shipment for order {orderId}: {ex.Message}");
-                        return false;
+                        return ApiResponse<bool>.Failure($"Error confirming shipment for order {orderId}: {ex.Message}");
                     }
                 }
             }
-            return false;
+             return ApiResponse<bool>.Failure("Failure ConfirmShipmentAndUpdateInventoryAsync");
         }
     }
 }

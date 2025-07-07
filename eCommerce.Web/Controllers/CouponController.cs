@@ -1,15 +1,15 @@
 ﻿
 using eCommerce.Application.Dtos;
-using eCommerce.Application.Interface;
+using eCommerce.Web.Services.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Web.Controllers
 {
     public class CouponController : Controller
     {
-        private readonly ICouponService _couponService;
+        private readonly ICouponApiClient _couponService;
 
-        public CouponController(ICouponService couponService)
+        public CouponController(ICouponApiClient couponService)
         {
             _couponService = couponService;
         }

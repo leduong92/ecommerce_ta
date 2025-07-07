@@ -30,7 +30,7 @@ namespace eCommerce.Web.Controllers
             }
 
             var client = _httpClientFactory.CreateClient("ApiClient");
-            var response = await client.GetAsync($"{_apiBaseUrl}ShoppingCart/{sessionId}");
+            var response = await client.GetAsync($"{_apiBaseUrl}cart/{sessionId}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -79,7 +79,7 @@ namespace eCommerce.Web.Controllers
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"{_apiBaseUrl}ShoppingCart/update-quantity", jsonContent);
+            var response = await client.PutAsync($"{_apiBaseUrl}cart/update-quantity", jsonContent);
 
             if (response.IsSuccessStatusCode)
             {
@@ -114,7 +114,7 @@ namespace eCommerce.Web.Controllers
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
 
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_apiBaseUrl}ShoppingCart/remove")
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_apiBaseUrl}cart/remove")
             {
                 Content = jsonContent
             };

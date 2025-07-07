@@ -2,9 +2,11 @@
 using eCommerce.Application.Services;
 using eCommerce.Shared.Common;
 using eCommerce.Web.LocalizationResources;
+using eCommerce.Web.Services;
+using eCommerce.Web.Services.IService;
 using LazZiya.ExpressLocalization;
-using Microservices.Web.Services;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Net.Http.Headers;
@@ -16,9 +18,9 @@ builder.Services.AddControllersWithViews();
 
 var cultures = new[]
 {
-    new CultureInfo("en-US"),
-    new CultureInfo("vi-VN"),
-    new CultureInfo("zh-CN"),
+    new CultureInfo("en"),
+    new CultureInfo("vi"),
+    new CultureInfo("zh"),
 };
 
 builder.Services.AddControllersWithViews()
@@ -30,7 +32,7 @@ builder.Services.AddControllersWithViews()
         {
             o.SupportedCultures = cultures;
             o.SupportedUICultures = cultures;
-            o.DefaultRequestCulture = new RequestCulture("en-US");
+            o.DefaultRequestCulture = new RequestCulture("en");
         };
     });
 
@@ -47,6 +49,9 @@ SD.ApiBaseUrl = builder.Configuration["ApiBaseUrl"];
 
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IBaseApiClient, BaseApiClient>();
+builder.Services.AddScoped<ILanguageApiClient, LanguageApiClient>();
+builder.Services.AddScoped<IRegionApiClient, RegionApiClient>();
+builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
 
 // Configure Session
 builder.Services.AddDistributedMemoryCache(); // Required for session state

@@ -34,7 +34,7 @@ namespace eCommerce.BackendApi.Controllers
                 return BadRequest("Failed to process checkout. Check server logs for details.");
             }
 
-            return Ok(new { Message = "Order placed successfully!", OrderId = order.Id, TotalAmount = order.TotalAmount });
+            return Ok(new { Message = "Order placed successfully!", OrderId = order.Data.Id, TotalAmount = order.Data.TotalAmount });
         }
 
         [HttpGet("{orderId}")]
@@ -62,7 +62,7 @@ namespace eCommerce.BackendApi.Controllers
             }
 
             var success = await _orderService.UpdateOrderStatusAsync(orderId, newStatus);
-            if (!success)
+            if (!success.IsSuccess)
             {
                 return NotFound("Order not found or update failed.");
             }
@@ -73,7 +73,7 @@ namespace eCommerce.BackendApi.Controllers
         public async Task<IActionResult> ConfirmShipment(int orderId)
         {
             var success = await _orderService.ConfirmShipmentAndUpdateInventoryAsync(orderId);
-            if (!success)
+            if (!success.IsSuccess)
             {
                 return BadRequest("Failed to confirm shipment or update inventory. Check server logs.");
             }

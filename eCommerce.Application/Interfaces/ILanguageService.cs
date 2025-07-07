@@ -3,8 +3,8 @@ using eCommerce.Shared.Common;
 
 namespace eCommerce.Application.Interfaces
 {
-    public interface IRegionService
+    public interface ILanguageService
     {
-        Task<ApiResponse<List<RegionDto>>> GetRegionsAsync();
+        Task<ApiResponse<List<LanguageDto>>> GetLanguagesAsync();
     }
 }
