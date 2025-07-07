@@ -122,7 +122,7 @@ namespace eCommerce.Web.Controllers
             TempData["LocationSet"] = "Your location has been set for better stock estimates.";
             return Json("OK"); // Không cần redirect, client-side JS có thể xử lý tiếp
         }
-        public IActionResult SetCultureCookie(string culture, string returnUrl)
+        public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,

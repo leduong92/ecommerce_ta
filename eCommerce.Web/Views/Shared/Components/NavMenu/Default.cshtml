@@ -1,9 +1,11 @@
-﻿@model NavMenuViewModel;
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@model NavMenuViewModel;
+
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
@@ -36,7 +38,7 @@
                         </select>
                     </form>
 
-                    <div class="dropdown">
+               @*      <div class="dropdown">
                         @{
                             var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
                         }
@@ -44,7 +46,27 @@
                                       class="fixed-width-dropdown"
                                       cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { culture = "{0}", returnUrl = returnUrl })">
                         </language-nav>
-                    </div>
+                    </div> *@
+                    @{
+                        var culture = Context.Features.Get<IRequestCultureFeature>();
+                        var currentCulture = culture.RequestCulture.UICulture;
+                        var cultureItems = new List<SelectListItem>
+                        {
+                        new SelectListItem { Value = "en", Text = "English", Selected = (currentCulture.Name == "en") },
+                        new SelectListItem { Value = "vi", Text = "Tiếng Việt", Selected = (currentCulture.Name == "vi") },
+                        new SelectListItem { Value = "zh", Text = "简体中文", Selected = (currentCulture.Name == "zh") }
+                        };
+                    }
+                    <form id="cultureForm" asp-controller="Home" asp-action="SetLanguage" method="post" class="d-flex">
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                        <span class="me-2">@SharedLocalizer["Language"]:</span>
+                        <select name="culture" onchange="this.form.submit()" class="form-select form-select-sm">
+                            @foreach (var cultureItem in cultureItems)
+                            {
+                                <option value="@cultureItem.Value" selected="@cultureItem.Selected">@cultureItem.Text</option>
+                            }
+                        </select>
+                    </form>
 
                 </div>
             </div>

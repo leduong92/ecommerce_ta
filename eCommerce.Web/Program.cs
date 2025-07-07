@@ -1,11 +1,13 @@
 ﻿using eCommerce.Application.Interface;
 using eCommerce.Application.Services;
 using eCommerce.Shared.Common;
+using eCommerce.Web.Extensions;
 using eCommerce.Web.LocalizationResources;
 using eCommerce.Web.Services;
 using eCommerce.Web.Services.IService;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using System.Net.Http.Headers;
 
@@ -14,25 +16,28 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var cultures = new[]
+var supportedCultures = new[]
 {
-    new CultureInfo("en-US"),
-    new CultureInfo("vi-VN"),
-    new CultureInfo("zh-CN"),
+    new CultureInfo("en"),
+    new CultureInfo("vi"),
+    new CultureInfo("zh"),
 };
 
+builder.Services.AddLocalization(opt => opt.ResourcesPath = "Resources");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedUICultures = supportedCultures;
+    options.SupportedCultures = supportedCultures;
+    options.FallBackToParentCultures = true;
+    options.FallBackToParentUICultures = true;
+});
+
 builder.Services.AddControllersWithViews()
-    .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
-    {
-        ops.UseAllCultureProviders = false;
-        ops.ResourcesPath = "LocalizationResources";
-        ops.RequestLocalizationOptions = o =>
-        {
-            o.SupportedCultures = cultures;
-            o.SupportedUICultures = cultures;
-            o.DefaultRequestCulture = new RequestCulture("en-US");
-        };
-    });
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -73,9 +78,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRequestLocalization();
 
 app.UseRouting();
+
+var requestLocalizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+
+app.UseRequestLocalization(requestLocalizationOptions);
 
 app.UseSession(); // IMPORTANT: Must be before UseAuthorization and MapControllers
 app.UseAuthorization();
