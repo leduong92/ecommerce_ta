@@ -6,8 +6,6 @@ using eCommerce.Web.Services;
 using eCommerce.Web.Services.IService;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Net.Http.Headers;
 
@@ -18,9 +16,9 @@ builder.Services.AddControllersWithViews();
 
 var cultures = new[]
 {
-    new CultureInfo("en"),
-    new CultureInfo("vi"),
-    new CultureInfo("zh"),
+    new CultureInfo("en-US"),
+    new CultureInfo("vi-VN"),
+    new CultureInfo("zh-CN"),
 };
 
 builder.Services.AddControllersWithViews()
@@ -32,7 +30,7 @@ builder.Services.AddControllersWithViews()
         {
             o.SupportedCultures = cultures;
             o.SupportedUICultures = cultures;
-            o.DefaultRequestCulture = new RequestCulture("en");
+            o.DefaultRequestCulture = new RequestCulture("en-US");
         };
     });
 

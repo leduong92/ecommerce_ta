@@ -1,5 +1,6 @@
 ﻿@using eCommerce.Web
 @using eCommerce.Web.Models
+@using eCommerce.Web.ShareResources
 @using eCommerce.Web.ViewModels
 @using eCommerce.Shared
 @using eCommerce.Application.Dtos
@@ -10,3 +11,6 @@
 @addTagHelper *, LazZiya.TagHelpers
 @addTagHelper *, LazZiya.ExpressLocalization
 @inject ISharedCultureLocalizer SharedLocalizer
+
+@* @inject IStringLocalizer<SharedResources> SharedLocalizer 
+@using Microsoft.Extensions.Localization *@
