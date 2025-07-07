@@ -24,5 +24,12 @@ namespace eCommerce.Application.Dtos
         public string? Description { get; set; }
         public string? FulfillingWarehouseName { get; set; }
         public string? FulfillingWarehouseAddress { get; set; }
+        public ICollection<InventoryItemDto> InventoryItems { get; set; } = new List<InventoryItemDto>();
+    }
+
+    public class InventoryItemDto
+    {
+        public string WarehouseId { get; set; }
+        public int Stock { get; set; }
     }
 }

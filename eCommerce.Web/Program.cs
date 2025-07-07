@@ -75,10 +75,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRequestLocalization();
 
 app.UseRouting();
-
-app.UseRequestLocalization();
 
 app.UseSession(); // IMPORTANT: Must be before UseAuthorization and MapControllers
 app.UseAuthorization();

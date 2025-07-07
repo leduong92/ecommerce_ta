@@ -1,0 +1,45 @@
+﻿@model List<CartItemDto>
+
+@if (Model == null || !Model.Any())
+{
+    <p>@SharedLocalizer["YourCartIsEmpty"] <a asp-controller="Home" asp-action="Index">@SharedLocalizer["StartShopping"]</a></p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@SharedLocalizer["Product"]</th>
+                <th>@SharedLocalizer["Price"]</th>
+                <th>@SharedLocalizer["Quantity"]</th>
+                <th>@SharedLocalizer["Total"]</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.UnitPrice.ToString("N2") @item.Currency</td>
+                    <td>
+                        <div class="input-group" style="width: 150px;">
+                            <button class="btn btn-outline-secondary btn-decrease-quantity" type="button" data-product-id="@item.ProductId">-</button>
+                            <input type="number" class="form-control text-center item-quantity" value="@item.Quantity" data-product-id="@item.ProductId" min="0">
+                            <button class="btn btn-outline-secondary btn-increase-quantity" type="button" data-product-id="@item.ProductId">+</button>
+                        </div>
+                    </td>
+                    <td>@item.TotalPrice.ToString("N2") @item.Currency</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="removeCartItem('@item.ProductId')">@SharedLocalizer["Remove"]</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <h4>@SharedLocalizer["CartTotal"]: @Model.Sum(item => item.TotalPrice).ToString("N2") @(Model.FirstOrDefault()?.Currency ?? "USD")</h4>
+        <a asp-controller="Checkout" asp-action="Index" class="btn btn-success">@SharedLocalizer["ProceedToCheckout"]</a>
+    </div>
+}

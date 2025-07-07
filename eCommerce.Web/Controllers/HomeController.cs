@@ -86,12 +86,33 @@ namespace eCommerce.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetRegion(string regionCode)
+        public IActionResult SetRegion(string regionCode, string returnUrl)
         {
             // In a real application, you might also store this in user preferences or a cookie
             // Lưu regionCode vào session khi người dùng chọn
+            //HttpContext.Session.SetString("CurrentRegion", regionCode);
+            //return RedirectToAction("Index", new { regionCode = regionCode });
             HttpContext.Session.SetString("CurrentRegion", regionCode);
-            return RedirectToAction("Index", new { regionCode = regionCode });
+
+            // Phân tích returnUrl để xây dựng lại URL với regionCode mới
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var uri = new Uri(Request.Scheme + "://" + Request.Host + returnUrl);
+            var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+            queryParams["regionCode"] = regionCode; // Cập nhật hoặc thêm regionCode
+
+            var newQueryString = queryParams.ToString();
+            var newUrl = uri.AbsolutePath;
+            if (!string.IsNullOrEmpty(newQueryString))
+            {
+                newUrl += "?" + newQueryString;
+            }
+
+            return LocalRedirect(newUrl);
         }
         [HttpPost]
         public IActionResult SetCustomerLocation(string latitude, string longitude, string currentRegion)
@@ -101,11 +122,11 @@ namespace eCommerce.Web.Controllers
             TempData["LocationSet"] = "Your location has been set for better stock estimates.";
             return Json("OK"); // Không cần redirect, client-side JS có thể xử lý tiếp
         }
-        public IActionResult SetCultureCookie(string cltr, string returnUrl)
+        public IActionResult SetCultureCookie(string culture, string returnUrl)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(cltr)),
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
                 );
 

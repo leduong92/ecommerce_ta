@@ -26,6 +26,7 @@
                 </ul>
                 <div class="navbar-text d-flex align-items-center">
                     <form asp-controller="Home" asp-action="SetRegion" method="post" class="region-container d-flex me-3">
+                        <input type="hidden" name="returnUrl" value="@($"{Context.Request.Path}{Context.Request.QueryString}")" />
                         <span class="region-label me-2">@SharedLocalizer["Deliver to"]:</span>
                         <select name="regionCode" onchange="this.form.submit()" class="form-select form-select-sm">
                             @foreach (var region in Model.Regions)
@@ -36,9 +37,12 @@
                     </form>
 
                     <div class="dropdown">
+                        @{
+                            var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+                        }
                         <language-nav language-label="NativeName"
                                       class="fixed-width-dropdown"
-                                      cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { cltr = "{0}", returnUrl = "{1}" })">
+                                      cookie-handler-url="@Url.Action("SetCultureCookie", "Home", new { culture = "{0}", returnUrl = returnUrl })">
                         </language-nav>
                     </div>
 
