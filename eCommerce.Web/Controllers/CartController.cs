@@ -30,7 +30,7 @@ namespace eCommerce.Web.Controllers
             }
 
             var client = _httpClientFactory.CreateClient("ApiClient");
-            var response = await client.GetAsync($"{_apiBaseUrl}cart/{sessionId}");
+            var response = await client.GetAsync($"{_apiBaseUrl}ShoppingCart/{sessionId}");
 
             if (response.IsSuccessStatusCode)
             {

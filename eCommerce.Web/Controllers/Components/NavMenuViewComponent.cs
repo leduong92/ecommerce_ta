@@ -20,11 +20,11 @@ namespace eCommerce.Web.Controllers.Components
             var languages = await _languageApiClient.GetLanguagesAsync();
             var regions = await _regionApiClient.GetRegionsAsync();
 
-            ViewBag.SelectedLanguage = Request.Cookies["language"] ?? "en";
-            ViewBag.SelectedRegion = Request.Cookies["region"] ?? "US";
+            //ViewBag.SelectedLanguage = Request.Cookies["language"] ?? "en";
+            //ViewBag.SelectedRegion = Request.Cookies["region"] ?? "US";
 
-            ViewBag.Languages = languages.Data;
-            ViewBag.Regions = regions.Data;
+            //ViewBag.Languages = languages.Data;
+            //ViewBag.Regions = regions.Data;
 
             var response = new NavMenuViewModel()
             {

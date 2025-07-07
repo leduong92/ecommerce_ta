@@ -95,7 +95,7 @@ namespace eCommerce.Web.Controllers
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync($"{_apiBaseUrl}cart/add", jsonContent);
+            var response = await client.PostAsync($"{_apiBaseUrl}ShoppingCart/add", jsonContent);
 
             if (response.IsSuccessStatusCode)
             {
