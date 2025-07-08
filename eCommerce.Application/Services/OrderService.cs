@@ -29,7 +29,7 @@ namespace eCommerce.Application.Services
         public async Task<ApiResponse<Order?>> ProcessCheckoutAsync(CheckoutRequest checkoutRequest)
         {
             // 1. Retrieve cart items
-            var cartItems = await _cartService.GetCartItemsAsync(checkoutRequest.SessionId, checkoutRequest.UserId);
+            var cartItems = await _cartService.GetCartItemsAsync(checkoutRequest.SessionId, checkoutRequest.UserId.Value);
             if (!cartItems.Any())
             {
                 return ApiResponse<Order?>.Failure("Error: Cart is empty.");
@@ -167,7 +167,7 @@ namespace eCommerce.Application.Services
                         await _context.SaveChangesAsync();
 
                         // 6. Clear the shopping cart after successful order creation
-                        await _cartService.ClearCartAsync(checkoutRequest.SessionId, checkoutRequest.UserId); // Pass RequestUserId if applicable
+                        await _cartService.ClearCartAsync(checkoutRequest.SessionId, checkoutRequest.UserId.Value); // Pass RequestUserId if applicable
 
                         await transaction.CommitAsync(); // Commit all changes if everything is successful
                         Console.WriteLine($"Order {order.Id} created successfully. Total: {order.TotalAmount:C}. Shipping from {order.ChosenShippingOriginWarehouseName}.");

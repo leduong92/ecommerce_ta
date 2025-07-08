@@ -14,7 +14,7 @@ namespace eCommerce.Domain.Entities
         WhiteGlove         // Giao hàng, lắp đặt, dọn dẹp bao bì
     }
 
-    public class ShippingServiceLevel
+    public class ShippingServiceLevel : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;// e.g., "Standard Shipping", "Expedited Shipping", "Prime 2-Day"

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Domain.Entities
 {
-    public class ShippingRateTier
+    public class ShippingRateTier : BaseEntity
     {
         public int Id { get; set; }
         public int ShippingRateRuleId { get; set; }

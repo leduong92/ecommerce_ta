@@ -1,6 +1,6 @@
 ﻿namespace eCommerce.Domain.Entities
 {
-    public class ProductVariant
+    public class ProductVariant : BaseEntity
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

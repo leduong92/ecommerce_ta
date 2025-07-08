@@ -2,7 +2,7 @@
 
 namespace eCommerce.Domain.Entities
 {
-    public class CartItem
+    public class CartItem : BaseEntity
     {
         public int Id { get; set; }
         public int CartId { get; set; }

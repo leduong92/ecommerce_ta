@@ -1,9 +1,8 @@
 ﻿namespace eCommerce.Domain.Entities
 {
-    public class Cart 
+    public class Cart : BaseEntity
     {
         public int Id { get; set; }
-        public string? SessionId { get; set; } // For anonymous users
         public Guid? UserId { get; set; }
 
         public DateTime CreatedDate { get; set; }

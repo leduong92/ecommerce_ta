@@ -10,11 +10,13 @@ namespace eCommerce.Application.Interfaces
 {
     public interface IShoppingCartService
     {
-        Task<Cart> GetOrCreateCartAsync(string sessionId, Guid? userId = null);
-        Task<Cart> AddToCartAsync(string sessionId, int productId, int quantity, string customerRegionCode, Guid? userId = null);
-        Task<Cart> UpdateCartItemQuantityAsync(string sessionId, int productId, int quantity, Guid? userId = null);
-        Task<Cart> RemoveFromCartAsync(string sessionId, int productId, Guid? userId = null);
-        Task ClearCartAsync(string sessionId, Guid? userId = null);
-        Task<List<CartItem>> GetCartItemsAsync(string sessionId, Guid? userId = null);
+        Task<Cart> GetOrCreateCartAsync(Guid userId);
+        Task<Cart> AddToCartAsync(string sessionId, int productId, int quantity, string customerRegionCode, Guid userId);
+        Task<Cart> UpdateCartItemQuantityAsync(string sessionId, int productId, int quantity, Guid userId);
+        Task<Cart> RemoveFromCartAsync(string sessionId, int productId, Guid userId);
+        Task ClearCartAsync(string sessionId, Guid userId);
+        Task<List<CartItem>> GetCartItemsAsync(string sessionId, Guid userId);
+        Task<int> GetCartItemCountAsync(Guid? userId);
+        Task MergeCartsAsync(Guid? anonymousUserId, Guid? authenticatedUserId);
     }
 }

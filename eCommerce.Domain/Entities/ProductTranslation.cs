@@ -1,6 +1,6 @@
 ﻿namespace eCommerce.Domain.Entities
 {
-    public class ProductTranslation
+    public class ProductTranslation : BaseEntity
     {
         public int ProductId { get; set; }
         public int LanguageId { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Domain.Entities
 {
-    public class ProductShippingProfile
+    public class ProductShippingProfile : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty; // e.g., "Small Chair (Parcel)", "Dining Table (Pallet)", "Sofa (Freight)"

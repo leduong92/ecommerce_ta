@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Domain.Entities
 {
-    public class GlobalShippingLane
+    public class GlobalShippingLane : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty; // e.g., "Vietnam-US West Coast (Ocean)"

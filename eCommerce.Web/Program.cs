@@ -59,6 +59,7 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Set a short timeout for testing
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; // Make session cookie essential
+    options.Cookie.SameSite = SameSiteMode.Lax; // Quan trọng cho cookie giỏ hàng ẩn danh
 });
 
 

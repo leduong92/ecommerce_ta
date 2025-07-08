@@ -2,24 +2,45 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text;
+using System.Security.Claims;
 
 namespace eCommerce.Web.Controllers
 {
-    public class CartController : Controller
+    public class ShoppingCartController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<CartController> _logger;
+        private readonly ILogger<ShoppingCartController> _logger;
         private readonly string _apiBaseUrl;
 
-        public CartController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<CartController> logger)
+        public ShoppingCartController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ShoppingCartController> logger)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _logger = logger;
             _apiBaseUrl = configuration["ApiBaseUrl"] ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
         }
-
+        // Helper to get User ID for the authenticated user, or null if anonymous
+        private Guid? GetAuthenticatedUserId()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (Guid.TryParse(userIdClaim, out Guid authenticatedUserId))
+            {
+                return authenticatedUserId;
+            }
+            return null;
+        }
+        // Helper to get the anonymous cart ID from the cookie
+        private Guid? GetAnonymousCartIdFromCookie()
+        {
+            var anonymousCartCookieName = "AnonymousCartId";
+            var anonymousIdString = HttpContext.Request.Cookies[anonymousCartCookieName];
+            if (Guid.TryParse(anonymousIdString, out Guid anonymousId))
+            {
+                return anonymousId;
+            }
+            return null;
+        }
         public async Task<IActionResult> Index()
         {
             var sessionId = HttpContext.Session.Id;

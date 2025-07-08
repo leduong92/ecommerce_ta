@@ -1,7 +1,7 @@
 ﻿
 namespace eCommerce.Domain.Entities
 {
-    public class ProductOptionValue
+    public class ProductOptionValue : BaseEntity
     {
         public int Id { get; set; }
         public int ProductOptionId { get; set; }

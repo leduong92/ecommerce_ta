@@ -12,7 +12,7 @@ namespace eCommerce.Domain.Entities
         StateProvince, // e.g., "CA", "NY", "Hanoi", "Ho Chi Minh"
         Country        // e.g., "US", "VN" (useful if a Zone is just a single country)
     }
-    public class ShippingZoneDetail
+    public class ShippingZoneDetail : BaseEntity
     {
         public int Id { get; set; }
         public int ShippingZoneId { get; set; }

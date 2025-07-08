@@ -126,7 +126,6 @@ namespace eCommerce.Application.Services
                            .Where(ii => ii.WarehouseId == nearestWarehouse.Id));
             }
 
-
             var products = await productsQuery.ToListAsync();
 
             var productList = products.Select(p =>

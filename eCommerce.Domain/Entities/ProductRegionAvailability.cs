@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Domain.Entities
 {
-    public class ProductRegionAvailability
+    public class ProductRegionAvailability : BaseEntity
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

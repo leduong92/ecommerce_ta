@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Domain.Entities
 {
-    public class ProductVariantOptionValue
+    public class ProductVariantOptionValue 
     {
         public int ProductVariantId { get; set; }
         public int ProductOptionValueId { get; set; }

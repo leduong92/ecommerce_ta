@@ -1,6 +1,6 @@
 ﻿namespace eCommerce.Domain.Entities
 {
-    public class ProductOption
+    public class ProductOption : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }  // "Color", "Size"

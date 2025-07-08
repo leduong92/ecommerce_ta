@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using eCommerce.Application.Interface;
 using eCommerce.Application.Dtos;
 using eCommerce.Web.Services.IService;
+using eCommerce.Application.Interfaces;
 
 namespace eCommerce.Web.Controllers
 {
@@ -15,31 +16,53 @@ namespace eCommerce.Web.Controllers
     {
         private readonly IAuthApiClient _authService;
         private readonly ITokenProvider _tokenProvider;
+        private readonly IShoppingCartService _shoppingCartService;
 
-        public AuthController(IAuthApiClient authService, ITokenProvider tokenProvider)
+        public AuthController(
+            IAuthApiClient authService
+            , ITokenProvider tokenProvider
+            , IShoppingCartService shoppingCartService)
         {
             _authService = authService;
             _tokenProvider = tokenProvider;
+            _shoppingCartService = shoppingCartService;
         }
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = null)
         {
-            LoginRequestDto loginRequestDto = new();
-            return View(loginRequestDto);
+            ViewData["ReturnUrl"] = returnUrl;
+
+            return LocalRedirect(returnUrl ?? "/");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequestDto obj)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginRequestDto obj, string? returnUrl = null)
         {
-            var responseDto = await _authService.LoginAsync(obj);
+            ViewData["ReturnUrl"] = returnUrl;
 
+            // Lấy ID giỏ hàng ẩn danh HIỆN TẠI TRƯỚC KHI ĐĂNG NHẬP
+            var anonymousCartCookieName = "AnonymousCartId";
+            var anonymousUserId = Request.Cookies[anonymousCartCookieName];
+
+            string authenticatedUserId = "someAuthenticatedUserId";
+
+            var responseDto = await _authService.LoginAsync(obj);
             if (responseDto != null && responseDto.IsSuccess)
             {
                 var loginResponseDto = responseDto.Data;
 
+                if (!string.IsNullOrEmpty(anonymousUserId) && anonymousUserId != authenticatedUserId)
+                {
+                    //await _shoppingCartService.MergeCartsAsync(anonymousUserId, authenticatedUserId);
+                    // Xóa cookie giỏ hàng ẩn danh sau khi hợp nhất
+                    Response.Cookies.Delete(anonymousCartCookieName);
+                }
+
                 await SignInUser(loginResponseDto);
                 _tokenProvider.SetToken(loginResponseDto.Token);
-                return RedirectToAction("Index", "Home");
+
+                return LocalRedirect(returnUrl ?? "/");
             }
             else
             {
@@ -49,7 +72,7 @@ namespace eCommerce.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(string? returnUrl = null)
         {
             var regions = await _authService.GetRegionsAsync();
             ViewBag.Regions = regions.Data?.Select(r => new SelectListItem
@@ -65,12 +88,16 @@ namespace eCommerce.Web.Controllers
             };
 
             ViewBag.RoleList = roleList;
-            return View();
+            return LocalRedirect(returnUrl ?? "/");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterationRequestDto obj)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterationRequestDto obj, string? returnUrl = null)
         {
+            var anonymousCartCookieName = "AnonymousCartId";
+            var anonymousUserId = Request.Cookies[anonymousCartCookieName];
+
             var result = await _authService.RegisterAsync(obj);
 
             if (result != null && result.IsSuccess)
@@ -85,6 +112,13 @@ namespace eCommerce.Web.Controllers
                     TempData["success"] = "Registration Successful";
                     return RedirectToAction(nameof(Login));
                 }
+                string authenticatedUserId = "someNewlyRegisteredUserId";
+                if (!string.IsNullOrEmpty(anonymousUserId) && anonymousUserId != authenticatedUserId)
+                {
+                    //await _cartService.MergeCartsAsync(anonymousUserId, authenticatedUserId);
+                    Response.Cookies.Delete(anonymousCartCookieName);
+                }
+                return LocalRedirect(returnUrl ?? "/");
             }
             else
             {
