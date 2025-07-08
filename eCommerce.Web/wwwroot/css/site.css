@@ -21,25 +21,15 @@ body {
   margin-bottom: 60px;
 }
 
-.fixed-width-dropdown {
-    width: 120px; /* hoặc 150px nếu bạn muốn nhỏ hơn */
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.fixed-width-dropdown a {
-    width: 100%;
-    display: flex;
-    text-decoration: none;
-    align-items: center;
-    justify-content: center;
-}
-.fixed-width-dropdown .dropdown-menu {
-    min-width: 7.5rem;
-}
 .region-container {
     display: flex;
     align-items: center;
 }
 .region-label {
     white-space: nowrap;
+}
+
+
+.product-image {
+    padding: 15px;
 }

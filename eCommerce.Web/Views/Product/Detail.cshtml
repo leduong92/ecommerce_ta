@@ -1,7 +1,7 @@
 ﻿@model ProductDetailDto
 
 @{
-    // ViewData["Title"] = Model?.Name ?? SharedLocalizer["ProductDetails"];
+    ViewData["Title"] = Model?.Name ?? SharedLocalizer["ProductDetails"];
 }
 
 <h1 class="my-4">@Model?.Name</h1>
@@ -9,8 +9,8 @@
 <div class="card mb-4">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
-                <img class="img-fluid" src="https://via.placeholder.com/600x400?text=@(Model?.Name.Replace(" ", "+"))" alt="@Model?.Name">
+            <div class="col-md-6 p-1">
+                <img class="img-fluid product-image Sirv" src="@Model?.DefaultImageUrl?profile=basic?w=300" alt="@Model?.Name">
             </div>
             <div class="col-md-6">
                 <h3 class="my-3">@SharedLocalizer["ProductDetails"]</h3>
@@ -18,6 +18,7 @@
                 <p>@SharedLocalizer["Category"]: @Model?.Category</p>
                 <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
                 <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
+                <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
                 <p>
                     @if (Model?.EstimatedAvailableStock.HasValue == true)
                     {

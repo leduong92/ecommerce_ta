@@ -11,12 +11,14 @@ namespace eCommerce.Application.Dtos
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
+        public string Sku { get; set; } = string.Empty;
         public decimal? Price { get; set; }
         public string? Currency { get; set; }
         public decimal WeightKg { get; set; }
         public decimal LengthCm { get; set; }
         public decimal WidthCm { get; set; }
         public decimal HeightCm { get; set; }
+        public string? DefaultImageUrl { get; set; }
         public int? EstimatedAvailableStock { get; set; } // Quantity available in the nearest warehouse
     }
     public class ProductDetailDto : ProductListDto

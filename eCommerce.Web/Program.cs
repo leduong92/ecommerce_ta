@@ -77,27 +77,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-var options = new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("en"), // Default to English
-    SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures
-};
-options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider
-{
-    RouteDataStringKey = "culture",
-    UIRouteDataStringKey = "culture"
-});
-options.RequestCultureProviders.Add(new CookieRequestCultureProvider());
-options.RequestCultureProviders.Add(new AcceptLanguageHeaderRequestCultureProvider()); // Fallback to browser language
-app.UseRequestLocalization(options);
+
+app.UseRequestLocalization();
 
 app.UseSession(); // IMPORTANT: Must be before UseAuthorization and MapControllers
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}",
-    constraints: new { culture = "en|vi|zh" });
+    pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

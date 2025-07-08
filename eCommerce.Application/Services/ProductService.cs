@@ -73,6 +73,8 @@ namespace eCommerce.Application.Services
                 Name = product.Name,
                 Description = "High-quality modern furniture piece.",
                 Category = product.ProductCategory.Name,
+                Sku = product.Sku,
+                DefaultImageUrl = product.DefaultImageUrl,
                 Price = price,
                 Currency = currency,
                 WeightKg = product.NetWeightKg,
@@ -141,13 +143,15 @@ namespace eCommerce.Application.Services
                     Id = p.Id,
                     Name = p.Name,
                     Category = p.ProductCategory.Name,
+                    Sku = p.Sku,
                     Price = price,
                     Currency = currency,
                     EstimatedAvailableStock = inventory?.AvailableQuantity, // Null if no warehouse or no inventory item
                     WeightKg = p.NetWeightKg,
                     LengthCm = p.Depth,
                     WidthCm = p.Width,
-                    HeightCm = p.Height
+                    HeightCm = p.Height,
+                    DefaultImageUrl = p.DefaultImageUrl
                 };
             }).ToList();
 

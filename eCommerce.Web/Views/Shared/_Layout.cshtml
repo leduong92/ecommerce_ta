@@ -13,6 +13,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ECommerce.MvcClient</title>
+
+        <link rel="preconnect" href="https://scripts.sirv.com/sirvjs/v3/sirv.js?modules=zoom,video,gallery" crossorigin />
+    <link rel="dns-prefetch" href="https://scripts.sirv.com/sirvjs/v3/sirv.js?modules=zoom,video,gallery" />
+    <link rel="dns-prefetch" href="https://theodorealexander.sirv.com" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.6/css/flag-icon.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -48,37 +53,12 @@
             &copy; 2025 - ECommerce.MvcClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <script src="https://scripts.sirv.com/sirvjs/v3/sirv.js" inline async></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     if (navigator.geolocation && !sessionStorage.getItem('locationSet')) {
-        //         navigator.geolocation.getCurrentPosition(function (position) {
-        //             var latitude = position.coords.latitude;
-        //             var longitude = position.coords.longitude;
-        //             $.post('/Home/SetCustomerLocation', {
-        //                 latitude: latitude,
-        //                 longitude: longitude,
-        //                 currentRegion: '@ViewBag.CurrentRegion'
-        //             }).done(function () {
-        //                 sessionStorage.setItem('locationSet', 'true');
-        //                 // No need to reload here, as location setting is less critical than currency/language
-        //             }).fail(function () {
-        //                 console.error('Failed to send location to server.');
-        //             });
-        //         }, function (error) {
-        //             console.warn('Geolocation denied or failed:', error.message);
-        //         });
-        //     }
-        // });
-
-        document.querySelectorAll('[data-toggle="dropdown"]').forEach(el => {
-            el.setAttribute('data-bs-toggle', 'dropdown');
-            el.removeAttribute('data-toggle');
-        });
-    </script>
 </body>
 </html>

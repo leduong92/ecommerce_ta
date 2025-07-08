@@ -1000,9 +1000,9 @@ namespace eCommerce.Infrastructure.Extensions
 
 
             modelBuilder.Entity<Product>().HasData(
-                new Product { Id = 1, CollectionId = 8, RoomId = 2, TypeId = 4, LifeStyleId = 4, StyleId = 9, Sku = "TA54027.C301", Slug = "catalina-round-dining-table-ta54027-c301", Name = "Catalina Round Dining Table", NetWeightKg = 91m, Depth = 162.6m, Width = 162.6m, Height = 76.2m, ProductCategoryId = 101, ProductShippingProfileId = 201 },
-                new Product { Id = 2, CollectionId = 8, RoomId = 1, TypeId = 29, LifeStyleId = 4, StyleId = 9,Sku = "TA51059.C301", Slug = "catalina-cocktail-table-ta51059-c301", Name = "Catalina Cocktail Table", NetWeightKg = 38m, Depth = 71.1m, Width = 122m, Height = 41.9m, ProductCategoryId = 102, ProductShippingProfileId = 202 },
-                new Product { Id = 3, CollectionId = 8, RoomId = 3, TypeId = 20, LifeStyleId = 4, StyleId = 9, Sku = "TA84012.C306", Slug = "catalina-upholstered-california-king-bed-ta84012-c306", Name = "Designer Vase", NetWeightKg = 2m, Depth = 30m, Width = 20m, Height = 20m, ProductCategoryId = 103, ProductShippingProfileId = 203 }
+                new Product { Id = 1, CollectionId = 8, RoomId = 2, TypeId = 4, LifeStyleId = 4, StyleId = 9, Sku = "TA54027.C301", Slug = "catalina-round-dining-table-ta54027-c301", Name = "Catalina Round Dining Table", NetWeightKg = 91m, Depth = 162.6m, Width = 162.6m, Height = 76.2m, ProductCategoryId = 101, ProductShippingProfileId = 201, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA54027.C301_main_1.jpg" },
+                new Product { Id = 2, CollectionId = 8, RoomId = 1, TypeId = 29, LifeStyleId = 4, StyleId = 9,Sku = "TA51059.C301", Slug = "catalina-cocktail-table-ta51059-c301", Name = "Catalina Cocktail Table", NetWeightKg = 38m, Depth = 71.1m, Width = 122m, Height = 41.9m, ProductCategoryId = 102, ProductShippingProfileId = 202, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA51059.C301_main_1.jpg" },
+                new Product { Id = 3, CollectionId = 8, RoomId = 3, TypeId = 20, LifeStyleId = 4, StyleId = 9, Sku = "TA84012.C306", Slug = "catalina-upholstered-california-king-bed-ta84012-c306", Name = "Designer Vase", NetWeightKg = 2m, Depth = 30m, Width = 20m, Height = 20m, ProductCategoryId = 103, ProductShippingProfileId = 203, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA8/TA84012.C306_main_1.jpg" }
             );
 
             modelBuilder.Entity<ProductRegionAvailability>().HasData(

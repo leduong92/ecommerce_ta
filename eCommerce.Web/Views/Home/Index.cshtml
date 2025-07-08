@@ -13,7 +13,7 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img class="card-img-top" src="https://via.placeholder.com/400x250?text=@(product.Name.Replace(" ", "+"))" alt="@product.Name">
+                    <img class="card-img-top product-image Sirv" src="@product.DefaultImageUrl?profile=basic?w=300" alt="@product.Name">
                     <div class="card-body">
                         <h4 class="card-title">
                             <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" asp-route-regionCode="@ViewBag.CurrentRegion">@product.Name</a>
