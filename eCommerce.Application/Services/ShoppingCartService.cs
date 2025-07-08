@@ -23,9 +23,9 @@ namespace eCommerce.Application.Services
         {
 
             var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                    .ThenInclude(ci => ci.Product) // Eagerly load product details
-                .FirstOrDefaultAsync(c => c.UserId == userId);
+                                    .Include(c => c.CartItems)
+                                    .ThenInclude(ci => ci.Product) // Eagerly load product details
+                                    .FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (cart == null)
             {
@@ -43,14 +43,15 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Adds a product to the shopping cart.
         /// </summary>
-        public async Task<Cart> AddToCartAsync(string sessionId, int productId, int quantity, string customerRegionCode, Guid userId)
+        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId)
         {
             var cart = await GetOrCreateCartAsync(userId);
+
             var product = await _context.Products
-                .Include(p => p.Prices)!
+                    .Include(p => p.Prices)!
                     .ThenInclude(pp => pp.Region)
-                .Include(p => p.ProductCategory) // Still need this for dimensional factor fallback
-                .FirstOrDefaultAsync(p => p.Id == productId);
+                    .Include(p => p.ProductCategory) // Still need this for dimensional factor fallback
+                    .FirstOrDefaultAsync(p => p.Id == productId);
 
             if (product == null)
             {
@@ -91,6 +92,7 @@ namespace eCommerce.Application.Services
                     CartId = cart.Id,
                     ProductId = productId,
                     Quantity = quantity,
+                    Currency = productPrice.Currency,
                     UnitPrice = unitPrice // Use the region-specific price
                 };
                 cart.CartItems.Add(newItem);
@@ -108,7 +110,7 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Updates the quantity of a product in the shopping cart.
         /// </summary>
-        public async Task<Cart> UpdateCartItemQuantityAsync(string sessionId, int productId, int quantity, Guid userId)
+        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int quantity, Guid userId)
         {
             var cart = await GetOrCreateCartAsync(userId);
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
@@ -135,9 +137,10 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Removes a product from the shopping cart.
         /// </summary>
-        public async Task<Cart> RemoveFromCartAsync(string sessionId, int productId, Guid userId)
+        public async Task<Cart> RemoveFromCartAsync(int productId, Guid userId)
         {
             var cart = await GetOrCreateCartAsync(userId);
+
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
             if (cartItem != null)
             {
@@ -151,7 +154,7 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Clears all items from the shopping cart.
         /// </summary>
-        public async Task ClearCartAsync(string sessionId, Guid userId)
+        public async Task ClearCartAsync(Guid userId)
         {
             var cart = await GetOrCreateCartAsync(userId);
             if (cart != null)
@@ -168,7 +171,7 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Gets the current items in a shopping cart.
         /// </summary>
-        public async Task<List<CartItem>> GetCartItemsAsync(string sessionId, Guid userId)
+        public async Task<List<CartItem>> GetCartItemsAsync(Guid userId)
         {
             var cart = await GetOrCreateCartAsync(userId);
             return cart.CartItems.ToList();
@@ -226,7 +229,6 @@ namespace eCommerce.Application.Services
                 _logger.LogInformation($"Merged anonymous cart {anonymousCart.Id} into authenticated cart {authenticatedCart.Id}.");
             }
 
-            _context.Carts.Update(authenticatedCart);
             await _context.SaveChangesAsync();
             _logger.LogInformation($"Cart merge completed for user {authenticatedUserId}.");
         }

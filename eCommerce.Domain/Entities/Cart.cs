@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public Guid? UserId { get; set; }
-
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }
 

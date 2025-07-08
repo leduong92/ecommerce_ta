@@ -1,5 +1,6 @@
 ﻿using eCommerce.Application.Dtos;
 using eCommerce.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
@@ -60,7 +61,7 @@ namespace eCommerce.BackendApi.Controllers
             }
         }
 
-        [HttpGet("{sessionId?}")] // Optional sessionId for anonymous carts
+        [HttpGet] 
         public async Task<IActionResult> GetCart()
         {
             var userId = GetCurrentUserId();
@@ -70,13 +71,14 @@ namespace eCommerce.BackendApi.Controllers
                 ProductId = ci.ProductId,
                 ProductName = ci.Product.Name,
                 Quantity = ci.Quantity,
+                Currency = ci.Currency,
                 UnitPrice = ci.UnitPrice,
                 TotalPrice = ci.TotalPrice
             }).ToList());
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddToCart([FromBody] AddToCartRequest request)
+        public async Task<IActionResult> AddToCart([FromBody] AddToCartRequestDto request)
         {
             if (!ModelState.IsValid)
             {
@@ -92,7 +94,7 @@ namespace eCommerce.BackendApi.Controllers
 
             try
             {
-                var cart = await _cartService.AddToCartAsync(request.SessionId, request.ProductId, request.Quantity, request.CustomerRegionCode, userId);
+                var cart = await _cartService.AddToCartAsync(request.ProductId, request.Quantity, request.CustomerRegionCode, userId);
                 return Ok(new { Message = "Product added to cart.", CartId = cart.Id });
             }
             catch (ArgumentException ex)
@@ -106,7 +108,7 @@ namespace eCommerce.BackendApi.Controllers
             var userId = GetCurrentUserId();
             try
             {
-                var cart = await _cartService.UpdateCartItemQuantityAsync(request.SessionId, request.ProductId, request.Quantity, userId);
+                var cart = await _cartService.UpdateCartItemQuantityAsync(request.ProductId, request.Quantity, userId);
                 return Ok(new { Message = "Cart updated.", CartId = cart.Id });
             }
             catch (ArgumentException ex)
@@ -118,15 +120,51 @@ namespace eCommerce.BackendApi.Controllers
         public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest request)
         {
             var userId = GetCurrentUserId();
-            var cart = await _cartService.RemoveFromCartAsync(request.SessionId, request.ProductId, userId);
+            var cart = await _cartService.RemoveFromCartAsync(request.ProductId, userId);
             return Ok(new { Message = "Product removed from cart.", CartId = cart.Id });
         }
-        [HttpDelete("clear/{sessionId?}")]
-        public async Task<IActionResult> ClearCart(string? sessionId)
+        [HttpDelete("clear")]
+        public async Task<IActionResult> ClearCart()
         {
             var userId = GetCurrentUserId();
-            await _cartService.ClearCartAsync(sessionId, userId);
+            await _cartService.ClearCartAsync(userId);
             return Ok(new { Message = "Cart cleared." });
+        }
+        [HttpPost("merge")]
+        [Authorize] // Only allow authenticated users to call this
+        public async Task<IActionResult> MergeCarts([FromBody] MergeCartRequestDto request)
+        {
+            if (User.Identity?.IsAuthenticated != true)
+            {
+                return Unauthorized("User must be authenticated to merge carts.");
+            }
+
+            var authenticatedUserIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!Guid.TryParse(authenticatedUserIdString, out Guid authenticatedUserId))
+            {
+                return Unauthorized("Authenticated user ID is not a valid GUID.");
+            }
+
+            if (!Guid.TryParse(request.AnonymousUserId.ToString(), out Guid anonymousUserId)) // Ensure anonymousUserId is also Guid
+            {
+                return BadRequest("Anonymous user ID is required and must be a valid GUID for merging.");
+            }
+
+            if (anonymousUserId == authenticatedUserId)
+            {
+                return BadRequest("Cannot merge a cart with itself.");
+            }
+
+            try
+            {
+                await _cartService.MergeCartsAsync(anonymousUserId, authenticatedUserId);
+                return Ok(new { success = true, message = "Carts merged successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error merging carts for anonymous user {AnonymousId} and authenticated user {AuthenticatedId}.", anonymousUserId, authenticatedUserId);
+                return StatusCode(500, "An error occurred while merging carts.");
+            }
         }
     }
 }

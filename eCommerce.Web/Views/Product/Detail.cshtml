@@ -53,6 +53,9 @@
                         <button type="submit" class="btn btn-primary" @(Model?.EstimatedAvailableStock == 0 ? "disabled" : "")>
                             <i class="bi bi-cart-plus"></i> @SharedLocalizer["AddtoCart"]
                         </button>
+                        @* <button class="btn btn-primary" id="addToCartBtn" data-product-id="@Model.Id" data-product-name="@Model.Name" data-product-price="@Model.Price" data-product-currency="@Model.Currency">
+                            @SharedLocalizer["AddToCart"]
+                        </button> *@
                     </div>
                     @if (Model?.EstimatedAvailableStock == 0)
                     {
@@ -63,3 +66,39 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#addToCartBtn').click(function () {
+                var productId = $(this).data('product-id');
+                var productName = $(this).data('product-name'); // For success message only
+                var price = $(this).data('product-price'); // For success message only
+                var currency = $(this).data('product-currency'); // For success message only
+                var quantity = $('#productQuantity').val();
+
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId, quantity: quantity },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            // Update cart item count in the header
+                            const cartCountElement = document.getElementById('cart-item-count');
+                            if (cartCountElement) {
+                                cartCountElement.innerText = response.cartItemCount;
+                            }
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error adding to cart: ", error);
+                        alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
+                    }
+                });
+            });
+        });
+    </script>
+}

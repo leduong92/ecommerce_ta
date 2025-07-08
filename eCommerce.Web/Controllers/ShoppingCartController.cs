@@ -1,8 +1,10 @@
 ﻿using eCommerce.Application.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using System.Text;
 using System.Security.Claims;
+using eCommerce.Web.Services.IService;
+using System.Net;
+using Microsoft.Extensions.Localization;
 
 namespace eCommerce.Web.Controllers
 {
@@ -11,13 +13,21 @@ namespace eCommerce.Web.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger<ShoppingCartController> _logger;
+        private readonly IShoppingCartApiClient _cartService;
         private readonly string _apiBaseUrl;
-
-        public ShoppingCartController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ShoppingCartController> logger)
+        private readonly IStringLocalizer<SharedResources> _sharedLocalizer;
+        public ShoppingCartController(
+            IHttpClientFactory httpClientFactory
+            , IConfiguration configuration
+            , ILogger<ShoppingCartController> logger
+            , StringLocalizer<SharedResources> sharedLocalizer
+            , IShoppingCartApiClient cartService)
         {
+            _sharedLocalizer = sharedLocalizer;
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _logger = logger;
+            _cartService = cartService;
             _apiBaseUrl = configuration["ApiBaseUrl"] ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
         }
         // Helper to get User ID for the authenticated user, or null if anonymous
@@ -43,116 +53,109 @@ namespace eCommerce.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var sessionId = HttpContext.Session.Id;
-            if (string.IsNullOrEmpty(sessionId))
+
+            ViewBag.CurrentRegion = HttpContext.Session.GetString("CurrentRegion") ?? "US";
+            List<CartItemDto> cartItems = new List<CartItemDto>();
+            try
             {
-                // Giỏ hàng trống nếu không có session
-                return View(new List<CartItemDto>());
+                cartItems = (await _cartService.GetCartItemsAsync()).Data;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve cart items for display.");
             }
 
-            var client = _httpClientFactory.CreateClient("ApiClient");
-            var response = await client.GetAsync($"{_apiBaseUrl}ShoppingCart/{sessionId}");
-
-            if (response.IsSuccessStatusCode)
+            return View(cartItems);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId, int quantity = 1) // productId is now Guid
+        {
+            try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var cartItems = JsonSerializer.Deserialize<IEnumerable<CartItemDto>>(content, new JsonSerializerOptions
+                var currentItemCount = await _cartService.AddItemToCartAsync( new AddToCartRequestDto{ ProductId = productId,Quantity = quantity });
+                TempData["SuccessMessage"] = _sharedLocalizer["ProductAddedToCart"].Value;
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    PropertyNameCaseInsensitive = true
-                });
-                return View(cartItems);
+                    return Json(new { success = true, message = _sharedLocalizer["ProductAddedToCart"].Value, cartItemCount = currentItemCount });
+                }
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
             {
-                return View(new List<CartItemDto>()); // Giỏ hàng trống
+                TempData["ErrorMessage"] = _sharedLocalizer["ProductNotFound"].Value;
+                _logger.LogWarning($"Attempted to add non-existent product ID: {productId}");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = _sharedLocalizer["ProductNotFound"].Value });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogError($"Error fetching cart: {response.StatusCode} - {response.ReasonPhrase}");
-                ViewBag.ErrorMessage = "Error fetching cart contents.";
-                return View(new List<CartItemDto>());
+                _logger.LogError(ex, "Error adding product to cart for product ID: {ProductId}", productId);
+                TempData["ErrorMessage"] = _sharedLocalizer["ErrorAddingProductToCart"].Value;
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = _sharedLocalizer["ErrorAddingProductToCart"].Value });
+                }
             }
+            return RedirectToAction("Index", "Cart");
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
         {
-            var sessionId = HttpContext.Session.Id;
-            if (string.IsNullOrEmpty(sessionId))
+            try
             {
-                TempData["ErrorMessage"] = "Session not found. Please add items to cart first.";
-                return RedirectToAction("Index");
+                await _cartService.UpdateItemQuantityAsync(new UpdateQuantityRequestDto { ProductId = productId, Quantity = quantity });
+            }
+            catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(_sharedLocalizer["ProductNotFoundInCart"].Value);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating cart quantity for product ID: {ProductId}", productId);
+                return BadRequest(_sharedLocalizer["ErrorUpdatingCart"].Value);
             }
 
-            if (quantity <= 0)
-            {
-                return RedirectToAction("Remove", new { productId = productId }); // If quantity is 0 or less, remove it
-            }
-
-            var client = _httpClientFactory.CreateClient("ApiClient");
-
-            var requestData = new
-            {
-                sessionId = sessionId,
-                productId = productId,
-                quantity = quantity
-            };
-
-            var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
-
-            var response = await client.PutAsync($"{_apiBaseUrl}cart/update-quantity", jsonContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                TempData["SuccessMessage"] = "Cart item quantity updated.";
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                _logger.LogError($"Error updating cart quantity: {response.StatusCode} - {errorContent}");
-                TempData["ErrorMessage"] = $"Error updating cart quantity: {{(errorContent != null ? errorContent : response.ReasonPhrase)}}";
-            }
-            return RedirectToAction("Index");
+            var cartItems = await _cartService.GetCartItemsAsync();
+            return PartialView("_CartItemsPartial", cartItems);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Remove(int productId)
+        public async Task<IActionResult> RemoveFromCart(int productId)
         {
-            var client = _httpClientFactory.CreateClient("ApiClient");
-            var sessionId = HttpContext.Session.Id;
-
-            if (string.IsNullOrEmpty(sessionId))
+            try
             {
-                TempData["ErrorMessage"] = "Session not found.";
-                return RedirectToAction("Index");
+                await _cartService.RemoveItemFromCartAsync(productId);
+            }
+            catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(_sharedLocalizer["ProductNotFoundInCart"].Value);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error removing item from cart for product ID: {ProductId}", productId);
+                return BadRequest(_sharedLocalizer["ErrorRemovingItem"].Value);
             }
 
-            var requestData = new
+            var cartItems = await _cartService.GetCartItemsAsync();
+            return PartialView("_CartItemsPartial", cartItems);
+        }
+        // Action to get cart item count (typically called via AJAX for header display)
+        [HttpGet]
+        public async Task<IActionResult> GetCartItemCount()
+        {
+            try
             {
-                sessionId = sessionId,
-                productId = productId
-            };
-
-            var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
-
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{_apiBaseUrl}cart/remove")
-            {
-                Content = jsonContent
-            };
-
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                TempData["SuccessMessage"] = "Product removed from cart.";
+                var cartItems = await _cartService.GetCartItemsAsync();
+                var count = cartItems.Data.Sum(ci => ci.Quantity);
+                return Ok(count);
             }
-            else
+            catch (Exception ex)
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                _logger.LogError($"Error removing from cart: {response.StatusCode} - {errorContent}");
-                TempData["ErrorMessage"] = $"Error removing product from cart: {{(errorContent != null ? errorContent : response.ReasonPhrase)}}";
+                _logger.LogError(ex, "Error getting cart item count.");
+                return Ok(0); // Return 0 on error to avoid breaking UI
             }
-            return RedirectToAction("Index");
         }
     }
 }

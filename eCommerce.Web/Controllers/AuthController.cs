@@ -9,6 +9,7 @@ using eCommerce.Application.Interface;
 using eCommerce.Application.Dtos;
 using eCommerce.Web.Services.IService;
 using eCommerce.Application.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace eCommerce.Web.Controllers
 {
@@ -16,59 +17,87 @@ namespace eCommerce.Web.Controllers
     {
         private readonly IAuthApiClient _authService;
         private readonly ITokenProvider _tokenProvider;
-        private readonly IShoppingCartService _shoppingCartService;
-
+        private readonly IShoppingCartService _cartService;
+        private readonly ILogger<AuthController> _logger;
         public AuthController(
             IAuthApiClient authService
             , ITokenProvider tokenProvider
-            , IShoppingCartService shoppingCartService)
+            , ILogger<AuthController> logger
+            , IShoppingCartService cartService)
         {
             _authService = authService;
             _tokenProvider = tokenProvider;
-            _shoppingCartService = shoppingCartService;
+            _cartService  = cartService;
+            _logger = logger;
         }
         [HttpGet]
         public IActionResult Login(string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-
             return LocalRedirect(returnUrl ?? "/");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginRequestDto obj, string? returnUrl = null)
+        public async Task<IActionResult> Login(LoginRequestDto model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-
-            // Lấy ID giỏ hàng ẩn danh HIỆN TẠI TRƯỚC KHI ĐĂNG NHẬP
-            var anonymousCartCookieName = "AnonymousCartId";
-            var anonymousUserId = Request.Cookies[anonymousCartCookieName];
-
-            string authenticatedUserId = "someAuthenticatedUserId";
-
-            var responseDto = await _authService.LoginAsync(obj);
-            if (responseDto != null && responseDto.IsSuccess)
+            if (ModelState.IsValid)
             {
-                var loginResponseDto = responseDto.Data;
-
-                if (!string.IsNullOrEmpty(anonymousUserId) && anonymousUserId != authenticatedUserId)
+                // Get the anonymous cart ID BEFORE successful login (from the browser's cookie)
+                var anonymousCartCookieName = "AnonymousCartId";
+                Guid? anonymousUserId = null;
+                if (Guid.TryParse(Request.Cookies[anonymousCartCookieName], out Guid parsedAnonymousId))
                 {
-                    //await _shoppingCartService.MergeCartsAsync(anonymousUserId, authenticatedUserId);
-                    // Xóa cookie giỏ hàng ẩn danh sau khi hợp nhất
-                    Response.Cookies.Delete(anonymousCartCookieName);
+                    anonymousUserId = parsedAnonymousId;
                 }
 
-                await SignInUser(loginResponseDto);
-                _tokenProvider.SetToken(loginResponseDto.Token);
+                // --- Replace this with your ACTUAL authentication logic ---
+                // This is a PLACEHOLDER for demonstrating cart merge
+                // In a real app, you would validate credentials against a database
+                // or an Identity provider.
+                Guid authenticatedUserId;
+                if (model.Email == "test@example.com" && model.Password == "Password123!")
+                {
+                    authenticatedUserId = Guid.Parse("B0000000-0000-0000-0000-000000000001"); // Example GUID for authenticated user
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, authenticatedUserId.ToString()),
+                        new Claim(ClaimTypes.Name, model.Email)
+                    };
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties = new AuthenticationProperties { IsPersistent = model.RememberMe };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                    _logger.LogInformation($"User {authenticatedUserId} (test@example.com) logged in successfully (placeholder).");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt (placeholder).");
+                    return View(model);
+                }
+                // --- End of placeholder authentication logic ---
+
+                // AFTER successful login, perform cart merge
+                if (anonymousUserId.HasValue && anonymousUserId.Value != authenticatedUserId)
+                {
+                    try
+                    {
+                        await _cartService.MergeCartsAsync(anonymousUserId.Value, authenticatedUserId);
+                        // Delete the anonymous cart cookie from the browser after successful merge
+                        Response.Cookies.Delete(anonymousCartCookieName);
+                        _logger.LogInformation($"Merged cart for anonymous user {anonymousUserId.Value} to authenticated user {authenticatedUserId}.");
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        _logger.LogError(ex, "Error during cart merge after login for user {AuthenticatedUserId}", authenticatedUserId);
+                        // You might want to display a warning to the user, but don't prevent login
+                        TempData["WarningMessage"] = "Could not merge your previous cart. Please check your items.";
+                    }
+                }
 
                 return LocalRedirect(returnUrl ?? "/");
             }
-            else
-            {
-                TempData["error"] = responseDto.Message;
-                return View(obj);
-            }
+            return View(model);
         }
 
         [HttpGet]
@@ -91,40 +120,12 @@ namespace eCommerce.Web.Controllers
             return LocalRedirect(returnUrl ?? "/");
         }
 
+        // Register action - similar merge logic if you allow anonymous cart to be carried over on registration
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterationRequestDto obj, string? returnUrl = null)
+        public async Task<IActionResult> Register(RegisterationRequestDto model, string? returnUrl = null)
         {
-            var anonymousCartCookieName = "AnonymousCartId";
-            var anonymousUserId = Request.Cookies[anonymousCartCookieName];
-
-            var result = await _authService.RegisterAsync(obj);
-
-            if (result != null && result.IsSuccess)
-            {
-                if (string.IsNullOrEmpty(obj.Role))
-                {
-                    obj.Role = SD.RoleCustomer;
-                }
-                var  assingRole = await _authService.AssignRoleAsync(obj);
-                if (assingRole != null && assingRole.IsSuccess)
-                {
-                    TempData["success"] = "Registration Successful";
-                    return RedirectToAction(nameof(Login));
-                }
-                string authenticatedUserId = "someNewlyRegisteredUserId";
-                if (!string.IsNullOrEmpty(anonymousUserId) && anonymousUserId != authenticatedUserId)
-                {
-                    //await _cartService.MergeCartsAsync(anonymousUserId, authenticatedUserId);
-                    Response.Cookies.Delete(anonymousCartCookieName);
-                }
-                return LocalRedirect(returnUrl ?? "/");
-            }
-            else
-            {
-                TempData["error"] = result.Message;
-            }
-
+            ViewData["ReturnUrl"] = returnUrl;
             var roleList = new List<SelectListItem>()
             {
                 new SelectListItem{Text=SD.RoleAdmin,Value=SD.RoleAdmin},
@@ -132,12 +133,64 @@ namespace eCommerce.Web.Controllers
             };
 
             ViewBag.RoleList = roleList;
-            return View(obj);
+
+            if (ModelState.IsValid)
+            {
+                var anonymousCartCookieName = "AnonymousCartId";
+                Guid? anonymousUserId = null;
+                if (Guid.TryParse(Request.Cookies[anonymousCartCookieName], out Guid parsedAnonymousId))
+                {
+                    anonymousUserId = parsedAnonymousId;
+                }
+
+                // --- Replace this with your ACTUAL registration logic ---
+                Guid newlyRegisteredUserId;
+                if (model.Email == "newuser@example.com" && model.Password == "Password123!")
+                {
+                    newlyRegisteredUserId = Guid.NewGuid(); // Generate new GUID for new user
+                    // Simulate creating user and logging them in
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, newlyRegisteredUserId.ToString()),
+                        new Claim(ClaimTypes.Name, model.Email)
+                    };
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authProperties = new AuthenticationProperties { IsPersistent = false };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                    _logger.LogInformation($"User {newlyRegisteredUserId} (newuser@example.com) registered successfully (placeholder).");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid registration attempt (placeholder).");
+                    return View(model);
+                }
+                // --- End of placeholder registration logic ---
+
+                if (anonymousUserId.HasValue && anonymousUserId.Value != newlyRegisteredUserId)
+                {
+                    try
+                    {
+                        await _cartService.MergeCartsAsync(anonymousUserId.Value, newlyRegisteredUserId);
+                        Response.Cookies.Delete(anonymousCartCookieName);
+                        _logger.LogInformation($"Merged cart for anonymous user {anonymousUserId.Value} to newly registered user {newlyRegisteredUserId}.");
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        _logger.LogError(ex, "Error during cart merge after registration for user {NewlyRegisteredUserId}", newlyRegisteredUserId);
+                        TempData["WarningMessage"] = "Could not merge your previous cart. Please check your items.";
+                    }
+                }
+
+                return LocalRedirect(returnUrl ?? "/");
+            }
+
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            _logger.LogInformation("User logged out.");
             _tokenProvider.ClearToken();
             return RedirectToAction("Index", "Home");
         }

@@ -2,16 +2,114 @@
 
 @{
     ViewData["Title"] = SharedLocalizer["ShoppingCart"];
+    decimal subtotal = Model.Sum(item => item.TotalPrice);
+    string currency = Model.FirstOrDefault()?.Currency ?? "USD";
 }
 
 <h1 class="my-4">@SharedLocalizer["YourShoppingCart"]</h1>
 
-<div id="cartItemsContainer">
-    @await Html.PartialAsync("_CartItemsPartial", Model)
-</div>
+
+@if (Model == null || !Model.Any())
+{
+    <p>@SharedLocalizer["YourCartIsEmpty"].Value</p>
+    <p><a asp-controller="Product" asp-action="Index">@SharedLocalizer["ContinueShopping"].Value</a></p>
+}
+else
+{
+    <div id="cart-items-container">
+        @await Html.PartialAsync("_CartItemsPartial", Model)
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@SharedLocalizer["OrderSummary"].Value</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @SharedLocalizer["Subtotal"]:
+                            <span>@subtotal.ToString("N2") @currency</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @SharedLocalizer["Shipping"]:
+                            <span>@SharedLocalizer["CalculatedAtCheckout"].Value</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @SharedLocalizer["Tax"]:
+                            <span>@SharedLocalizer["CalculatedAtCheckout"].Value</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
+                            @SharedLocalizer["Total"]:
+                            <span>@subtotal.ToString("N2") @currency</span> @* Total here is just subtotal, full total is on checkout *@
+                        </li>
+                    </ul>
+                    <div class="d-grid gap-2 mt-3">
+                        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary btn-lg">@SharedLocalizer["ProceedToCheckout"].Value</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts {
     <script>
-  
+        function updateCartItemCount() {
+            fetch('@Url.Action("GetCartItemCount", "Cart")', {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(response => response.ok ? response.json() : Promise.reject('Failed to get count'))
+                .then(data => {
+                    const cartCountElement = document.getElementById('cart-item-count');
+                    if (cartCountElement) {
+                        cartCountElement.innerText = data;
+                    }
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        }
+
+        $(document).ready(function () {
+            // Initial update
+            updateCartItemCount();
+
+            // Handle quantity change
+            $('#cart-items-container').on('change', '.item-quantity', function () {
+                var productId = $(this).data('product-id');
+                var quantity = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("UpdateQuantity", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId, quantity: quantity },
+                    success: function (data) {
+                        $('#cart-items-container').html(data);
+                        updateCartItemCount();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error updating quantity: ", error);
+                        alert('@SharedLocalizer["ErrorUpdatingCart"].Value');
+                    }
+                });
+            });
+
+            // Handle remove item
+            $('#cart-items-container').on('click', '.remove-item', function (e) {
+                e.preventDefault();
+                var productId = $(this).data('product-id');
+                $.ajax({
+                    url: '@Url.Action("RemoveFromCart", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId },
+                    success: function (data) {
+                        $('#cart-items-container').html(data);
+                        updateCartItemCount();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error removing item: ", error);
+                        alert('@SharedLocalizer["ErrorRemovingItem"].Value');
+                    }
+                });
+            });
+        });
     </script>
 }

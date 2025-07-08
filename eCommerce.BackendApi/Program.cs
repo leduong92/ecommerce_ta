@@ -3,6 +3,7 @@ using eCommerce.Application.Services;
 using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
 using eCommerce.Shared.Common;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,15 +29,32 @@ builder.Services.AddScoped<IProductService, ProductService>(); // NEW
 builder.Services.AddScoped<ILanguageService, LanguageService>(); // NEW
 builder.Services.AddScoped<IRegionService, RegionService>(); // NEW
 
-// Configure Session
-builder.Services.AddDistributedMemoryCache(); // Required for session
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set your session timeout
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true; // Make the session cookie essential
-});
+// Configure Cookie Authentication (if you're using this for API auth, common for monolithic apps)
+// If you're using JWT/Bearer tokens, this part will be different.
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "eCommerceAuthCookie"; // Name your authentication cookie
+        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/api/Auth/Login"; // This won't be hit directly by browser for API
+        options.LogoutPath = "/api/Auth/Logout";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+        options.Cookie.SameSite = SameSiteMode.Lax; // Important for cross-site requests if your client is on different domain/port
+    });
+builder.Services.AddAuthorization();
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins("https://localhost:7142") // Replace with your MVC client URL
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()); // Allow cookies/credentials
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -54,8 +72,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseSession(); // NEW
+app.UseCors("AllowSpecificOrigin"); // Use CORS policy
 
+app.UseAuthentication(); // Must be before UseAuthorization
 app.UseAuthorization();
 
 app.MapControllers();

@@ -90,9 +90,8 @@ namespace eCommerce.Web.Controllers
             }
 
             // Use the AddToCartRequest DTO from the API project
-            var requestData = new AddToCartRequest
+            var requestData = new AddToCartRequestDto
             {
-                SessionId = sessionId,
                 ProductId = productId,
                 Quantity = quantity,
                 CustomerRegionCode = regionCode

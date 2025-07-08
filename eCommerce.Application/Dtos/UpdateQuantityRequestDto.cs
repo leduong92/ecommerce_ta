@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Application.Dtos
 {
-    public class AddToCartRequest
+    public class UpdateQuantityRequestDto
     {
-        public string? SessionId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public string CustomerRegionCode { get; set; } = string.Empty;
     }
-    public class UpdateCartRequest : AddToCartRequest { }
 }

@@ -3,6 +3,8 @@ using eCommerce.Application.Services;
 using eCommerce.Shared.Common;
 using eCommerce.Web.Services;
 using eCommerce.Web.Services.IService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
 using System.Globalization;
@@ -51,16 +53,18 @@ builder.Services.AddScoped<IBaseApiClient, BaseApiClient>();
 builder.Services.AddScoped<ILanguageApiClient, LanguageApiClient>();
 builder.Services.AddScoped<IRegionApiClient, RegionApiClient>();
 builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
+builder.Services.AddScoped<IShoppingCartApiClient, ShoppingCartApiClient>();
 
-// Configure Session
-builder.Services.AddDistributedMemoryCache(); // Required for session state
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set a short timeout for testing
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true; // Make session cookie essential
-    options.Cookie.SameSite = SameSiteMode.Lax; // Quan trọng cho cookie giỏ hàng ẩn danh
-});
+// Configure Cookie Authentication for MVC client (for user login)
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+        options.SlidingExpiration = true;
+    });
+builder.Services.AddAuthorization();
 
 
 var app = builder.Build();
@@ -78,10 +82,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
 app.UseRequestLocalization();
 
-app.UseSession(); // IMPORTANT: Must be before UseAuthorization and MapControllers
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

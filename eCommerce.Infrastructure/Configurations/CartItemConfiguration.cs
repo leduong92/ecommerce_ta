@@ -12,6 +12,7 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
         builder.ToTable("CartItems");
         builder.HasKey(x => x.Id);
         builder.Property(e => e.Id).UseIdentityColumn();
+        builder.Property(ci => ci.Currency).HasMaxLength(18);
 
         builder.HasOne(ci => ci.Product).WithMany().HasForeignKey(ci => ci.ProductId);
 
