@@ -8,7 +8,6 @@ using Microsoft.Extensions.Localization;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text.Json;
-using eCommerce.Web.Resources;
 using System.Text.RegularExpressions;
 
 

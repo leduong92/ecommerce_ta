@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Web.Resources
+﻿namespace eCommerce.Web
 {
     public class SharedResources
     {

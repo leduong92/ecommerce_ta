@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text;
 using eCommerce.Web.Services.IService;
-using eCommerce.Web.Resources;
 using Microsoft.Extensions.Localization;
 
 namespace eCommerce.Web.Controllers
