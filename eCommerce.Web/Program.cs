@@ -1,13 +1,10 @@
 ﻿using eCommerce.Application.Interface;
 using eCommerce.Application.Services;
 using eCommerce.Shared.Common;
-using eCommerce.Web.Extensions;
-using eCommerce.Web.LocalizationResources;
 using eCommerce.Web.Services;
 using eCommerce.Web.Services.IService;
-using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Localization.Routing;
 using System.Globalization;
 using System.Net.Http.Headers;
 
@@ -35,9 +32,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddViewLocalization()
     .AddDataAnnotationsLocalization();
-
 
 builder.Services.AddHttpContextAccessor();
 
@@ -81,20 +77,27 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-var requestLocalizationOptions = new RequestLocalizationOptions
+var options = new RequestLocalizationOptions
 {
-    DefaultRequestCulture = new RequestCulture("en"),
+    DefaultRequestCulture = new RequestCulture("en"), // Default to English
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures
 };
-
-app.UseRequestLocalization(requestLocalizationOptions);
+options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider
+{
+    RouteDataStringKey = "culture",
+    UIRouteDataStringKey = "culture"
+});
+options.RequestCultureProviders.Add(new CookieRequestCultureProvider());
+options.RequestCultureProviders.Add(new AcceptLanguageHeaderRequestCultureProvider()); // Fallback to browser language
+app.UseRequestLocalization(options);
 
 app.UseSession(); // IMPORTANT: Must be before UseAuthorization and MapControllers
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{culture=en}/{controller=Home}/{action=Index}/{id?}",
+    constraints: new { culture = "en|vi|zh" });
 
 app.Run();

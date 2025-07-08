@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<ProductListDto>
 
 @{
-    ViewData["Title"] = SharedLocalizer["Products"];
+    ViewData["Title"] = Localizer["Products"];
 }
 
-<h1 class="my-4">@SharedLocalizer["Products"] in @ViewBag.CurrentRegion</h1>
+<h1 class="my-4">@Localizer["Products"] in @ViewBag.CurrentRegion</h1>
+<h1>@ViewData["Message"]</h1>
 
 @if (Model != null && Model.Any())
 {
@@ -19,31 +20,31 @@
                             <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" asp-route-regionCode="@ViewBag.CurrentRegion">@product.Name</a>
                         </h4>
                         <h5>@product.Price?.ToString("N2") @product.Currency</h5>
-                        <p class="card-text">@SharedLocalizer["Category"]: @product.Category</p>
+                        <p class="card-text">@Localizer["Category"]: @product.Category</p>
                         <p class="card-text">
                             @if (product.EstimatedAvailableStock.HasValue)
                             {
                                 if (product.EstimatedAvailableStock.Value > 0)
                                 {
-                                    <span class="text-success">@SharedLocalizer["EstimatedStock"]: @product.EstimatedAvailableStock.Value</span>
+                                    <span class="text-success">@Localizer["EstimatedStock"]: @product.EstimatedAvailableStock.Value</span>
                                     if (product.EstimatedAvailableStock.Value <= 5)
                                     {
-                                        <span class="text-warning fw-bold">@SharedLocalizer["LowStock"]</span>
+                                        <span class="text-warning fw-bold">@Localizer["LowStock"]</span>
                                     }
                                 }
                                 else
                                 {
-                                    <span class="text-danger fw-bold">@SharedLocalizer["OutofStock"]</span>
+                                    <span class="text-danger fw-bold">@Localizer["OutofStock"]</span>
                                 }
                             }
                             else
                             {
-                                <span class="text-info">@SharedLocalizer["StockInfoNotAvailable"]</span>
+                                <span class="text-info">@Localizer["StockInfoNotAvailable"]</span>
                             }
                         </p>
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" asp-route-regionCode="@ViewBag.CurrentRegion" class="btn btn-primary">@SharedLocalizer["ViewDetails"]</a>
+                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" asp-route-regionCode="@ViewBag.CurrentRegion" class="btn btn-primary">@Localizer["ViewDetails"]</a>
                     </div>
                 </div>
             </div>
@@ -52,7 +53,7 @@
 }
 else
 {
-    <p>@SharedLocalizer["NoProductsFoundInThisRegion"]</p>
+    <p>@Localizer["NoProductsFoundInThisRegion"]</p>
 }
 
 @section Scripts {

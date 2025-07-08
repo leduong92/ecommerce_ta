@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text;
 using eCommerce.Web.Services.IService;
+using eCommerce.Web.Resources;
+using Microsoft.Extensions.Localization;
 
 namespace eCommerce.Web.Controllers
 {
@@ -13,10 +15,12 @@ namespace eCommerce.Web.Controllers
         private readonly ILogger<ProductController> _logger;
         private readonly IProductApiClient _productApiClient;
         private readonly string _apiBaseUrl;
-
+        private readonly IStringLocalizer<SharedResources> _localizer;
         public ProductController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<ProductController> logger
-            , IProductApiClient productApiClient)
+            , IProductApiClient productApiClient
+            , IStringLocalizer<SharedResources> localizer)
         {
+            _localizer = localizer;
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _logger = logger;
@@ -27,6 +31,8 @@ namespace eCommerce.Web.Controllers
         public async Task<IActionResult> Detail(int id, string regionCode)
         {
             ViewBag.CurrentRegion = regionCode;
+            ViewData["Message"] = _localizer["Welcome"];
+            ViewData["Culture"] = Thread.CurrentThread.CurrentUICulture.Name;
 
             //var client = _httpClientFactory.CreateClient("ApiClient");
             var latitude = HttpContext.Session.GetString("CustomerLatitude");

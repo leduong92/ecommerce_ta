@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using eCommerce.Web
 @using eCommerce.Web.Models
-@using eCommerce.Web.ShareResources
+@using eCommerce.Web.Resources
 @using eCommerce.Web.ViewModels
 @using eCommerce.Shared
 @using eCommerce.Application.Dtos
@@ -13,7 +13,8 @@
 @addTagHelper *, LazZiya.ExpressLocalization
 @* @inject ISharedCultureLocalizer SharedLocalizer *@
 
-@inject IViewLocalizer SharedLocalizer
+@inject IViewLocalizer Localizer
 
-@inject IStringLocalizer<SharedResources> SharedLocalizer1 
+@inject IStringLocalizer<SharedResources> SharedLocalizer
+
 @using Microsoft.Extensions.Localization

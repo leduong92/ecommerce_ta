@@ -8,6 +8,8 @@ using Microsoft.Extensions.Localization;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text.Json;
+using eCommerce.Web.Resources;
+using System.Text.RegularExpressions;
 
 
 namespace eCommerce.Web.Controllers
@@ -18,11 +20,13 @@ namespace eCommerce.Web.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IProductApiClient _productApiClient;
         private readonly string _apiBaseUrl;
-
+        private readonly IStringLocalizer<SharedResources> _localizer;
         public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory
             , IConfiguration configuration
-            , IProductApiClient productApiClient) // NEW
+            , IProductApiClient productApiClient
+            , IStringLocalizer<SharedResources> localizer) // NEW
         {
+            _localizer = localizer;
             _logger = logger;
             _httpClientFactory = httpClientFactory;
             _productApiClient = productApiClient;
@@ -124,11 +128,43 @@ namespace eCommerce.Web.Controllers
         }
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
+            // Validate the culture
+            var supportedCultures = new[] { "en", "vi", "zh" };
+            if (!supportedCultures.Contains(culture))
+            {
+                culture = "en"; // Fallback to default
+            }
+
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
                 );
+
+            // Adjust returnUrl based on the current page
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                var path = returnUrl.Split('?')[0]; // Remove query string for path check
+                if (path == $"/" || path == $"/{culture}/")
+                {
+                    returnUrl = $"/{culture}"; // For Home page, use only culture
+                }
+                else
+                {
+                    returnUrl = Regex.Replace(returnUrl, @"^/[^/]+", $"/{culture}"); // For other pages, keep full path
+                }
+            }
+            else
+            {
+                returnUrl = $"/{culture}"; // Default to Home page
+            }
+
+            // Preserve the query string
+            var queryString = Request.QueryString.ToString();
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                returnUrl += queryString;
+            }
 
             return LocalRedirect(returnUrl);
         }
