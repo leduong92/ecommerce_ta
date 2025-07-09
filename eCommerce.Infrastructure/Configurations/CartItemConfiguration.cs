@@ -13,7 +13,7 @@ public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
         builder.HasKey(x => x.Id);
         builder.Property(e => e.Id).UseIdentityColumn();
         builder.Property(ci => ci.Currency).HasMaxLength(18);
-
+        builder.Property(ci => ci.RegionCode).HasMaxLength(18);
         builder.HasOne(ci => ci.Product).WithMany().HasForeignKey(ci => ci.ProductId);
 
         builder.Property(ci => ci.UnitPrice).HasColumnType("decimal(18,2)");

@@ -45,6 +45,7 @@ namespace eCommerce.Application.Services
 
             // Start building the query for a single product
             IQueryable<Product> productQuery = _context.Products
+                .Include(p => p.ProductVariants)
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Prices!.Where(pp => pp.RegionId == region.Id && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
                 .Include(p => p.RegionAvailabilities!.Where(ra => ra.RegionId == region.Id));

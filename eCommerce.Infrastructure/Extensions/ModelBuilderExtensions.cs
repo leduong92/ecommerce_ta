@@ -946,7 +946,15 @@ namespace eCommerce.Infrastructure.Extensions
 
                 new ProductOptionValue { Id = 4, ProductOptionId = 2, Value = "36x12x40" },
                 new ProductOptionValue { Id = 5, ProductOptionId = 2, Value = "42x16x48" },
-                new ProductOptionValue { Id = 6, ProductOptionId = 2, Value = "48x18x52" }
+                new ProductOptionValue { Id = 6, ProductOptionId = 2, Value = "48x18x52" },
+
+                  // Color (ProductOptionId = 1)
+                new ProductOptionValue { Id = 7, ProductOptionId = 1, Value = "Walnut" },
+                new ProductOptionValue { Id = 8, ProductOptionId = 1, Value = "Oak" },
+
+                // Size (ProductOptionId = 2)
+                new ProductOptionValue { Id = 9, ProductOptionId = 2, Value = "180x100x75" },
+                new ProductOptionValue { Id = 10, ProductOptionId = 2, Value = "220x100x75" }
             );
 
             modelBuilder.Entity<ProductVariant>().HasData(
@@ -954,7 +962,11 @@ namespace eCommerce.Infrastructure.Extensions
                 new ProductVariant { Id = 2, ProductId = 1, Sku = "BLK-42", PriceAdjustment = 54.99m },
                 new ProductVariant { Id = 3, ProductId = 1, Sku = "WHT-36", PriceAdjustment = 59.99m },
                 new ProductVariant { Id = 4, ProductId = 1, Sku = "OAK-42", PriceAdjustment = 64.99m },
-                new ProductVariant { Id = 5, ProductId = 1, Sku = "OAK-52", PriceAdjustment = 69.99m }
+                new ProductVariant { Id = 5, ProductId = 1, Sku = "OAK-52", PriceAdjustment = 69.99m },
+                new ProductVariant { Id = 6, ProductId = 2, Sku = "MAR-OAK-180", PriceAdjustment = 79.99m },
+                new ProductVariant { Id = 7, ProductId = 2, Sku = "MAR-OAK-220", PriceAdjustment = 89.99m },
+                new ProductVariant { Id = 8, ProductId = 2, Sku = "MAR-WAL-220", PriceAdjustment = 94.99m }
+
             );
 
             modelBuilder.Entity<ProductVariantOptionValue>().HasData(
@@ -971,7 +983,16 @@ namespace eCommerce.Infrastructure.Extensions
                 new { ProductVariantId = 4, ProductOptionValueId = 5 },
 
                 new { ProductVariantId = 5, ProductOptionValueId = 3 },
-                new { ProductVariantId = 5, ProductOptionValueId = 6 }
+                new { ProductVariantId = 5, ProductOptionValueId = 6 },
+
+                new { ProductVariantId = 6, ProductOptionValueId = 8 }, // Oak
+                new { ProductVariantId = 6, ProductOptionValueId = 9 }, // 180x100x75
+
+                new { ProductVariantId = 7, ProductOptionValueId = 8 }, // Oak
+                new { ProductVariantId = 7, ProductOptionValueId = 10 }, // 220x100x75
+
+                new { ProductVariantId = 8, ProductOptionValueId = 7 }, // Walnut
+                new { ProductVariantId = 8, ProductOptionValueId = 10 } // 220x100x75
             );
 
             modelBuilder.Entity<ProductImage>().HasData(
@@ -995,7 +1016,16 @@ namespace eCommerce.Infrastructure.Extensions
                 // Variant 5 - Oak - 48x18x52
                 new ProductImage { Id = 10, ProductVariantId = 5, ImageUrl = "/images/oak_52_1.jpg", IsPrimary = true },
                 new ProductImage { Id = 11, ProductVariantId = 5, ImageUrl = "/images/oak_52_2.jpg", IsPrimary = false },
-                new ProductImage { Id = 12, ProductVariantId = 5, ImageUrl = "/images/oak_52_3.jpg", IsPrimary = false }
+                new ProductImage { Id = 12, ProductVariantId = 5, ImageUrl = "/images/oak_52_3.jpg", IsPrimary = false },
+
+                new ProductImage { Id = 13, ProductVariantId = 6, ImageUrl = "/images/mar_oak_180_1.jpg", IsPrimary = true },
+                new ProductImage { Id = 14, ProductVariantId = 6, ImageUrl = "/images/mar_oak_180_2.jpg", IsPrimary = false },
+
+                new ProductImage { Id = 15, ProductVariantId = 7, ImageUrl = "/images/mar_oak_220_1.jpg", IsPrimary = true },
+                new ProductImage { Id = 16, ProductVariantId = 7, ImageUrl = "/images/mar_oak_220_2.jpg", IsPrimary = false },
+
+                new ProductImage { Id = 17, ProductVariantId = 8, ImageUrl = "/images/mar_wal_220_1.jpg", IsPrimary = true },
+                new ProductImage { Id = 18, ProductVariantId = 8, ImageUrl = "/images/mar_wal_220_2.jpg", IsPrimary = false }
             );
 
 
