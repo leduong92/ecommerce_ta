@@ -2,8 +2,7 @@
 
 @{
     ViewData["Title"] = SharedLocalizer["ShoppingCart"];
-    decimal subtotal = Model != null ? Model.Sum(item => item.TotalPrice) : 0;
-    string currency = Model != null ? Model.FirstOrDefault()?.Currency : "USD";
+
 }
 
 <h1 class="my-4">@SharedLocalizer["YourShoppingCart"]</h1>
@@ -16,100 +15,60 @@
 }
 else
 {
-    <div id="cart-items-container">
+    <div id="cartItemsContainer">
         @await Html.PartialAsync("_CartItemsPartial", Model)
     </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">@SharedLocalizer["OrderSummary"].Value</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            @SharedLocalizer["Subtotal"]:
-                            <span>@subtotal.ToString("N2") @currency</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            @SharedLocalizer["Shipping"]:
-                            <span>@SharedLocalizer["CalculatedAtCheckout"].Value</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            @SharedLocalizer["Tax"]:
-                            <span>@SharedLocalizer["CalculatedAtCheckout"].Value</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
-                            @SharedLocalizer["Total"]:
-                            <span>@subtotal.ToString("N2") @currency</span> @* Total here is just subtotal, full total is on checkout *@
-                        </li>
-                    </ul>
-                    <div class="d-grid gap-2 mt-3">
-                        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary btn-lg">@SharedLocalizer["ProceedToCheckout"].Value</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 }
-
 @section Scripts {
     <script>
-        function updateCartItemCount() {
-            fetch('@Url.Action("GetCartItemCount", "Cart")', {
-                method: 'GET',
-                headers: { 'Accept': 'application/json' }
-            })
-                .then(response => response.ok ? response.json() : Promise.reject('Failed to get count'))
-                .then(data => {
-                    const cartCountElement = document.getElementById('cart-item-count');
-                    if (cartCountElement) {
-                        cartCountElement.innerText = data;
-                    }
-                })
-                .catch(error => console.error('Error fetching cart count:', error));
-        }
-
         $(document).ready(function () {
-            // Initial update
-            updateCartItemCount();
-
-            // Handle quantity change
-            $('#cart-items-container').on('change', '.item-quantity', function () {
+            // Sự kiện click cho nút tăng số lượng
+            $('#cartItemsContainer').on('click', '.btn-increase-quantity', function () {
                 var productId = $(this).data('product-id');
-                var quantity = $(this).val();
+                var currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
+                var newQuantity = currentQuantity + 1;
+                updateCartItemQuantity(productId, newQuantity);
+            });
+
+            // Sự kiện click cho nút giảm số lượng
+            $('#cartItemsContainer').on('click', '.btn-decrease-quantity', function () {
+                var productId = $(this).data('product-id');
+                var currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
+                var newQuantity = currentQuantity - 1;
+                updateCartItemQuantity(productId, newQuantity);
+            });
+
+            // Sự kiện khi người dùng tự nhập số lượng
+            $('#cartItemsContainer').on('change', '.item-quantity', function () {
+                var productId = $(this).data('product-id');
+                var newQuantity = parseInt($(this).val());
+                if (isNaN(newQuantity) || newQuantity < 0) {
+                    newQuantity = 1; // Đảm bảo số lượng hợp lệ
+                    $(this).val(newQuantity);
+                }
+                updateCartItemQuantity(productId, newQuantity);
+            });
+
+            // Hàm gửi AJAX request để cập nhật số lượng
+            function updateCartItemQuantity(productId, quantity) {
                 $.ajax({
-                    url: '@Url.Action("UpdateQuantity", "Cart")',
+                    url: '@Url.Action("UpdateQuantity", "Cart")', // URL tới action UpdateQuantity
                     type: 'POST',
-                    data: { productId: productId, quantity: quantity },
-                    success: function (data) {
-                        $('#cart-items-container').html(data);
-                        updateCartItemCount();
+                    data: {
+                        productId: productId,
+                        quantity: quantity
+                    },
+                    success: function (result) {
+                        $('#cartItemsContainer').html(result); // Cập nhật lại phần giỏ hàng
+                        console.log('Cart updated successfully.');
+                        // Có thể thêm thông báo thành công ở đây nếu muốn
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error updating quantity: ", error);
+                        console.error('Error updating cart:', error);
                         alert('@SharedLocalizer["ErrorUpdatingCart"].Value');
                     }
                 });
-            });
-
-            // Handle remove item
-            $('#cart-items-container').on('click', '.remove-item', function (e) {
-                e.preventDefault();
-                var productId = $(this).data('product-id');
-                $.ajax({
-                    url: '@Url.Action("RemoveFromCart", "Cart")',
-                    type: 'POST',
-                    data: { productId: productId },
-                    success: function (data) {
-                        $('#cart-items-container').html(data);
-                        updateCartItemCount();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error removing item: ", error);
-                        alert('@SharedLocalizer["ErrorRemovingItem"].Value');
-                    }
-                });
-            });
+            }
         });
     </script>
 }

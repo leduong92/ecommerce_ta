@@ -119,15 +119,16 @@ namespace eCommerce.Web.Controllers
             }
             var anynomousId = GetAnonymousCartIdFromCookie();
             var cartItems = await _cartService.GetCartItemsAsync(anynomousId);
-            return PartialView("_CartItemsPartial", cartItems);
+            return PartialView("_CartItemsPartial", cartItems.Data ?? new List<CartItemDto>());
         }
 
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int productId)
         {
+            var anynomousId = GetAnonymousCartIdFromCookie();
             try
             {
-                await _cartService.RemoveItemFromCartAsync(productId);
+                await _cartService.RemoveItemFromCartAsync(new RemoveFromCartRequest { ProductId = productId, AnonymousId = anynomousId });
             }
             catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
             {
@@ -138,9 +139,8 @@ namespace eCommerce.Web.Controllers
                 _logger.LogError(ex, "Error removing item from cart for product ID: {ProductId}", productId);
                 return BadRequest(_localizer["ErrorRemovingItem"].Value);
             }
-            var anynomousId = GetAnonymousCartIdFromCookie();
             var cartItems = await _cartService.GetCartItemsAsync(anynomousId);
-            return PartialView("_CartItemsPartial", cartItems);
+            return PartialView("_CartItemsPartial", cartItems.Data ?? new List<CartItemDto>());
         }
         // Action to get cart item count (typically called via AJAX for header display)
         [HttpGet]

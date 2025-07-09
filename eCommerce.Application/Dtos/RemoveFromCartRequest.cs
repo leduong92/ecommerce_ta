@@ -8,7 +8,7 @@ namespace eCommerce.Application.Dtos
 {
     public class RemoveFromCartRequest
     {
-        public string? SessionId { get; set; }
+        public string? AnonymousId { get; set; }
         public int ProductId { get; set; }
     }
 }

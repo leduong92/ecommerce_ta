@@ -54,12 +54,13 @@ namespace eCommerce.Web.Services
             });
         }
 
-        public async Task<ApiResponse<int>> RemoveItemFromCartAsync(int productId)
+        public async Task<ApiResponse<int>> RemoveItemFromCartAsync(RemoveFromCartRequest request)
         {
             return await _baseApiClient.SendAsync<int>(new RequestDto()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = $"{SD.ApiBaseUrl}cart/remove/{productId}"
+                Data = request,
+                Url = $"{SD.ApiBaseUrl}cart/remove"
             });
         }
 
