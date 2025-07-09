@@ -14,11 +14,11 @@ namespace eCommerce.Infrastructure.Configurations
             builder.HasKey(pv => new { pv.ProductVariantId, pv.ProductOptionValueId });
 
             builder.HasOne(pv => pv.ProductVariant)
-                        .WithMany(v => v.ProductVariantOptionValues)
+                        .WithMany(v => v.VariantOptionValues)
                         .HasForeignKey(pv => pv.ProductVariantId);
 
             builder.HasOne(pv => pv.ProductOptionValue)
-                        .WithMany()
+                        .WithMany(ov => ov.VariantOptionValues)
                         .HasForeignKey(pv => pv.ProductOptionValueId);
 
         }

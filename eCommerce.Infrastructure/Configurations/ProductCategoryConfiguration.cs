@@ -14,7 +14,7 @@ namespace eCommerce.Infrastructure.Configurations
             builder.Property(x => x.ImageUrl).HasMaxLength(1024);
             builder.Property(x => x.IsPrimary).HasDefaultValue(false);
 
-            builder.HasOne(i => i.ProductVariant).WithMany(v => v.ProductImages).HasForeignKey(i => i.ProductVariantId);
+            builder.HasOne(i => i.ProductVariant).WithMany(v => v.Images).HasForeignKey(i => i.ProductVariantId);
         }
     }
 }

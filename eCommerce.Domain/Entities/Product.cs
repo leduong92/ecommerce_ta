@@ -36,7 +36,7 @@
         public int? ProductShippingProfileId { get; set; }
         public ProductShippingProfile? ProductShippingProfile { get; set; }
         public virtual ICollection<ProductRegionAvailability>? RegionAvailabilities { get; set; }
-        public virtual ICollection<ProductVariant>? ProductVariants { get; set; }
+        public virtual ICollection<ProductVariant>? Variants { get; set; }
         public virtual ICollection<ProductTranslation>? ProductTranslations { get; set; }
         public virtual ICollection<ProductPrice>? Prices { get; set; }
         // NEW: Add this collection to link Product to its InventoryItems

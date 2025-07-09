@@ -943,18 +943,16 @@ namespace eCommerce.Infrastructure.Extensions
                 new ProductOptionValue { Id = 1, ProductOptionId = 1, Value = "Deep Black" },
                 new ProductOptionValue { Id = 2, ProductOptionId = 1, Value = "White" },
                 new ProductOptionValue { Id = 3, ProductOptionId = 1, Value = "Oak" },
+                // Color (ProductOptionId = 1)
+                new ProductOptionValue { Id = 7, ProductOptionId = 1, Value = "Walnut" },
 
                 new ProductOptionValue { Id = 4, ProductOptionId = 2, Value = "36x12x40" },
                 new ProductOptionValue { Id = 5, ProductOptionId = 2, Value = "42x16x48" },
                 new ProductOptionValue { Id = 6, ProductOptionId = 2, Value = "48x18x52" },
 
-                  // Color (ProductOptionId = 1)
-                new ProductOptionValue { Id = 7, ProductOptionId = 1, Value = "Walnut" },
-                new ProductOptionValue { Id = 8, ProductOptionId = 1, Value = "Oak" },
-
                 // Size (ProductOptionId = 2)
-                new ProductOptionValue { Id = 9, ProductOptionId = 2, Value = "180x100x75" },
-                new ProductOptionValue { Id = 10, ProductOptionId = 2, Value = "220x100x75" }
+                new ProductOptionValue { Id = 8, ProductOptionId = 2, Value = "180x100x75" },
+                new ProductOptionValue { Id = 9, ProductOptionId = 2, Value = "220x100x75" }
             );
 
             modelBuilder.Entity<ProductVariant>().HasData(
@@ -985,14 +983,14 @@ namespace eCommerce.Infrastructure.Extensions
                 new { ProductVariantId = 5, ProductOptionValueId = 3 },
                 new { ProductVariantId = 5, ProductOptionValueId = 6 },
 
-                new { ProductVariantId = 6, ProductOptionValueId = 8 }, // Oak
-                new { ProductVariantId = 6, ProductOptionValueId = 9 }, // 180x100x75
+                new { ProductVariantId = 6, ProductOptionValueId = 3 }, // Oak
+                new { ProductVariantId = 6, ProductOptionValueId = 8 }, // 180x100x75
 
-                new { ProductVariantId = 7, ProductOptionValueId = 8 }, // Oak
-                new { ProductVariantId = 7, ProductOptionValueId = 10 }, // 220x100x75
+                new { ProductVariantId = 7, ProductOptionValueId = 3 }, // Oak
+                new { ProductVariantId = 7, ProductOptionValueId = 9 }, // 220x100x75
 
                 new { ProductVariantId = 8, ProductOptionValueId = 7 }, // Walnut
-                new { ProductVariantId = 8, ProductOptionValueId = 10 } // 220x100x75
+                new { ProductVariantId = 8, ProductOptionValueId = 9 } // 220x100x75
             );
 
             modelBuilder.Entity<ProductImage>().HasData(

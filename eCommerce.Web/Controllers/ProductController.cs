@@ -5,6 +5,7 @@ using System.Text;
 using eCommerce.Web.Services.IService;
 using Microsoft.Extensions.Localization;
 using eCommerce.Shared.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Web.Controllers
 {
@@ -116,6 +117,13 @@ namespace eCommerce.Web.Controllers
                 TempData["ErrorMessage"] = $"Error adding product to cart: {errorContent}";
                 return RedirectToAction("Detail", new { id = productId, regionCode = regionCode });
             }
+        }
+
+        [HttpGet("GetVariant")]
+        public async Task<IActionResult> GetVariant(int variantId)
+        {
+            var variant = await _productApiClient.GetVariantAsync(variantId);
+            return Json(variant.Data);
         }
     }
 }

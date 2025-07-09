@@ -45,7 +45,12 @@ namespace eCommerce.Application.Services
 
             // Start building the query for a single product
             IQueryable<Product> productQuery = _context.Products
-                .Include(p => p.ProductVariants)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.VariantOptionValues)
+                        .ThenInclude(p => p.ProductOptionValue)
+                            .ThenInclude(v => v.Option)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.Images)
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Prices!.Where(pp => pp.RegionId == region.Id && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
                 .Include(p => p.RegionAvailabilities!.Where(ra => ra.RegionId == region.Id));
@@ -79,11 +84,35 @@ namespace eCommerce.Application.Services
             // Just need to access the loaded data.
             var inventory = product.InventoryItems?.FirstOrDefault();
 
-
             var price = product.Prices?.FirstOrDefault()?.Price;
             var currency = product.Prices?.FirstOrDefault()?.Currency;
 
-            var result =  new ProductDetailDto
+            var selectedVariant = product.Variants.First();
+
+            // Flatten variant-option-value pairs for grouping
+            var variantOptionValues = product.Variants
+                .SelectMany(v => v.VariantOptionValues
+                    .Select(vov => new { VariantId = v.Id, vov.ProductOptionValue }))
+                .ToList();
+
+            var optionGroups = variantOptionValues
+                .GroupBy(x => x.ProductOptionValue.Option.Name)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.GroupBy(x => x.ProductOptionValue.Id).Select(g2 =>
+                    {
+                        var ov = g2.First().ProductOptionValue;
+                        return new OptionDto
+                        {
+                            ValueId = ov.Id,
+                            Value = ov.Value,
+                            VariantIds = g2.Select(x => x.VariantId).Distinct().ToList(),
+                            IsSelected = selectedVariant.VariantOptionValues.Any(vov => vov.ProductOptionValueId == ov.Id)
+                        };
+                    }).ToList()
+                );
+
+            var result = new ProductDetailDto
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -99,7 +128,23 @@ namespace eCommerce.Application.Services
                 HeightCm = product.Height,
                 EstimatedAvailableStock = inventory?.AvailableQuantity,
                 FulfillingWarehouseName = nearestWarehouse?.Name,
-                FulfillingWarehouseAddress = nearestWarehouse != null ? $"{nearestWarehouse.Address1}, {nearestWarehouse.City}" : null
+                FulfillingWarehouseAddress = nearestWarehouse != null ? $"{nearestWarehouse.Address1}, {nearestWarehouse.City}" : null,
+                SelectedVariant = new VariantDto
+                {
+                    Id = selectedVariant.Id,
+                    Sku = selectedVariant.Sku,
+                    Price = selectedVariant.PriceAdjustment,
+                    ImageList = selectedVariant.Images.Select(x => new ProductImage
+                    { 
+                        Id = x.Id,
+                        ImageUrl = x.ImageUrl,
+                        SortOrder = x.SortOrder,
+                        IsPrimary = x.IsPrimary,
+                        ProductVariantId = x.ProductVariantId
+                    }).ToList()
+                },
+                ColorOptions = optionGroups.ContainsKey("Color") ? optionGroups["Color"] : new List<OptionDto>(),
+                SizeOptions = optionGroups.ContainsKey("Size") ? optionGroups["Size"] : new List<OptionDto>()
             };
             return ApiResponse<ProductDetailDto>.Success(result);
         }
@@ -171,6 +216,31 @@ namespace eCommerce.Application.Services
             }).ToList();
 
             return ApiResponse<IEnumerable<ProductListDto>>.Success(productList);
+        }
+
+        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int variantId)
+        {
+            var variant = await _context.ProductVariants
+                            .Include(v => v.Images)
+                            .FirstAsync(v => v.Id == variantId);
+
+            var result = new VariantDto
+            {
+                Id = variant.Id,
+                Sku = variant.Sku,
+                Price = variant.PriceAdjustment,
+                ImageUrl = variant.Images.FirstOrDefault(x => x.IsPrimary).ImageUrl ?? "",
+                ImageList = variant.Images.Select(x => new ProductImage
+                {
+                    Id = x.Id,
+                    ImageUrl = x.ImageUrl,
+                    SortOrder = x.SortOrder,
+                    IsPrimary = x.IsPrimary,
+                    ProductVariantId = x.ProductVariantId
+                }).ToList()
+            };
+
+            return ApiResponse<VariantDto>.Success(result);
         }
     }
 }

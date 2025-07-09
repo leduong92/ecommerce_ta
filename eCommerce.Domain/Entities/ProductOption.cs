@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }  // "Color", "Size"
-        public virtual ICollection<ProductOptionValue> ProductOptionValues { get; set; }
+        public virtual ICollection<ProductOptionValue> OptionValues { get; set; }
     }
 }

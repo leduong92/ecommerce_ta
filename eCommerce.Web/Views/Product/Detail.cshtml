@@ -18,6 +18,34 @@
                 <p>@SharedLocalizer["Category"]: @Model?.Category</p>
                 <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
                 <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
+                <div>
+                    <div>
+                        <label>Color:</label>
+                        <select id="colorSelect">
+                            @foreach (var option in Model.ColorOptions)
+                            {
+                                <option value="@option.ValueId" data-variant-ids="@string.Join(",", option.VariantIds)" selected=@(option.IsSelected ? "selected" : null)>@option.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        @foreach(var color in Model.SelectedVariant.ImageList)
+                        {
+                            <div>@color.ImageUrl</div>
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <label>Size:</label>
+                    <select id="sizeSelect">
+                        @foreach (var option in Model.SizeOptions)
+                        {
+                            <option value="@option.ValueId" data-variant-ids="@string.Join(",", option.VariantIds)" selected=@(option.IsSelected ? "selected" : null)>@option.Value</option>
+                        }
+                    </select>
+                </div>
+
                 <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
                 <p>
                     @if (Model?.EstimatedAvailableStock.HasValue == true)
@@ -70,6 +98,41 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            const colorSelect = document.getElementById('colorSelect');
+            const sizeSelect = document.getElementById('sizeSelect');
+
+            function findMatchingVariant() {
+                const colorVariants = colorSelect.options[colorSelect.selectedIndex].dataset.variantIds.split(',');
+                const sizeVariants = sizeSelect.options[sizeSelect.selectedIndex].dataset.variantIds.split(',');
+                const match = colorVariants.find(id => sizeVariants.includes(id));
+                if (match) {
+                    $.ajax({
+                        url: '@Url.Action("GetVariant", "Product")',
+                        type: 'GET',
+                        data: { variantId: match },
+                        success: function (response) {
+                            document.getElementById('mainImage').src = data.imageUrl;
+                            document.getElementById('sku').textContent = data.sku;
+                            document.getElementById('price').textContent = `$${data.price}`;
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error adding to cart: ", error);
+                            alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
+                        }
+                    });
+                    // fetch(`/Product/GetVariant?variantId=${match}`)
+                    //     .then(res => res.json())
+                    //     .then(data => {
+                    //         document.getElementById('mainImage').src = data.imageUrl;
+                    //         document.getElementById('sku').textContent = data.sku;
+                    //         document.getElementById('price').textContent = `$${data.price}`;
+                    //     });
+                }
+            }
+
+            colorSelect.addEventListener('change', findMatchingVariant);
+            sizeSelect.addEventListener('change', findMatchingVariant);
+
             $('#addToCartBtn').click(function () {
                 var productId = $(this).data('product-id');
                 var productName = $(this).data('product-name'); // For success message only

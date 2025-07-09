@@ -1,6 +1,7 @@
 ﻿using eCommerce.Application.Dtos;
 using eCommerce.Shared.Common;
 using eCommerce.Web.Services.IService;
+using System.Reflection.Metadata.Ecma335;
 
 namespace eCommerce.Web.Services
 {
@@ -38,6 +39,15 @@ namespace eCommerce.Web.Services
             {
                 ApiType = SD.ApiType.GET,
                 Url = requestUrl,
+            });
+        }
+
+        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int variantId)
+        {
+            return await _baseApiClient.SendAsync<VariantDto>(new RequestDto()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.ApiBaseUrl}product/GetVariant/{variantId}",
             });
         }
     }

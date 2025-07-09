@@ -14,7 +14,7 @@ namespace eCommerce.Infrastructure.Configurations
             builder.Property(x => x.PriceAdjustment).HasDefaultValue(0m).HasColumnType("decimal(18,2)");
             builder.Property(x => x.Sku).HasMaxLength(64);
 
-            builder.HasOne(v => v.Product).WithMany(p => p.ProductVariants).HasForeignKey(v => v.ProductId);
+            builder.HasOne(v => v.Product).WithMany(p => p.Variants).HasForeignKey(v => v.ProductId);
 
         }
     }

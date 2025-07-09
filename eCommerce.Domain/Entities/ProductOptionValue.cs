@@ -7,5 +7,6 @@ namespace eCommerce.Domain.Entities
         public int ProductOptionId { get; set; }
         public ProductOption Option { get; set; }
         public string Value { get; set; } // "Deep Black", "White"
+        public ICollection<ProductVariantOptionValue> VariantOptionValues { get; set; } = new List<ProductVariantOptionValue>();
     }
 }

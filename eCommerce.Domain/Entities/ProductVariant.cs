@@ -8,8 +8,8 @@
         public string Sku { get; set; } = string.Empty;
         public decimal PriceAdjustment  { get; set; }
         public bool IsActive { get; set; }
-        public ICollection<ProductImage> ProductImages { get; set; }
-        public ICollection<ProductVariantOptionValue> ProductVariantOptionValues { get; set; }
+        public ICollection<ProductImage> Images { get; set; }
+        public ICollection<ProductVariantOptionValue> VariantOptionValues { get; set; }
 
     }
 }

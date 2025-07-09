@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCommerce.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,9 @@ namespace eCommerce.Application.Dtos
         public string? Description { get; set; }
         public string? FulfillingWarehouseName { get; set; }
         public string? FulfillingWarehouseAddress { get; set; }
+        public VariantDto SelectedVariant { get; set; } = null!;
+        public List<OptionDto> ColorOptions { get; set; } = [];
+        public List<OptionDto> SizeOptions { get; set; } = [];
         public ICollection<InventoryItemDto> InventoryItems { get; set; } = new List<InventoryItemDto>();
     }
 
@@ -34,4 +38,20 @@ namespace eCommerce.Application.Dtos
         public int WarehouseId { get; set; }
         public int Stock { get; set; }
     }
+    public class VariantDto
+    {
+        public int Id { get; set; }
+        public string Sku { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
+        public List<ProductImage> ImageList { get; set; }
+    }
+    public class OptionDto
+    {
+        public int ValueId { get; set; }
+        public string Value { get; set; } = string.Empty;
+        public List<int> VariantIds { get; set; } = [];
+        public bool IsSelected { get; set; }
+    }
+
 }
