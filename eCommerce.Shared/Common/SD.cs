@@ -3,6 +3,7 @@
     public class SD
     {
         public static string ApiBaseUrl { get; set; }
+        public const string AnonymousId = "AnonymousId";
 
         public const string RoleAdmin = "ADMIN";
         public const string RoleCustomer = "CUSTOMER";

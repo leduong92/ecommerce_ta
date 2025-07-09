@@ -5,7 +5,7 @@ namespace eCommerce.Web.Services.IService
 {
     public interface IShoppingCartApiClient
     {
-        Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(); // Returns a list of DTOs
+        Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(string anonymousId); // Returns a list of DTOs
         Task<ApiResponse<int>> AddItemToCartAsync(AddToCartRequestDto request); // Returns new item count
         Task<ApiResponse<int>> UpdateItemQuantityAsync(UpdateQuantityRequestDto  request); // Returns new item count
         Task<ApiResponse<int>> RemoveItemFromCartAsync(int productId); // Returns new item count

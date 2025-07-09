@@ -29,7 +29,7 @@ namespace eCommerce.Application.Services
         public async Task<ApiResponse<Order?>> ProcessCheckoutAsync(CheckoutRequest checkoutRequest)
         {
             // 1. Retrieve cart items
-            var cartItems = await _cartService.GetCartItemsAsync(checkoutRequest.UserId.Value);
+            var cartItems = (await _cartService.GetCartItemsAsync(checkoutRequest.UserId.Value, checkoutRequest.AnonymousId)).Data;
             if (!cartItems.Any())
             {
                 return ApiResponse<Order?>.Failure("Error: Cart is empty.");
@@ -109,7 +109,7 @@ namespace eCommerce.Application.Services
                             // Kiểm tra tồn kho có sẵn (on hand - reserved)
                             if (inventoryItem == null || inventoryItem.AvailableQuantity < cartItem.Quantity) // AvailableQuantity = QuantityOnHand - QuantityReserved
                             {
-                                return ApiResponse<Order?>.Failure($"Insufficient stock for product {cartItem.Product.Name} at {fulfillingWarehouse.Name}. Available: {inventoryItem?.AvailableQuantity ?? 0}, Requested: {cartItem.Quantity}");
+                                return ApiResponse<Order?>.Failure($"Insufficient stock for product {cartItem.ProductName} at {fulfillingWarehouse.Name}. Available: {inventoryItem?.AvailableQuantity ?? 0}, Requested: {cartItem.Quantity}");
                             }
                             // Phân bổ (dự trữ) tồn kho bằng cách tăng QuantityReserved
                             inventoryItem.QuantityReserved += cartItem.Quantity;
@@ -167,7 +167,7 @@ namespace eCommerce.Application.Services
                         await _context.SaveChangesAsync();
 
                         // 6. Clear the shopping cart after successful order creation
-                        await _cartService.ClearCartAsync(checkoutRequest.UserId.Value); // Pass RequestUserId if applicable
+                        await _cartService.ClearCartAsync(checkoutRequest.UserId.Value, checkoutRequest.AnonymousId); // Pass RequestUserId if applicable
 
                         await transaction.CommitAsync(); // Commit all changes if everything is successful
                         Console.WriteLine($"Order {order.Id} created successfully. Total: {order.TotalAmount:C}. Shipping from {order.ChosenShippingOriginWarehouseName}.");

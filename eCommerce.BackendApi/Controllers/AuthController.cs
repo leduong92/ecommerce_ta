@@ -1,6 +1,8 @@
 ﻿using eCommerce.Application.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using eCommerce.Application.Interfaces;
+using eCommerce.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace eCommerce.BackendApi.Controllers
 {
@@ -10,11 +12,17 @@ namespace eCommerce.BackendApi.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
-
-        public AuthController(IAuthService authService
-            , IConfiguration configuration
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AuthController(
+            IAuthService authService
+                , SignInManager<ApplicationUser> signInManager
+                , UserManager<ApplicationUser> userManager
+                , IConfiguration configuration
             )
         {
+            _signInManager = signInManager;
+            _userManager = userManager;
             _authService = authService;
             _configuration = configuration;
         }

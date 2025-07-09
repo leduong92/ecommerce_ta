@@ -4,10 +4,11 @@ using System.Text.Json;
 using System.Text;
 using eCommerce.Web.Services.IService;
 using Microsoft.Extensions.Localization;
+using eCommerce.Shared.Common;
 
 namespace eCommerce.Web.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
@@ -73,6 +74,7 @@ namespace eCommerce.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, int quantity, string regionCode)
         {
+            var anonymousId = Request.Cookies[SD.AnonymousId];
             if (quantity <= 0)
             {
                 TempData["ErrorMessage"] = "Quantity must be positive.";
@@ -92,6 +94,7 @@ namespace eCommerce.Web.Controllers
             // Use the AddToCartRequest DTO from the API project
             var requestData = new AddToCartRequestDto
             {
+                AnonymousId = anonymousId,
                 ProductId = productId,
                 Quantity = quantity,
                 CustomerRegionCode = regionCode
@@ -99,7 +102,7 @@ namespace eCommerce.Web.Controllers
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync($"{_apiBaseUrl}ShoppingCart/add", jsonContent);
+            var response = await client.PostAsync($"{_apiBaseUrl}Cart/add", jsonContent);
 
             if (response.IsSuccessStatusCode)
             {

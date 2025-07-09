@@ -4,6 +4,7 @@ using eCommerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using eCommerce.Domain.Entities;
 using eCommerce.Shared.Common;
+using System.Text.Json;
 
 namespace eCommerce.Application.Services
 {
@@ -18,6 +19,20 @@ namespace eCommerce.Application.Services
         {
             _context = context;
             _warehouseService = warehouseService;
+        }
+
+        public async Task<ApiResponse<List<InventoryItemDto>>> GetAvailableWarehousesAsync()
+        {
+            // Lấy danh sách các kho hàng duy nhất từ bảng InventoryItems
+            var warehouses = await _context.InventoryItems
+                .Select(ii => new InventoryItemDto
+                {
+                    WarehouseId = ii.WarehouseId,
+                })
+                .Distinct()
+                .ToListAsync();
+
+            return ApiResponse<List<InventoryItemDto>>.Success(warehouses);
         }
 
         public async Task<ApiResponse<ProductDetailDto>?> GetProductDetailsAsync(int productId, string regionCode, double? customerLatitude, double? customerLongitude)

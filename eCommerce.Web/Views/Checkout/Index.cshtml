@@ -13,7 +13,7 @@
     <div class="col-md-7">
         <h3 class="mb-3">@SharedLocalizer["ShippingInformation"]</h3>
         <form asp-action="CalculateShipping" method="post">
-            <input type="hidden" asp-for="SessionId" />
+            <input type="hidden" asp-for="AnonymousId" />
             <input type="hidden" asp-for="UserId" />
 
             <div class="row g-3">
@@ -90,7 +90,7 @@
         {
             <h3 class="mb-3 mt-4">@SharedLocalizer["ShippingOptions"]</h3>
             <form asp-action="PlaceOrder" method="post">
-                <input type="hidden" asp-for="SessionId" />
+                <input type="hidden" asp-for="AnonymousId" />
                 <input type="hidden" asp-for="UserId" />
                 <input type="hidden" asp-for="ShippingFirstName" />
                 <input type="hidden" asp-for="ShippingLastName" />

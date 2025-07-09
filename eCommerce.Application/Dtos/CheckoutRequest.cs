@@ -8,7 +8,7 @@ namespace eCommerce.Application.Dtos
 {
     public class CheckoutRequest
     {
-        public string SessionId { get; set; } = string.Empty;
+        public string AnonymousId { get; set; } = string.Empty;
         public Guid? UserId { get; set; } // Optional, if logged in
 
         // Shipping Address

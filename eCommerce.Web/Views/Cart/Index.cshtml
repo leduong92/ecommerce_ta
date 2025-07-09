@@ -2,8 +2,8 @@
 
 @{
     ViewData["Title"] = SharedLocalizer["ShoppingCart"];
-    decimal subtotal = Model.Sum(item => item.TotalPrice);
-    string currency = Model.FirstOrDefault()?.Currency ?? "USD";
+    decimal subtotal = Model != null ? Model.Sum(item => item.TotalPrice) : 0;
+    string currency = Model != null ? Model.FirstOrDefault()?.Currency : "USD";
 }
 
 <h1 class="my-4">@SharedLocalizer["YourShoppingCart"]</h1>

@@ -55,6 +55,11 @@ builder.Services.AddScoped<IRegionApiClient, RegionApiClient>();
 builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
 builder.Services.AddScoped<IShoppingCartApiClient, ShoppingCartApiClient>();
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
+
 // Configure Cookie Authentication for MVC client (for user login)
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -84,6 +89,7 @@ app.UseRouting();
 
 app.UseRequestLocalization();
 
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

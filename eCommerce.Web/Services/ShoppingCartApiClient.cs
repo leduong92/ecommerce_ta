@@ -21,7 +21,7 @@ namespace eCommerce.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = request,
-                Url = $"{SD.ApiBaseUrl}Cart/add"
+                Url = $"{SD.ApiBaseUrl}cart/add"
             });
         }
 
@@ -31,16 +31,16 @@ namespace eCommerce.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = null,
-                Url = $"{SD.ApiBaseUrl}Cart/clear"
+                Url = $"{SD.ApiBaseUrl}cart/clear"
             });
         }
 
-        public async Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync()
+        public async Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(string anonymousId)
         {
             return await _baseApiClient.SendAsync<List<CartItemDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = $"{SD.ApiBaseUrl}Cart"
+                Url = $"{SD.ApiBaseUrl}cart?anonymousId={anonymousId}"
             });
         }
 
@@ -50,7 +50,7 @@ namespace eCommerce.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = request,
-                Url = $"{SD.ApiBaseUrl}Cart/merge"
+                Url = $"{SD.ApiBaseUrl}cart/merge"
             });
         }
 
@@ -59,7 +59,7 @@ namespace eCommerce.Web.Services
             return await _baseApiClient.SendAsync<int>(new RequestDto()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = $"{SD.ApiBaseUrl}Cart/remove/{productId}"
+                Url = $"{SD.ApiBaseUrl}cart/remove/{productId}"
             });
         }
 
@@ -69,7 +69,7 @@ namespace eCommerce.Web.Services
             {
                 ApiType = SD.ApiType.PUT,
                 Data = request,
-                Url = $"{SD.ApiBaseUrl}Cart/update"
+                Url = $"{SD.ApiBaseUrl}cart/update"
             });
         }
     }

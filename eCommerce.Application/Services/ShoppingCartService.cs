@@ -1,6 +1,8 @@
-﻿using eCommerce.Application.Interfaces;
+﻿using eCommerce.Application.Dtos;
+using eCommerce.Application.Interfaces;
 using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
+using eCommerce.Shared.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -19,35 +21,38 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Gets an existing shopping cart or creates a new one for a given session/user.
         /// </summary>
-        public async Task<Cart> GetOrCreateCartAsync(Guid userId)
+        public async Task<Cart> GetOrCreateCartAsync(Guid? userId, string? anonymousId)
         {
 
             var cart = await _context.Carts
                                     .Include(c => c.CartItems)
                                     .ThenInclude(ci => ci.Product) // Eagerly load product details
-                                    .FirstOrDefaultAsync(c => c.UserId == userId);
+                                    .FirstOrDefaultAsync(c => c.UserId == userId || c.AnonymousId == anonymousId);
 
             if (cart == null)
             {
                 cart = new Cart()
                 {
                     UserId = userId,
+                    AnonymousId = anonymousId,
                     CreatedDate = DateTime.UtcNow,
-                    LastUpdatedDate = DateTime.UtcNow
+                    LastModifiedDate = DateTime.UtcNow
                 };
                 _context.Carts.Add(cart);
                 await _context.SaveChangesAsync();
             }
+
             return cart;
         }
         /// <summary>
         /// Adds a product to the shopping cart.
         /// </summary>
-        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId)
+        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId, string? anonymousId)
         {
-            var cart = await GetOrCreateCartAsync(userId);
+            var cart = await GetOrCreateCartAsync(userId, anonymousId);
 
             var product = await _context.Products
+                    .Include(p => p.InventoryItems)
                     .Include(p => p.Prices)!
                     .ThenInclude(pp => pp.Region)
                     .Include(p => p.ProductCategory) // Still need this for dimensional factor fallback
@@ -92,6 +97,7 @@ namespace eCommerce.Application.Services
                     CartId = cart.Id,
                     ProductId = productId,
                     Quantity = quantity,
+                    RegionCode = customerRegionCode,
                     Currency = productPrice.Currency,
                     UnitPrice = unitPrice // Use the region-specific price
                 };
@@ -102,7 +108,7 @@ namespace eCommerce.Application.Services
                 cartItem.Quantity += quantity;
                 _context.CartItems.Update(cartItem);
             }
-            cart.LastUpdatedDate = DateTime.UtcNow;
+            cart.LastModifiedDate = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             _logger.LogInformation($"Added/updated product {productId} for user {userId}. Quantity: {quantity}");
             return cart;
@@ -110,9 +116,9 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Updates the quantity of a product in the shopping cart.
         /// </summary>
-        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int quantity, Guid userId)
+        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int quantity, Guid userId, string? anonymousId)
         {
-            var cart = await GetOrCreateCartAsync(userId);
+            var cart = await GetOrCreateCartAsync(userId, anonymousId);
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
             if (cartItem == null)
             {
@@ -130,23 +136,23 @@ namespace eCommerce.Application.Services
                 cartItem.Quantity = quantity;
                 _context.CartItems.Update(cartItem);
             }
-            cart.LastUpdatedDate = DateTime.UtcNow;
+            cart.LastModifiedDate = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return cart;
         }
         /// <summary>
         /// Removes a product from the shopping cart.
         /// </summary>
-        public async Task<Cart> RemoveFromCartAsync(int productId, Guid userId)
+        public async Task<Cart> RemoveFromCartAsync(int productId, Guid userId, string? anonymousId)
         {
-            var cart = await GetOrCreateCartAsync(userId);
+       var cart = await GetOrCreateCartAsync(userId, anonymousId);
 
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
             if (cartItem != null)
             {
                 cart.CartItems.Remove(cartItem);
                 _context.CartItems.Remove(cartItem);
-                cart.LastUpdatedDate = DateTime.UtcNow;
+                cart.LastModifiedDate = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
             }
             return cart;
@@ -154,13 +160,13 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Clears all items from the shopping cart.
         /// </summary>
-        public async Task ClearCartAsync(Guid userId)
+        public async Task ClearCartAsync(Guid userId, string? anonymousId)
         {
-            var cart = await GetOrCreateCartAsync(userId);
+       var cart = await GetOrCreateCartAsync(userId, anonymousId);
             if (cart != null)
             {
                 _context.CartItems.RemoveRange(cart.CartItems);
-                cart.LastUpdatedDate = DateTime.UtcNow;
+                cart.LastModifiedDate = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
             }
             else
@@ -171,10 +177,18 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Gets the current items in a shopping cart.
         /// </summary>
-        public async Task<List<CartItem>> GetCartItemsAsync(Guid userId)
+        public async Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(Guid userId, string? anonymousId)
         {
-            var cart = await GetOrCreateCartAsync(userId);
-            return cart.CartItems.ToList();
+            var cart = await GetOrCreateCartAsync(userId, anonymousId);
+            return ApiResponse<List<CartItemDto>>.Success(cart.CartItems.Select(x => new CartItemDto
+            {
+                ProductId = x.ProductId,
+                ProductName = x.Product.Name,
+                Quantity = x.Quantity,
+                Currency = x.Currency,
+                UnitPrice = x.UnitPrice,
+                TotalPrice = x.TotalPrice
+            }).ToList());
         }
         public async Task<int> GetCartItemCountAsync(Guid? userId)
         {
@@ -182,28 +196,26 @@ namespace eCommerce.Application.Services
             return cart?.CartItems.Sum(item => item.Quantity) ?? 0;
         }
         // NEW: Phương thức hợp nhất giỏ hàng
-        public async Task MergeCartsAsync(Guid? anonymousUserId, Guid? authenticatedUserId)
+        public async Task MergeCartsAsync(Guid? authenticatedUserId, string? anonymousUserId)
         {
 
-            var anonymousCart = await _context.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.UserId == anonymousUserId);
+            var anonymousCart = await _context.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.AnonymousId == anonymousUserId);
+            
+            if (anonymousCart == null)
+                return;
+
             var authenticatedCart = await _context.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.UserId == authenticatedUserId);
 
-            if (anonymousCart == null && authenticatedCart == null)
-            {
-                _logger.LogInformation("No carts to merge.");
-                return;
-            }
-
             // Nếu người dùng đã đăng nhập chưa có giỏ hàng, chỉ cần chuyển giỏ hàng ẩn danh cho họ
-            if (authenticatedCart == null && anonymousCart != null)
+            if (anonymousCart != null)
             {
                 anonymousCart.UserId = authenticatedUserId;
-                anonymousCart.LastUpdatedDate = DateTime.UtcNow;
+                anonymousCart.AnonymousId = null;
+                anonymousCart.LastModifiedDate = DateTime.UtcNow;
                 _context.Carts.Update(anonymousCart);
-                _logger.LogInformation($"Moved anonymous cart {anonymousCart.Id} to authenticated user {authenticatedUserId}.");
             }
             // Nếu người dùng đã đăng nhập đã có giỏ hàng, và người dùng ẩn danh cũng có giỏ hàng, thì hợp nhất
-            else if (authenticatedCart != null && anonymousCart != null)
+            else
             {
                 foreach (var anonymousItem in anonymousCart.CartItems.ToList()) // ToList() to avoid modification issues during iteration
                 {
@@ -218,7 +230,6 @@ namespace eCommerce.Application.Services
                     else
                     {
                         // Thêm mặt hàng mới từ giỏ hàng ẩn danh vào giỏ hàng đã đăng nhập
-                        anonymousItem.CartId = authenticatedCart.Id; // Thay đổi CartId của item
                         authenticatedCart.CartItems.Add(anonymousItem);
                         _context.CartItems.Update(anonymousItem); // Cập nhật để EF biết nó đã thay đổi CartId
                     }
@@ -226,11 +237,9 @@ namespace eCommerce.Application.Services
 
                 // Xóa giỏ hàng ẩn danh sau khi hợp nhất
                 _context.Carts.Remove(anonymousCart);
-                _logger.LogInformation($"Merged anonymous cart {anonymousCart.Id} into authenticated cart {authenticatedCart.Id}.");
             }
 
             await _context.SaveChangesAsync();
-            _logger.LogInformation($"Cart merge completed for user {authenticatedUserId}.");
         }
     }
 }

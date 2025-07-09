@@ -5,25 +5,26 @@ using System.Security.Claims;
 using eCommerce.Web.Services.IService;
 using System.Net;
 using Microsoft.Extensions.Localization;
+using eCommerce.Shared.Common;
 
 namespace eCommerce.Web.Controllers
 {
-    public class ShoppingCartController : Controller
+    public class CartController : BaseController
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<ShoppingCartController> _logger;
+        private readonly ILogger<CartController> _logger;
         private readonly IShoppingCartApiClient _cartService;
         private readonly string _apiBaseUrl;
-        private readonly IStringLocalizer<SharedResources> _sharedLocalizer;
-        public ShoppingCartController(
+        private readonly IStringLocalizer<SharedResources> _localizer;
+        public CartController(
             IHttpClientFactory httpClientFactory
             , IConfiguration configuration
-            , ILogger<ShoppingCartController> logger
-            , StringLocalizer<SharedResources> sharedLocalizer
+            , ILogger<CartController> logger
+            , IStringLocalizer<SharedResources> localizer
             , IShoppingCartApiClient cartService)
         {
-            _sharedLocalizer = sharedLocalizer;
+            _localizer = localizer;
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _logger = logger;
@@ -41,13 +42,12 @@ namespace eCommerce.Web.Controllers
             return null;
         }
         // Helper to get the anonymous cart ID from the cookie
-        private Guid? GetAnonymousCartIdFromCookie()
+        private string? GetAnonymousCartIdFromCookie()
         {
-            var anonymousCartCookieName = "AnonymousCartId";
-            var anonymousIdString = HttpContext.Request.Cookies[anonymousCartCookieName];
-            if (Guid.TryParse(anonymousIdString, out Guid anonymousId))
+            var anonymousIdString = HttpContext.Request.Cookies[SD.AnonymousId];
+            if (!string.IsNullOrEmpty(anonymousIdString))
             {
-                return anonymousId;
+                return anonymousIdString;
             }
             return null;
         }
@@ -56,9 +56,10 @@ namespace eCommerce.Web.Controllers
 
             ViewBag.CurrentRegion = HttpContext.Session.GetString("CurrentRegion") ?? "US";
             List<CartItemDto> cartItems = new List<CartItemDto>();
+            var anynomousId = GetAnonymousCartIdFromCookie();
             try
             {
-                cartItems = (await _cartService.GetCartItemsAsync()).Data;
+                cartItems = (await _cartService.GetCartItemsAsync(anynomousId)).Data;
             }
             catch (Exception ex)
             {
@@ -73,28 +74,28 @@ namespace eCommerce.Web.Controllers
             try
             {
                 var currentItemCount = await _cartService.AddItemToCartAsync( new AddToCartRequestDto{ ProductId = productId,Quantity = quantity });
-                TempData["SuccessMessage"] = _sharedLocalizer["ProductAddedToCart"].Value;
+                TempData["SuccessMessage"] = _localizer["ProductAddedToCart"].Value;
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    return Json(new { success = true, message = _sharedLocalizer["ProductAddedToCart"].Value, cartItemCount = currentItemCount });
+                    return Json(new { success = true, message = _localizer["ProductAddedToCart"].Value, cartItemCount = currentItemCount });
                 }
             }
             catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
             {
-                TempData["ErrorMessage"] = _sharedLocalizer["ProductNotFound"].Value;
+                TempData["ErrorMessage"] = _localizer["ProductNotFound"].Value;
                 _logger.LogWarning($"Attempted to add non-existent product ID: {productId}");
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    return Json(new { success = false, message = _sharedLocalizer["ProductNotFound"].Value });
+                    return Json(new { success = false, message = _localizer["ProductNotFound"].Value });
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error adding product to cart for product ID: {ProductId}", productId);
-                TempData["ErrorMessage"] = _sharedLocalizer["ErrorAddingProductToCart"].Value;
+                TempData["ErrorMessage"] = _localizer["ErrorAddingProductToCart"].Value;
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    return Json(new { success = false, message = _sharedLocalizer["ErrorAddingProductToCart"].Value });
+                    return Json(new { success = false, message = _localizer["ErrorAddingProductToCart"].Value });
                 }
             }
             return RedirectToAction("Index", "Cart");
@@ -109,15 +110,15 @@ namespace eCommerce.Web.Controllers
             }
             catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
             {
-                return NotFound(_sharedLocalizer["ProductNotFoundInCart"].Value);
+                return NotFound(_localizer["ProductNotFoundInCart"].Value);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error updating cart quantity for product ID: {ProductId}", productId);
-                return BadRequest(_sharedLocalizer["ErrorUpdatingCart"].Value);
+                return BadRequest(_localizer["ErrorUpdatingCart"].Value);
             }
-
-            var cartItems = await _cartService.GetCartItemsAsync();
+            var anynomousId = GetAnonymousCartIdFromCookie();
+            var cartItems = await _cartService.GetCartItemsAsync(anynomousId);
             return PartialView("_CartItemsPartial", cartItems);
         }
 
@@ -130,15 +131,15 @@ namespace eCommerce.Web.Controllers
             }
             catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
             {
-                return NotFound(_sharedLocalizer["ProductNotFoundInCart"].Value);
+                return NotFound(_localizer["ProductNotFoundInCart"].Value);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error removing item from cart for product ID: {ProductId}", productId);
-                return BadRequest(_sharedLocalizer["ErrorRemovingItem"].Value);
+                return BadRequest(_localizer["ErrorRemovingItem"].Value);
             }
-
-            var cartItems = await _cartService.GetCartItemsAsync();
+            var anynomousId = GetAnonymousCartIdFromCookie();
+            var cartItems = await _cartService.GetCartItemsAsync(anynomousId);
             return PartialView("_CartItemsPartial", cartItems);
         }
         // Action to get cart item count (typically called via AJAX for header display)
@@ -147,7 +148,8 @@ namespace eCommerce.Web.Controllers
         {
             try
             {
-                var cartItems = await _cartService.GetCartItemsAsync();
+                var anynomousId = GetAnonymousCartIdFromCookie();
+                var cartItems = await _cartService.GetCartItemsAsync(anynomousId);
                 var count = cartItems.Data.Sum(ci => ci.Quantity);
                 return Ok(count);
             }

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace eCommerce.Web.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
         private readonly IAuthApiClient _authService;
         private readonly ITokenProvider _tokenProvider;
@@ -45,12 +45,8 @@ namespace eCommerce.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Get the anonymous cart ID BEFORE successful login (from the browser's cookie)
-                var anonymousCartCookieName = "AnonymousCartId";
-                Guid? anonymousUserId = null;
-                if (Guid.TryParse(Request.Cookies[anonymousCartCookieName], out Guid parsedAnonymousId))
-                {
-                    anonymousUserId = parsedAnonymousId;
-                }
+
+                var anonymousId = Request.Cookies[SD.AnonymousId];
 
                 // --- Replace this with your ACTUAL authentication logic ---
                 // This is a PLACEHOLDER for demonstrating cart merge
@@ -78,14 +74,13 @@ namespace eCommerce.Web.Controllers
                 // --- End of placeholder authentication logic ---
 
                 // AFTER successful login, perform cart merge
-                if (anonymousUserId.HasValue && anonymousUserId.Value != authenticatedUserId)
+                if (!string.IsNullOrEmpty(anonymousId))
                 {
                     try
                     {
-                        await _cartService.MergeCartsAsync(anonymousUserId.Value, authenticatedUserId);
+                        await _cartService.MergeCartsAsync(authenticatedUserId, anonymousId);
                         // Delete the anonymous cart cookie from the browser after successful merge
-                        Response.Cookies.Delete(anonymousCartCookieName);
-                        _logger.LogInformation($"Merged cart for anonymous user {anonymousUserId.Value} to authenticated user {authenticatedUserId}.");
+                        Response.Cookies.Delete(anonymousId);
                     }
                     catch (HttpRequestException ex)
                     {
@@ -136,12 +131,7 @@ namespace eCommerce.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var anonymousCartCookieName = "AnonymousCartId";
-                Guid? anonymousUserId = null;
-                if (Guid.TryParse(Request.Cookies[anonymousCartCookieName], out Guid parsedAnonymousId))
-                {
-                    anonymousUserId = parsedAnonymousId;
-                }
+                var anonymousUserId = Request.Cookies[SD.AnonymousId];
 
                 // --- Replace this with your ACTUAL registration logic ---
                 Guid newlyRegisteredUserId;
@@ -166,13 +156,12 @@ namespace eCommerce.Web.Controllers
                 }
                 // --- End of placeholder registration logic ---
 
-                if (anonymousUserId.HasValue && anonymousUserId.Value != newlyRegisteredUserId)
+                if (!string.IsNullOrEmpty(anonymousUserId) && anonymousUserId != newlyRegisteredUserId.ToString())
                 {
                     try
                     {
-                        await _cartService.MergeCartsAsync(anonymousUserId.Value, newlyRegisteredUserId);
-                        Response.Cookies.Delete(anonymousCartCookieName);
-                        _logger.LogInformation($"Merged cart for anonymous user {anonymousUserId.Value} to newly registered user {newlyRegisteredUserId}.");
+                        await _cartService.MergeCartsAsync(newlyRegisteredUserId, anonymousUserId);
+                        Response.Cookies.Delete(anonymousUserId);
                     }
                     catch (HttpRequestException ex)
                     {

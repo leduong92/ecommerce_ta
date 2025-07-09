@@ -1,4 +1,5 @@
-﻿using eCommerce.Domain.Entities;
+﻿using eCommerce.Application.Dtos;
+using eCommerce.Domain.Entities;
 using eCommerce.Shared.Common;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ namespace eCommerce.Application.Interfaces
 {
     public interface IShoppingCartService
     {
-        Task<Cart> GetOrCreateCartAsync(Guid userId);
-        Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId);
-        Task<Cart> UpdateCartItemQuantityAsync(int productId, int quantity, Guid userId);
-        Task<Cart> RemoveFromCartAsync(int productId, Guid userId);
-        Task ClearCartAsync(Guid userId);
-        Task<List<CartItem>> GetCartItemsAsync(Guid userId);
+        Task<Cart> GetOrCreateCartAsync(Guid? userId, string? anonymousId);
+        Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId, string? anonymousId);
+        Task<Cart> UpdateCartItemQuantityAsync(int productId, int quantity, Guid userId, string? anonymousId);
+        Task<Cart> RemoveFromCartAsync(int productId, Guid userId, string? anonymousId);
+        Task ClearCartAsync(Guid userId, string? anonymousId);
+        Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(Guid userId, string? anonymousId);
         Task<int> GetCartItemCountAsync(Guid? userId);
-        Task MergeCartsAsync(Guid? anonymousUserId, Guid? authenticatedUserId);
+        Task MergeCartsAsync(Guid? authenticatedUserId, string? anonymousId);
     }
 }

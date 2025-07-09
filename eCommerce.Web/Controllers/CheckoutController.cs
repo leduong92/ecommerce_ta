@@ -7,7 +7,7 @@ using eCommerce.Domain.Entities;
 
 namespace eCommerce.Web.Controllers
 {
-    public class CheckoutController : Controller
+    public class CheckoutController : BaseController
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
@@ -55,7 +55,7 @@ namespace eCommerce.Web.Controllers
             // You might want to pre-fill address if user is logged in or from previous session
             var model = new CheckoutRequest
             {
-                SessionId = sessionId,
+                AnonymousId = sessionId,
                 // Prefill some dummy data for testing
                 ShippingFirstName = "John",
                 ShippingLastName = "Doe",
@@ -82,13 +82,13 @@ namespace eCommerce.Web.Controllers
                 TempData["ErrorMessage"] = "Session expired. Please add items to cart again.";
                 return RedirectToAction("Index", "Cart");
             }
-            model.SessionId = sessionId;
+            model.AnonymousId = sessionId;
 
             var client = _httpClientFactory.CreateClient("ApiClient");
 
             // Shipping calculation might require current cart items for weight/dimensions
             // Retrieve cart items to pass to shipping calculation
-            var cartResponse = await client.GetAsync($"{_apiBaseUrl}ShoppingCart/{model.SessionId}");
+            var cartResponse = await client.GetAsync($"{_apiBaseUrl}Cart/{model.AnonymousId}");
             if (!cartResponse.IsSuccessStatusCode)
             {
                 TempData["ErrorMessage"] = "Could not load cart for shipping calculation.";
@@ -148,12 +148,12 @@ namespace eCommerce.Web.Controllers
                 TempData["ErrorMessage"] = "Session expired. Please add items to cart again.";
                 return RedirectToAction("Index", "Cart");
             }
-            model.SessionId = sessionId;
+            model.AnonymousId = sessionId;
 
             var client = _httpClientFactory.CreateClient("ApiClient");
 
             // Re-fetch cart items to ensure OrderItemDetails is correctly populated
-            var cartResponse = await client.GetAsync($"{_apiBaseUrl}ShoppingCart/{model.SessionId}");
+            var cartResponse = await client.GetAsync($"{_apiBaseUrl}Cart/{model.AnonymousId}");
             if (!cartResponse.IsSuccessStatusCode)
             {
                 TempData["ErrorMessage"] = "Could not load cart for order placement.";

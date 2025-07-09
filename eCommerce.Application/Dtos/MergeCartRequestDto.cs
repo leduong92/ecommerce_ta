@@ -8,6 +8,7 @@ namespace eCommerce.Application.Dtos
 {
     public class MergeCartRequestDto
     {
-        public Guid AnonymousUserId { get; set; }
+        public Guid UserId { get; set; }
+        public string AnonymousId { get; set; } = null!;
     }
 }

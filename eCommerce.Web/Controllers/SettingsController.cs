@@ -2,7 +2,7 @@
 
 namespace eCommerce.Web.Controllers
 {
-    public class SettingsController : Controller
+    public class SettingsController : BaseController
     {
         public SettingsController()
         {

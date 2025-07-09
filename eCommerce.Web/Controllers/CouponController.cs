@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Web.Controllers
 {
-    public class CouponController : Controller
+    public class CouponController : BaseController
     {
         private readonly ICouponApiClient _couponService;
 

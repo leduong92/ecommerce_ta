@@ -31,7 +31,7 @@ namespace eCommerce.Application.Dtos
 
     public class InventoryItemDto
     {
-        public string WarehouseId { get; set; }
+        public int WarehouseId { get; set; }
         public int Stock { get; set; }
     }
 }
