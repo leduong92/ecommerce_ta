@@ -49,11 +49,11 @@ namespace eCommerce.BackendApi.Controllers
         /// <param name="longitude">Optional: Customer's longitude for more accurate nearest warehouse finding.</param>
         /// <returns>A ProductDetailDto.</returns>
         [HttpGet("{productId}/detail/{regionCode}")]
-        public async Task<IActionResult> GetProductDetail(int productId, string regionCode, [FromQuery] double? latitude, [FromQuery] double? longitude)
+        public async Task<IActionResult> GetProductDetail(int productId, string regionCode, [FromQuery] double? latitude, [FromQuery] double? longitude, int? colorId = null, int? sizeId = null)
         {
             try
             {
-                var product = await _productService.GetProductDetailsAsync(productId, regionCode, latitude, longitude);
+                var product = await _productService.GetProductDetailsAsync(productId, regionCode, latitude, longitude, colorId, sizeId);
                 if (product == null)
                 {
                     return NotFound($"Product {productId} not found or not available in region '{regionCode}'.");

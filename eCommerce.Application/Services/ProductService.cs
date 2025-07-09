@@ -35,7 +35,7 @@ namespace eCommerce.Application.Services
             return ApiResponse<List<InventoryItemDto>>.Success(warehouses);
         }
 
-        public async Task<ApiResponse<ProductDetailDto>?> GetProductDetailsAsync(int productId, string regionCode, double? customerLatitude, double? customerLongitude)
+        public async Task<ApiResponse<ProductDetailDto>?> GetProductDetailsAsync(int productId, string regionCode, double? customerLatitude, double? customerLongitude, int? colorId = null, int? sizeId = null)
         {
             var region = await _context.Regions.FirstOrDefaultAsync(r => r.Code == regionCode);
             if (region == null)
@@ -87,7 +87,11 @@ namespace eCommerce.Application.Services
             var price = product.Prices?.FirstOrDefault()?.Price;
             var currency = product.Prices?.FirstOrDefault()?.Currency;
 
-            var selectedVariant = product.Variants.First();
+            var selectedVariant = product.Variants
+                                .FirstOrDefault(v =>
+                                    (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
+                                    (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId))
+                                ) ?? product.Variants.First();
 
             // Flatten variant-option-value pairs for grouping
             var variantOptionValues = product.Variants

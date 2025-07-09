@@ -29,7 +29,7 @@ namespace eCommerce.Web.Controllers
             _apiBaseUrl = configuration["ApiBaseUrl"] ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
         }
         [HttpGet]
-        public async Task<IActionResult> Detail(int id, string regionCode)
+        public async Task<IActionResult> Detail(int id, string regionCode, int? colorId = null, int? sizeId = null)
         {
             ViewBag.CurrentRegion = regionCode;
             ViewData["Message"] = _localizer["Welcome"];

@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = Model?.Name ?? SharedLocalizer["ProductDetails"];
+    var selectedColor = Context.Request.Query["color"].ToString();
+    var selectedSize = Context.Request.Query["size"].ToString();
 }
 
 <h1 class="my-4">@Model?.Name</h1>
@@ -19,31 +21,25 @@
                 <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
                 <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
                 <div>
-                    <div>
-                        <label>Color:</label>
-                        <select id="colorSelect">
-                            @foreach (var option in Model.ColorOptions)
-                            {
-                                <option value="@option.ValueId" data-variant-ids="@string.Join(",", option.VariantIds)" selected=@(option.IsSelected ? "selected" : null)>@option.Value</option>
-                            }
-                        </select>
-                    </div>
-                    <div>
-                        @foreach(var color in Model.SelectedVariant.ImageList)
+                    <h4>Color</h4>
+                    <div class="color-options">
+                        @foreach (var color in Model.ColorOptions)
                         {
-                            <div>@color.ImageUrl</div>
+                            var isActive = color.IsSelected ? "selected" : "";
+                            <button class="color-option @isActive" data-value="@color.ValueId">@color.Value</button>
                         }
                     </div>
                 </div>
 
                 <div>
-                    <label>Size:</label>
-                    <select id="sizeSelect">
-                        @foreach (var option in Model.SizeOptions)
+                    <h4>Size</h4>
+                    <div class="size-options">
+                        @foreach (var size in Model.SizeOptions)
                         {
-                            <option value="@option.ValueId" data-variant-ids="@string.Join(",", option.VariantIds)" selected=@(option.IsSelected ? "selected" : null)>@option.Value</option>
+                            var isActive = size.IsSelected ? "selected" : "";
+                            <button class="size-option @isActive" data-value="@size.ValueId">@size.Value</button>
                         }
-                    </select>
+                    </div>
                 </div>
 
                 <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
@@ -97,41 +93,29 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            const colorSelect = document.getElementById('colorSelect');
-            const sizeSelect = document.getElementById('sizeSelect');
-
-            function findMatchingVariant() {
-                const colorVariants = colorSelect.options[colorSelect.selectedIndex].dataset.variantIds.split(',');
-                const sizeVariants = sizeSelect.options[sizeSelect.selectedIndex].dataset.variantIds.split(',');
-                const match = colorVariants.find(id => sizeVariants.includes(id));
-                if (match) {
-                    $.ajax({
-                        url: '@Url.Action("GetVariant", "Product")',
-                        type: 'GET',
-                        data: { variantId: match },
-                        success: function (response) {
-                            document.getElementById('mainImage').src = data.imageUrl;
-                            document.getElementById('sku').textContent = data.sku;
-                            document.getElementById('price').textContent = `$${data.price}`;
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error adding to cart: ", error);
-                            alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
-                        }
-                    });
-                    // fetch(`/Product/GetVariant?variantId=${match}`)
-                    //     .then(res => res.json())
-                    //     .then(data => {
-                    //         document.getElementById('mainImage').src = data.imageUrl;
-                    //         document.getElementById('sku').textContent = data.sku;
-                    //         document.getElementById('price').textContent = `$${data.price}`;
-                    //     });
-                }
+        document.addEventListener("DOMContentLoaded", function () {
+            function updateUrlParams(colorId, sizeId) {
+                const url = new URL(window.location.href);
+                if (colorId) url.searchParams.set("color", colorId);
+                if (sizeId) url.searchParams.set("size", sizeId);
+                window.location.href = url.toString();
             }
 
-            colorSelect.addEventListener('change', findMatchingVariant);
-            sizeSelect.addEventListener('change', findMatchingVariant);
+            document.querySelectorAll(".color-option").forEach(el => {
+                el.addEventListener("click", () => {
+                    const colorId = el.dataset.value;
+                    const sizeId = document.querySelector(".size-option.selected")?.dataset.value;
+                    updateUrlParams(colorId, sizeId);
+                });
+            });
+
+            document.querySelectorAll(".size-option").forEach(el => {
+                el.addEventListener("click", () => {
+                    const sizeId = el.dataset.value;
+                    const colorId = document.querySelector(".color-option.selected")?.dataset.value;
+                    updateUrlParams(colorId, sizeId);
+                });
+            });
 
             $('#addToCartBtn').click(function () {
                 var productId = $(this).data('product-id');
