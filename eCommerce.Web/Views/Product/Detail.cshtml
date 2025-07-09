@@ -20,28 +20,32 @@
                 <p>@SharedLocalizer["Category"]: @Model?.Category</p>
                 <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
                 <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
-                <div>
-                    <h4>Color</h4>
-                    <div class="color-options">
-                        @foreach (var color in Model.ColorOptions)
-                        {
-                            var isActive = color.IsSelected ? "selected" : "";
-                            <button class="color-option @isActive" data-value="@color.ValueId">@color.Value</button>
-                        }
+                @if (Model.ColorOptions.Count > 0)
+                {
+                    <div>
+                        <h4>Color</h4>
+                        <div class="color-options">
+                            @foreach (var color in Model.ColorOptions)
+                            {
+                                var isActive = color.IsSelected ? "selected" : "";
+                                <button class="color-option @isActive" data-value="@color.ValueId">@color.Value</button>
+                            }
+                        </div>
                     </div>
-                </div>
-
-                <div>
-                    <h4>Size</h4>
-                    <div class="size-options">
-                        @foreach (var size in Model.SizeOptions)
-                        {
-                            var isActive = size.IsSelected ? "selected" : "";
-                            <button class="size-option @isActive" data-value="@size.ValueId">@size.Value</button>
-                        }
+                }
+                @if (Model.SizeOptions.Count > 0)
+                {
+                    <div>
+                        <h4>Size</h4>
+                        <div class="size-options">
+                            @foreach (var size in Model.SizeOptions)
+                            {
+                                var isActive = size.IsSelected ? "selected" : "";
+                                <button class="size-option @isActive" data-value="@size.ValueId">@size.Value</button>
+                            }
+                        </div>
                     </div>
-                </div>
-
+                }
                 <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
                 <p>
                     @if (Model?.EstimatedAvailableStock.HasValue == true)
@@ -94,26 +98,31 @@
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            function updateUrlParams(colorId, sizeId) {
+            function updateUrlParams(newColorId, newSizeId) {
                 const url = new URL(window.location.href);
+                const currentColor = url.searchParams.get("color");
+                const currentSize = url.searchParams.get("size");
+
+                const colorId = newColorId || currentColor;
+                const sizeId = newSizeId || currentSize;
+
                 if (colorId) url.searchParams.set("color", colorId);
                 if (sizeId) url.searchParams.set("size", sizeId);
-                window.location.href = url.toString();
+
+                window.location.href = url.toString(); // Reload with updated values
             }
 
             document.querySelectorAll(".color-option").forEach(el => {
                 el.addEventListener("click", () => {
                     const colorId = el.dataset.value;
-                    const sizeId = document.querySelector(".size-option.selected")?.dataset.value;
-                    updateUrlParams(colorId, sizeId);
+                    updateUrlParams(colorId, null);
                 });
             });
 
             document.querySelectorAll(".size-option").forEach(el => {
                 el.addEventListener("click", () => {
                     const sizeId = el.dataset.value;
-                    const colorId = document.querySelector(".color-option.selected")?.dataset.value;
-                    updateUrlParams(colorId, sizeId);
+                    updateUrlParams(null, sizeId);
                 });
             });
 

@@ -91,7 +91,7 @@ namespace eCommerce.Application.Services
                                 .FirstOrDefault(v =>
                                     (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
                                     (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId))
-                                ) ?? product.Variants.First();
+                                ) ?? product.Variants.FirstOrDefault();
 
             // Flatten variant-option-value pairs for grouping
             var variantOptionValues = product.Variants
@@ -133,7 +133,7 @@ namespace eCommerce.Application.Services
                 EstimatedAvailableStock = inventory?.AvailableQuantity,
                 FulfillingWarehouseName = nearestWarehouse?.Name,
                 FulfillingWarehouseAddress = nearestWarehouse != null ? $"{nearestWarehouse.Address1}, {nearestWarehouse.City}" : null,
-                SelectedVariant = new VariantDto
+                SelectedVariant = selectedVariant != null ? new VariantDto
                 {
                     Id = selectedVariant.Id,
                     Sku = selectedVariant.Sku,
@@ -146,7 +146,7 @@ namespace eCommerce.Application.Services
                         IsPrimary = x.IsPrimary,
                         ProductVariantId = x.ProductVariantId
                     }).ToList()
-                },
+                } : null,
                 ColorOptions = optionGroups.ContainsKey("Color") ? optionGroups["Color"] : new List<OptionDto>(),
                 SizeOptions = optionGroups.ContainsKey("Size") ? optionGroups["Size"] : new List<OptionDto>()
             };
