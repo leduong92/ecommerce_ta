@@ -34,7 +34,17 @@
 @if (Model.SelectedVariant != null)
 {
     <div>
-        <img src="@Model.SelectedVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl" width="200" />
+        <div id="variant-images">
+            @if (Model.SelectedVariant?.Images != null && Model.SelectedVariant.Images.Any())
+            {
+                <div class="image-gallery">
+                    @foreach (var img in Model.SelectedVariant.Images)
+                    {
+                        <img src="@img.ImageUrl" alt="Product Image" class="img-thumbnail me-2" style="max-height: 100px;" />
+                    }
+                </div>
+            }
+        </div>
         <p>SKU: @Model.SelectedVariant.Sku</p>
         <p>Variant Price: $@Model.SelectedVariant.PriceAdjustment.ToString("0.00")</p>
         <input type="hidden" id="variantId" value="@Model.SelectedVariant.Id" />

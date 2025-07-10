@@ -87,16 +87,52 @@ namespace eCommerce.Application.Services
             var price = product.Prices?.FirstOrDefault()?.Price;
             var currency = product.Prices?.FirstOrDefault()?.Currency;
 
-            // CHỌN SELECTED VARIANT ĐÚNG CẢ COLOR + SIZE
-            var selectedVariant = product.Variants.FirstOrDefault(v =>
-                (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId.Value)) &&
-                (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId.Value)) &&
-                (!colorId.HasValue || !sizeId.HasValue ||
-                    v.VariantOptionValues.Count(x => x.ProductOptionValueId == colorId.Value || x.ProductOptionValueId == sizeId.Value) == 2)
-            ) ?? product.Variants.FirstOrDefault();
+            // Step 1: CHỌN SELECTED VARIANT ĐÚNG CẢ COLOR + SIZE
+            var selectedVariant = product.Variants
+                .FirstOrDefault(v =>
+                    (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
+                    (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)));
 
-            // Flatten variant-option-value pairs for grouping
-            // LẤY DANH SÁCH OPTION GROUPS
+            // 2. Nếu không có, fallback chỉ theo color
+            if (selectedVariant == null && colorId.HasValue)
+            {
+                selectedVariant = product.Variants.FirstOrDefault(v =>
+                    v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId));
+            }
+
+            if (selectedVariant == null && colorId.HasValue)
+            {
+                selectedVariant = product.Variants.FirstOrDefault(v =>
+                    v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId));
+            }
+            // 3. Nếu vẫn không có, fallback chỉ theo size
+            if (selectedVariant == null && sizeId.HasValue)
+            {
+                selectedVariant = product.Variants.FirstOrDefault(v =>
+                    v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId));
+            }
+
+            selectedVariant ??= product.Variants.FirstOrDefault();
+
+            // Step 2: Tìm colorId / sizeId mặc định từ selectedVariant nếu không có truyền lên
+            var defaultColorId = selectedVariant?.VariantOptionValues
+                .FirstOrDefault(x => x.ProductOptionValue.Option.Name == "Color")?.ProductOptionValueId;
+
+            var defaultSizeId = selectedVariant?.VariantOptionValues
+                .FirstOrDefault(x => x.ProductOptionValue.Option.Name == "Size")?.ProductOptionValueId;
+
+            // Step 3: Danh sách các variant matching theo color / size
+            var filteredVariantIdsByColor = product.Variants
+                .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (colorId ?? defaultColorId)))
+                .Select(v => v.Id)
+                .ToList();
+
+            var filteredVariantIdsBySize = product.Variants
+                .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (sizeId ?? defaultSizeId)))
+                .Select(v => v.Id)
+                .ToList();
+
+            // Step 4: Group theo Option (Color/Size)
             var variantOptionValues = product.Variants
                 .SelectMany(v => v.VariantOptionValues
                     .Select(vov => new { VariantId = v.Id, vov.ProductOptionValue }))
@@ -109,13 +145,26 @@ namespace eCommerce.Application.Services
                     g => g.GroupBy(x => x.ProductOptionValue.Id).Select(g2 =>
                     {
                         var ov = g2.First().ProductOptionValue;
+                        var ovVariantIds = g2.Select(x => x.VariantId).Distinct().ToList();
+
+                        bool isAvailable = true;
+
+                        if (ov.Option.Name == "Size")
+                        {
+                            isAvailable = ovVariantIds.Intersect(filteredVariantIdsByColor).Any();
+                        }
+                        else if (ov.Option.Name == "Color")
+                        {
+                            isAvailable = ovVariantIds.Intersect(filteredVariantIdsBySize).Any();
+                        }
+
                         return new OptionDto
                         {
                             ValueId = ov.Id,
                             Value = ov.Value,
-                            VariantIds = g2.Select(x => x.VariantId).Distinct().ToList(),
-                            IsSelected = selectedVariant != null &&
-                                        selectedVariant.VariantOptionValues.Any(vov => vov.ProductOptionValueId == ov.Id),
+                            VariantIds = ovVariantIds,
+                            IsSelected = selectedVariant?.VariantOptionValues.Any(vov => vov.ProductOptionValueId == ov.Id) ?? false,
+                            IsAvailable = isAvailable
                         };
                     }).ToList()
                 );

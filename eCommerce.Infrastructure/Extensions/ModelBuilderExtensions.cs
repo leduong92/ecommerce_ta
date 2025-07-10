@@ -971,17 +971,17 @@ namespace eCommerce.Infrastructure.Extensions
                 new { ProductVariantId = 1, ProductOptionValueId = 1 }, // Deep Black
                 new { ProductVariantId = 1, ProductOptionValueId = 4 }, // 36x12x40
 
-                new { ProductVariantId = 2, ProductOptionValueId = 1 },
-                new { ProductVariantId = 2, ProductOptionValueId = 5 },
+                new { ProductVariantId = 2, ProductOptionValueId = 1 }, // Deep Black
+                new { ProductVariantId = 2, ProductOptionValueId = 5 }, // 42x16x48
 
-                new { ProductVariantId = 3, ProductOptionValueId = 2 },
-                new { ProductVariantId = 3, ProductOptionValueId = 4 },
+                new { ProductVariantId = 3, ProductOptionValueId = 2 }, // White
+                new { ProductVariantId = 3, ProductOptionValueId = 4 }, // 36x12x40
 
-                new { ProductVariantId = 4, ProductOptionValueId = 3 },
-                new { ProductVariantId = 4, ProductOptionValueId = 5 },
+                new { ProductVariantId = 4, ProductOptionValueId = 3 }, // Oak
+                new { ProductVariantId = 4, ProductOptionValueId = 5 }, // 42x16x48
 
-                new { ProductVariantId = 5, ProductOptionValueId = 3 },
-                new { ProductVariantId = 5, ProductOptionValueId = 6 },
+                new { ProductVariantId = 5, ProductOptionValueId = 3 }, // Oak  
+                new { ProductVariantId = 5, ProductOptionValueId = 6 }, // 48x18x52
 
                 new { ProductVariantId = 6, ProductOptionValueId = 3 }, // Oak
                 new { ProductVariantId = 6, ProductOptionValueId = 8 }, // 180x100x75
