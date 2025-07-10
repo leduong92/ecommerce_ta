@@ -68,38 +68,38 @@ namespace eCommerce.Web.Controllers
 
             return View(cartItems);
         }
-        [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, int quantity = 1) // productId is now Guid
-        {
-            try
-            {
-                var currentItemCount = await _cartService.AddItemToCartAsync( new AddToCartRequestDto{ ProductId = productId,Quantity = quantity });
-                TempData["SuccessMessage"] = _localizer["ProductAddedToCart"].Value;
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = true, message = _localizer["ProductAddedToCart"].Value, cartItemCount = currentItemCount });
-                }
-            }
-            catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
-            {
-                TempData["ErrorMessage"] = _localizer["ProductNotFound"].Value;
-                _logger.LogWarning($"Attempted to add non-existent product ID: {productId}");
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = _localizer["ProductNotFound"].Value });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error adding product to cart for product ID: {ProductId}", productId);
-                TempData["ErrorMessage"] = _localizer["ErrorAddingProductToCart"].Value;
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = _localizer["ErrorAddingProductToCart"].Value });
-                }
-            }
-            return RedirectToAction("Index", "Cart");
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> AddToCart(int productId, int quantity = 1) // productId is now Guid
+        //{
+        //    try
+        //    {
+        //        var currentItemCount = await _cartService.AddItemToCartAsync( new AddToCartRequestDto{ ProductId = productId,Quantity = quantity });
+        //        TempData["SuccessMessage"] = _localizer["ProductAddedToCart"].Value;
+        //        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        //        {
+        //            return Json(new { success = true, message = _localizer["ProductAddedToCart"].Value, cartItemCount = currentItemCount });
+        //        }
+        //    }
+        //    catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
+        //    {
+        //        TempData["ErrorMessage"] = _localizer["ProductNotFound"].Value;
+        //        _logger.LogWarning($"Attempted to add non-existent product ID: {productId}");
+        //        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        //        {
+        //            return Json(new { success = false, message = _localizer["ProductNotFound"].Value });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error adding product to cart for product ID: {ProductId}", productId);
+        //        TempData["ErrorMessage"] = _localizer["ErrorAddingProductToCart"].Value;
+        //        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        //        {
+        //            return Json(new { success = false, message = _localizer["ErrorAddingProductToCart"].Value });
+        //        }
+        //    }
+        //    return RedirectToAction("Index", "Cart");
+        //}
 
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int productId, int quantity)

@@ -93,7 +93,7 @@ namespace eCommerce.Application.Services
 
             var unitPrice = productPrice.Price;
 
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId && ci.ProductVariantId == variantId);
             if (cartItem == null)
             {
                 var newItem = new CartItem()

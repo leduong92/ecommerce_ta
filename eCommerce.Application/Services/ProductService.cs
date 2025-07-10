@@ -191,6 +191,7 @@ namespace eCommerce.Application.Services
                     Id = selectedVariant.Id,
                     Sku = selectedVariant.Sku,
                     PriceAdjustment = selectedVariant.PriceAdjustment,
+                    ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault().ImageUrl ?? product.DefaultImageUrl,
                     Images = selectedVariant.Images.Select(x => new ProductImage
                     { 
                         Id = x.Id,
@@ -297,6 +298,7 @@ namespace eCommerce.Application.Services
                 Id = selectedVariant.Id,
                 Sku = selectedVariant.Sku,
                 PriceAdjustment = selectedVariant.PriceAdjustment,
+                ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault().ImageUrl ?? product.DefaultImageUrl,
                 Images = selectedVariant.Images.Select(i => new ProductImage
                 {
                     Id = i.Id,

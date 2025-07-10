@@ -75,13 +75,13 @@ namespace eCommerce.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, int quantity, string regionCode, int variantId)
+        public async Task<IActionResult> AddToCartAsync(AddToCartRequestDto request)
         {
             var anonymousId = Request.Cookies[SD.AnonymousId];
-            if (quantity <= 0)
+            if (request.Quantity <= 0)
             {
                 TempData["ErrorMessage"] = "Quantity must be positive.";
-                return RedirectToAction("Detail", new { id = productId, regionCode = regionCode });
+                return RedirectToAction("Detail", new { id = request.ProductId, regionCode = request.CustomerRegionCode });
             }
 
             var client = _httpClientFactory.CreateClient("ApiClient");
@@ -98,10 +98,10 @@ namespace eCommerce.Web.Controllers
             var requestData = new AddToCartRequestDto
             {
                 AnonymousId = anonymousId,
-                ProductId = productId,
-                Quantity = quantity,
-                CustomerRegionCode = regionCode,
-                VariantId = variantId
+                ProductId = request.ProductId,
+                Quantity = request.Quantity,
+                CustomerRegionCode = request.CustomerRegionCode,
+                VariantId = request.VariantId
             };
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
@@ -111,14 +111,24 @@ namespace eCommerce.Web.Controllers
             if (response.IsSuccessStatusCode)
             {
                 TempData["SuccessMessage"] = "Product added to cart successfully!";
-                return RedirectToAction("Index", "Cart");
+                return Json(new
+                {
+                    isSuccess = true,
+                    message = "Added to cart",
+                    redirectUrl = Url.Action("Index", "Cart")
+                });
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
                 _logger.LogError($"Error adding to cart: {response.StatusCode} - {errorContent}");
                 TempData["ErrorMessage"] = $"Error adding product to cart: {errorContent}";
-                return RedirectToAction("Detail", new { id = productId, regionCode = regionCode });
+                return Json(new
+                {
+                    isSuccess = false,
+                    message = "Failed",
+                    redirectUrl = Url.Action("Index", "Product")
+                });
             }
         }
 

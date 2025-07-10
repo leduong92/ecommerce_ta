@@ -14,7 +14,7 @@ namespace eCommerce.Domain.Entities
         public ProductVariant ProductVariant { get; set; }
         public string RegionCode { get; set; }
         public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; } // Price at the time of adding to cart
+        public decimal UnitPrice { get; set; } // Price at the time of adding to cart base + adjustment
         [NotMapped]
         public decimal TotalPrice => Quantity * UnitPrice;
     }

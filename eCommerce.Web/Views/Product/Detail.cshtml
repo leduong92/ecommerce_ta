@@ -11,6 +11,7 @@
 <input type="hidden" id="productId" value="@Model.Id" />
 <input type="hidden" id="regionCode" value="@ViewBag.CurrentRegion" />
 
+
 <div class="card mb-4">
     <div class="card-body">
         <div class="row">
@@ -66,19 +67,17 @@
                     @Html.Partial("_VariantOptionsPartial", Model)
                 </div>
 
-                <form asp-controller="Product" asp-action="AddToCart" method="post" class="mt-4">
+                <div class="input-group mb-3" style="max-width: 200px;">
+                    <input type="number" id="cart-quantity" class="form-control" value="1" min="1" max="100" />
+                    <button id="addToCartBtn" class="btn btn-primary" @(Model?.EstimatedAvailableStock == 0 ? "disabled" : "")>
+                        <i class="bi bi-cart-plus"></i> @SharedLocalizer["AddtoCart"]
+                    </button>
+                </div>
+                @if (Model?.EstimatedAvailableStock == 0)
+                {
+                    <p class="text-danger">@SharedLocalizer["ThisProductIsCurrentlyOutOfStock"]</p>
+                }
 
-                    <div class="input-group mb-3" style="max-width: 200px;">
-                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="100" />
-                        <button type="submit" class="btn btn-primary" @(Model?.EstimatedAvailableStock == 0 ? "disabled" : "")>
-                            <i class="bi bi-cart-plus"></i> @SharedLocalizer["AddtoCart"]
-                        </button>
-                    </div>
-                    @if (Model?.EstimatedAvailableStock == 0)
-                    {
-                        <p class="text-danger">@SharedLocalizer["ThisProductIsCurrentlyOutOfStock"]</p>
-                    }
-                </form>
             </div>
         </div>
     </div>
@@ -191,31 +190,27 @@
             bindOptionEvents();
 
             $('#addToCartBtn').click(function () {
-                var productId = $(this).data('product-id');
-                var productName = $(this).data('product-name'); // For success message only
-                var price = $(this).data('product-price'); // For success message only
-                var currency = $(this).data('product-currency'); // For success message only
-                var quantity = $('#productQuantity').val();
+                const productId = document.getElementById("productId").value;
+                const quantity = document.getElementById("cart-quantity").value;
+                const variantId = document.getElementById("variantId").value;
+                const regionCode = document.getElementById("regionCode").value;
 
                 $.ajax({
-                    url: '@Url.Action("AddToCart", "Cart")',
+                    url: '@Url.Action("AddToCart", "Product")',
                     type: 'POST',
-                    data: { productId: productId, quantity: quantity },
+                    data: { 
+                        productId: productId,
+                        quantity: quantity,
+                        variantId: variantId,
+                        customerRegionCode: regionCode
+                    },
                     success: function (response) {
-                        if (response.success) {
-                            alert(response.message);
-                            // Update cart item count in the header
-                            const cartCountElement = document.getElementById('cart-item-count');
-                            if (cartCountElement) {
-                                cartCountElement.innerText = response.cartItemCount;
-                            }
-                        } else {
-                            alert(response.message);
-                        }
+                        if (response.isSuccess) {
+                            window.location.href = response.redirectUrl;
+                        } 
                     },
                     error: function (xhr, status, error) {
                         console.error("Error adding to cart: ", error);
-                        alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
                     }
                 });
             });
