@@ -1,9 +1,9 @@
 ﻿@model ProductDetailDto
 
 @{
-    ViewData["Title"] = Model?.Name ?? SharedLocalizer["ProductDetails"];
-    var selectedColor = Context.Request.Query["color"].ToString();
-    var selectedSize = Context.Request.Query["size"].ToString();
+    ViewData["Title"] = Model.Name;
+    var selectedColorId = ViewBag.SelectedColorId as int?;
+    var selectedSizeId = ViewBag.SelectedSizeId as int?;
 }
 
 <h1 class="my-4">@Model?.Name</h1>
@@ -16,7 +16,8 @@
             </div>
             <div class="col-md-6">
                 <h3 class="my-3">@SharedLocalizer["ProductDetails"]</h3>
-                <h4>@SharedLocalizer["Price"]: @Model?.Price?.ToString("N2") @Model?.Currency</h4>
+                <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
+                <p id="price-display">@SharedLocalizer["Price"]: $@Model?.Price?.ToString("0.00") @Model.Currency</p>
                 <p>@SharedLocalizer["Category"]: @Model?.Category</p>
                 <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
                 <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
@@ -27,8 +28,8 @@
                         <div class="color-options">
                             @foreach (var color in Model.ColorOptions)
                             {
-                                var isActive = color.IsSelected ? "selected" : "";
-                                <button class="color-option @isActive" data-value="@color.ValueId">@color.Value</button>
+                                var isSelected = color.IsSelected ? "btn-primary" : "btn-outline-primary";
+                                <button class="color-option btn btn-sm @isSelected" data-value="@color.ValueId" data-selected="@(color.IsSelected.ToString().ToLower())">@color.Value</button>
                             }
                         </div>
                     </div>
@@ -40,13 +41,22 @@
                         <div class="size-options">
                             @foreach (var size in Model.SizeOptions)
                             {
-                                var isActive = size.IsSelected ? "selected" : "";
-                                <button class="size-option @isActive" data-value="@size.ValueId">@size.Value</button>
+                                var isSelected = size.IsSelected ? "btn-primary" : "btn-outline-primary";
+                                <button class="size-option btn btn-sm @isSelected" data-value="@size.ValueId" data-selected="@(size.IsSelected.ToString().ToLower())">@size.Value</button>
                             }
                         </div>
                     </div>
                 }
-                <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
+            
+                @if (Model.SelectedVariant != null)
+                {
+                    <div>
+                        <img src="@Model.SelectedVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl" width="200" />
+                        <p>SKU: @Model.SelectedVariant.Sku</p>
+                        <p>Variant Price: $@Model.SelectedVariant.PriceAdjustment.ToString("0.00")</p>
+                    </div>
+                    <input type="hidden" id="variantId" value="@Model.SelectedVariant.Id" />
+                }
                 <p>
                     @if (Model?.EstimatedAvailableStock.HasValue == true)
                     {

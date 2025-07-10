@@ -1,0 +1,8 @@
+﻿@model VariantDto
+
+<div id="variant-detail">
+    <img src="@Model.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl" width="200" />
+    <p>SKU: <span id="variant-sku">@Model.Sku</span></p>
+    <p>Price: $@Model.PriceAdjustment.ToString("0.00") </p>
+    <input type="hidden" id="variantId" value="@Model.Id" />
+</div>

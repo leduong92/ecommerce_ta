@@ -47,7 +47,7 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Adds a product to the shopping cart.
         /// </summary>
-        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId, string? anonymousId)
+        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId, string? anonymousId, int variantId)
         {
             var cart = await GetOrCreateCartAsync(userId, anonymousId);
 
@@ -87,6 +87,10 @@ namespace eCommerce.Application.Services
                 Console.WriteLine($"Warning: Using fallback price for product {productId} from region {productPrice.Region.Code}.");
             }
 
+            var exists = await _context.ProductVariants.AnyAsync(v => v.Id == variantId);
+            if (!exists)
+                throw new Exception("ProductVariant does not exist: " + variantId);
+
             var unitPrice = productPrice.Price;
 
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
@@ -99,6 +103,7 @@ namespace eCommerce.Application.Services
                     Quantity = quantity,
                     RegionCode = customerRegionCode,
                     Currency = productPrice.Currency,
+                    ProductVariantId = variantId,
                     UnitPrice = unitPrice // Use the region-specific price
                 };
                 cart.CartItems.Add(newItem);
@@ -180,15 +185,33 @@ namespace eCommerce.Application.Services
         public async Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(Guid userId, string? anonymousId)
         {
             var cart = await GetOrCreateCartAsync(userId, anonymousId);
-            return ApiResponse<List<CartItemDto>>.Success(cart.CartItems.Select(x => new CartItemDto
+
+            var items = await _context.CartItems
+                        .Include(x => x.ProductVariant)
+                            .ThenInclude(v => v.Product)
+                        .Include(x => x.ProductVariant.Images)
+                        .Include(x => x.ProductVariant.VariantOptionValues)
+                            .ThenInclude(vov => vov.ProductOptionValue)
+                                .ThenInclude(pov => pov.Option)
+                        .Where(x => x.CartId == cart.Id)
+                        .ToListAsync();
+
+            var result = items.Select(x => new CartItemDto
             {
-                ProductId = x.ProductId,
-                ProductName = x.Product.Name,
+                ProductId = x.ProductVariant.ProductId,
+                ProductName = x.ProductVariant.Product.Name,
+                ProductVariantId = x.ProductVariantId,
+                Sku = x.ProductVariant.Sku,
                 Quantity = x.Quantity,
                 Currency = x.Currency,
                 UnitPrice = x.UnitPrice,
-                TotalPrice = x.TotalPrice
-            }).ToList());
+                TotalPrice = x.Quantity * x.UnitPrice,
+                ImageUrl = x.ProductVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl,
+                VariantSummary = string.Join(", ", x.ProductVariant.VariantOptionValues
+            .Select(vov => $"{vov.ProductOptionValue.Option.Name}: {vov.ProductOptionValue.Value}"))
+            }).ToList();
+
+            return ApiResponse<List<CartItemDto>>.Success(result);
         }
         public async Task<int> GetCartItemCountAsync(Guid? userId)
         {

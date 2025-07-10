@@ -137,8 +137,8 @@ namespace eCommerce.Application.Services
                 {
                     Id = selectedVariant.Id,
                     Sku = selectedVariant.Sku,
-                    Price = selectedVariant.PriceAdjustment,
-                    ImageList = selectedVariant.Images.Select(x => new ProductImage
+                    PriceAdjustment = selectedVariant.PriceAdjustment,
+                    Images = selectedVariant.Images.Select(x => new ProductImage
                     { 
                         Id = x.Id,
                         ImageUrl = x.ImageUrl,
@@ -232,9 +232,9 @@ namespace eCommerce.Application.Services
             {
                 Id = variant.Id,
                 Sku = variant.Sku,
-                Price = variant.PriceAdjustment,
+                PriceAdjustment = variant.PriceAdjustment,
                 ImageUrl = variant.Images.FirstOrDefault(x => x.IsPrimary).ImageUrl ?? "",
-                ImageList = variant.Images.Select(x => new ProductImage
+                Images = variant.Images.Select(x => new ProductImage
                 {
                     Id = x.Id,
                     ImageUrl = x.ImageUrl,

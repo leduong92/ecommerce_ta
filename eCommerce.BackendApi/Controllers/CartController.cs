@@ -87,11 +87,10 @@ namespace eCommerce.BackendApi.Controllers
             }
 
             var userId = GetCurrentUserId();
-            var anonymousId = GetAnonymoustUserId();
 
             try
             {
-                var cart = await _cartService.AddToCartAsync(request.ProductId, request.Quantity, request.CustomerRegionCode, userId, request.AnonymousId);
+                var cart = await _cartService.AddToCartAsync(request.ProductId, request.Quantity, request.CustomerRegionCode, userId, request.AnonymousId, request.VariantId);
                 return Ok(new { Message = "Product added to cart.", CartId = cart.Id });
             }
             catch (ArgumentException ex)
@@ -103,7 +102,6 @@ namespace eCommerce.BackendApi.Controllers
         public async Task<IActionResult> UpdateCart([FromBody] UpdateCartRequest request)
         {
             var userId = GetCurrentUserId();
-            var anonymousId = GetAnonymoustUserId();
             try
             {
                 var cart = await _cartService.UpdateCartItemQuantityAsync(request.ProductId, request.Quantity, userId, request.AnonymousId);
@@ -118,7 +116,6 @@ namespace eCommerce.BackendApi.Controllers
         public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest request)
         {
             var userId = GetCurrentUserId();
-            var anonymousId = GetAnonymoustUserId();
             var cart = await _cartService.RemoveFromCartAsync(request.ProductId, userId, request.AnonymousId);
             return Ok(new { Message = "Product removed from cart.", CartId = cart.Id });
         }

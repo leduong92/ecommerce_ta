@@ -42,9 +42,9 @@ namespace eCommerce.Application.Dtos
     {
         public int Id { get; set; }
         public string Sku { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public decimal PriceAdjustment { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
-        public List<ProductImage> ImageList { get; set; }
+        public List<ProductImage> Images { get; set; }
     }
     public class OptionDto
     {

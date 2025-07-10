@@ -6,6 +6,10 @@ using eCommerce.Web.Services.IService;
 using Microsoft.Extensions.Localization;
 using eCommerce.Shared.Common;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using Azure;
+using System.Drawing;
+using eCommerce.Domain.Entities;
 
 namespace eCommerce.Web.Controllers
 {
@@ -73,7 +77,7 @@ namespace eCommerce.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, int quantity, string regionCode)
+        public async Task<IActionResult> AddToCart(int productId, int quantity, string regionCode, int variantId)
         {
             var anonymousId = Request.Cookies[SD.AnonymousId];
             if (quantity <= 0)
@@ -98,7 +102,8 @@ namespace eCommerce.Web.Controllers
                 AnonymousId = anonymousId,
                 ProductId = productId,
                 Quantity = quantity,
-                CustomerRegionCode = regionCode
+                CustomerRegionCode = regionCode,
+                VariantId = variantId
             };
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");

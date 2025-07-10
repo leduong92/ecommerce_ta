@@ -14,7 +14,7 @@ namespace eCommerce.Application.Dtos
         public string? AnonymousId { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime LastModifiedDate { get; set; } = DateTime.UtcNow;
-
+        public decimal Total => CartItems.Sum(x => x.UnitPrice * x.Quantity);
         public ICollection<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
     }
 }
