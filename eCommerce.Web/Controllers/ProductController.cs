@@ -33,11 +33,9 @@ namespace eCommerce.Web.Controllers
             _apiBaseUrl = configuration["ApiBaseUrl"] ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
         }
         [HttpGet]
-        public async Task<IActionResult> Detail(int id, string regionCode, int? colorId = null, int? sizeId = null)
+        public async Task<IActionResult> Detail(int id, string regionCode, int? color = null, int? size = null)
         {
             ViewBag.CurrentRegion = regionCode;
-            ViewData["Message"] = _localizer["Welcome"];
-            ViewData["Culture"] = Thread.CurrentThread.CurrentUICulture.Name;
 
             //var client = _httpClientFactory.CreateClient("ApiClient");
             var latitude = HttpContext.Session.GetString("CustomerLatitude");
@@ -52,7 +50,7 @@ namespace eCommerce.Web.Controllers
             //_logger.LogInformation($"Requesting product details from: {requestUrl}");
 
             //var response = await client.GetAsync(requestUrl);
-            var response = await _productApiClient.GetProductDetail(id, regionCode, latitude, longitude);
+            var response = await _productApiClient.GetProductDetail(id, regionCode, latitude, longitude, color, size);
 
             if (response.IsSuccess)
             {
@@ -124,11 +122,12 @@ namespace eCommerce.Web.Controllers
             }
         }
 
-        [HttpGet("GetVariant")]
-        public async Task<IActionResult> GetVariant(int variantId)
+        [HttpGet("{productId}/GetVariantPartial/{regionCode}")]
+        public async Task<IActionResult> GetVariantPartial(int productId, string regionCode, int? color, int? size)
         {
-            var variant = await _productApiClient.GetVariantAsync(variantId);
-            return Json(variant.Data);
+            var data = await _productApiClient.GetProductDetail(productId, regionCode, null, null, color, size);
+            if (data == null) return NotFound();
+            return PartialView("_VariantOptionsPartial", data.Data);
         }
     }
 }

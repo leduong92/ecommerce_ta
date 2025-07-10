@@ -65,11 +65,5 @@ namespace eCommerce.BackendApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("GetVariant/{variantId}")]
-        public async Task<IActionResult> GetVariant(int variantId)
-        {
-            var variant = await _productService.GetVariantAsync(variantId);
-            return Ok(variant);
-        }
     }
 }

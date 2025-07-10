@@ -87,13 +87,16 @@ namespace eCommerce.Application.Services
             var price = product.Prices?.FirstOrDefault()?.Price;
             var currency = product.Prices?.FirstOrDefault()?.Currency;
 
-            var selectedVariant = product.Variants
-                                .FirstOrDefault(v =>
-                                    (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
-                                    (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId))
-                                ) ?? product.Variants.FirstOrDefault();
+            // CHỌN SELECTED VARIANT ĐÚNG CẢ COLOR + SIZE
+            var selectedVariant = product.Variants.FirstOrDefault(v =>
+                (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId.Value)) &&
+                (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId.Value)) &&
+                (!colorId.HasValue || !sizeId.HasValue ||
+                    v.VariantOptionValues.Count(x => x.ProductOptionValueId == colorId.Value || x.ProductOptionValueId == sizeId.Value) == 2)
+            ) ?? product.Variants.FirstOrDefault();
 
             // Flatten variant-option-value pairs for grouping
+            // LẤY DANH SÁCH OPTION GROUPS
             var variantOptionValues = product.Variants
                 .SelectMany(v => v.VariantOptionValues
                     .Select(vov => new { VariantId = v.Id, vov.ProductOptionValue }))
@@ -111,7 +114,8 @@ namespace eCommerce.Application.Services
                             ValueId = ov.Id,
                             Value = ov.Value,
                             VariantIds = g2.Select(x => x.VariantId).Distinct().ToList(),
-                            IsSelected = selectedVariant.VariantOptionValues.Any(vov => vov.ProductOptionValueId == ov.Id)
+                            IsSelected = selectedVariant != null &&
+                                        selectedVariant.VariantOptionValues.Any(vov => vov.ProductOptionValueId == ov.Id),
                         };
                     }).ToList()
                 );
@@ -222,29 +226,5 @@ namespace eCommerce.Application.Services
             return ApiResponse<IEnumerable<ProductListDto>>.Success(productList);
         }
 
-        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int variantId)
-        {
-            var variant = await _context.ProductVariants
-                            .Include(v => v.Images)
-                            .FirstAsync(v => v.Id == variantId);
-
-            var result = new VariantDto
-            {
-                Id = variant.Id,
-                Sku = variant.Sku,
-                PriceAdjustment = variant.PriceAdjustment,
-                ImageUrl = variant.Images.FirstOrDefault(x => x.IsPrimary).ImageUrl ?? "",
-                Images = variant.Images.Select(x => new ProductImage
-                {
-                    Id = x.Id,
-                    ImageUrl = x.ImageUrl,
-                    SortOrder = x.SortOrder,
-                    IsPrimary = x.IsPrimary,
-                    ProductVariantId = x.ProductVariantId
-                }).ToList()
-            };
-
-            return ApiResponse<VariantDto>.Success(result);
-        }
     }
 }

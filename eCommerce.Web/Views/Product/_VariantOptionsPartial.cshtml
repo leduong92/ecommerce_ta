@@ -1,0 +1,42 @@
+﻿@model ProductDetailDto
+
+@if (Model.ColorOptions.Any())
+{
+    <div>
+        <h5>Color</h5>
+        <div class="btn-group" role="group">
+            @foreach (var color in Model.ColorOptions)
+            {
+                var isSelected = color.IsSelected ? "btn-primary" : "btn-outline-primary";
+                <button type="button" class="btn btn-sm color-option @isSelected" data-value="@color.ValueId">
+                    @color.Value
+                </button>
+            }
+        </div>
+    </div>
+}
+
+@if (Model.SizeOptions.Any())
+{
+    <div class="mt-3">
+        <h5>Size</h5>
+        <div class="btn-group" role="group">
+            @foreach (var size in Model.SizeOptions)
+            {
+                var isSelected = size.IsSelected ? "btn-primary" : "btn-outline-primary";
+                var disabledAttr = !size.IsAvailable ? "disabled" : "";
+                <button class="size-option btn btn-sm @isSelected" data-value="@size.ValueId" @disabledAttr>@size.Value</button>
+            }
+        </div>
+    </div>
+}
+
+@if (Model.SelectedVariant != null)
+{
+    <div>
+        <img src="@Model.SelectedVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl" width="200" />
+        <p>SKU: @Model.SelectedVariant.Sku</p>
+        <p>Variant Price: $@Model.SelectedVariant.PriceAdjustment.ToString("0.00")</p>
+        <input type="hidden" id="variantId" value="@Model.SelectedVariant.Id" />
+    </div>
+}

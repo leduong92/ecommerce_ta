@@ -52,6 +52,7 @@ namespace eCommerce.Application.Dtos
         public string Value { get; set; } = string.Empty;
         public List<int> VariantIds { get; set; } = [];
         public bool IsSelected { get; set; }
+        public bool IsAvailable { get; set; } = true; 
     }
 
 }

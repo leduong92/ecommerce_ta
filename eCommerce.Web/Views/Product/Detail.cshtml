@@ -8,12 +8,28 @@
 
 <h1 class="my-4">@Model?.Name</h1>
 
+<input type="hidden" id="productId" value="@Model.Id" />
+<input type="hidden" id="regionCode" value="@ViewBag.CurrentRegion" />
+<input type="hidden" name="regionCode" value="@ViewBag.CurrentRegion" />
+
 <div class="card mb-4">
     <div class="card-body">
         <div class="row">
             <div class="col-md-6 p-1">
                 <img class="img-fluid product-image Sirv" src="@Model?.DefaultImageUrl?profile=basic?w=300" alt="@Model?.Name">
+                <div id="variant-images">
+                    @if (Model.SelectedVariant?.Images != null && Model.SelectedVariant.Images.Any())
+                    {
+                        <div class="image-gallery">
+                            @foreach (var img in Model.SelectedVariant.Images)
+                            {
+                                <img src="@img.ImageUrl" alt="Product Image" class="img-thumbnail me-2" style="max-height: 100px;" />
+                            }
+                        </div>
+                    }
+                </div>
             </div>
+            
             <div class="col-md-6">
                 <h3 class="my-3">@SharedLocalizer["ProductDetails"]</h3>
                 <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
@@ -21,42 +37,6 @@
                 <p>@SharedLocalizer["Category"]: @Model?.Category</p>
                 <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
                 <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
-                @if (Model.ColorOptions.Count > 0)
-                {
-                    <div>
-                        <h4>Color</h4>
-                        <div class="color-options">
-                            @foreach (var color in Model.ColorOptions)
-                            {
-                                var isSelected = color.IsSelected ? "btn-primary" : "btn-outline-primary";
-                                <button class="color-option btn btn-sm @isSelected" data-value="@color.ValueId" data-selected="@(color.IsSelected.ToString().ToLower())">@color.Value</button>
-                            }
-                        </div>
-                    </div>
-                }
-                @if (Model.SizeOptions.Count > 0)
-                {
-                    <div>
-                        <h4>Size</h4>
-                        <div class="size-options">
-                            @foreach (var size in Model.SizeOptions)
-                            {
-                                var isSelected = size.IsSelected ? "btn-primary" : "btn-outline-primary";
-                                <button class="size-option btn btn-sm @isSelected" data-value="@size.ValueId" data-selected="@(size.IsSelected.ToString().ToLower())">@size.Value</button>
-                            }
-                        </div>
-                    </div>
-                }
-            
-                @if (Model.SelectedVariant != null)
-                {
-                    <div>
-                        <img src="@Model.SelectedVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl" width="200" />
-                        <p>SKU: @Model.SelectedVariant.Sku</p>
-                        <p>Variant Price: $@Model.SelectedVariant.PriceAdjustment.ToString("0.00")</p>
-                    </div>
-                    <input type="hidden" id="variantId" value="@Model.SelectedVariant.Id" />
-                }
                 <p>
                     @if (Model?.EstimatedAvailableStock.HasValue == true)
                     {
@@ -83,17 +63,17 @@
                     <p class="text-muted">@SharedLocalizer["FulfillingFrom"] @Model.FulfillingWarehouseName (@Model.FulfillingWarehouseAddress)</p>
                 }
 
+                <div id="variant-options">
+                    @Html.Partial("_VariantOptionsPartial", Model)
+                </div>
+
                 <form asp-controller="Product" asp-action="AddToCart" method="post" class="mt-4">
-                    <input type="hidden" name="productId" value="@Model?.Id" />
-                    <input type="hidden" name="regionCode" value="@ViewBag.CurrentRegion" />
+
                     <div class="input-group mb-3" style="max-width: 200px;">
                         <input type="number" name="quantity" class="form-control" value="1" min="1" max="100" />
                         <button type="submit" class="btn btn-primary" @(Model?.EstimatedAvailableStock == 0 ? "disabled" : "")>
                             <i class="bi bi-cart-plus"></i> @SharedLocalizer["AddtoCart"]
                         </button>
-                        @* <button class="btn btn-primary" id="addToCartBtn" data-product-id="@Model.Id" data-product-name="@Model.Name" data-product-price="@Model.Price" data-product-currency="@Model.Currency">
-                            @SharedLocalizer["AddToCart"]
-                        </button> *@
                     </div>
                     @if (Model?.EstimatedAvailableStock == 0)
                     {
@@ -108,33 +88,62 @@
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            function updateUrlParams(newColorId, newSizeId) {
+
+            function updateUrlParams(colorId, sizeId) {
                 const url = new URL(window.location.href);
-                const currentColor = url.searchParams.get("color");
-                const currentSize = url.searchParams.get("size");
-
-                const colorId = newColorId || currentColor;
-                const sizeId = newSizeId || currentSize;
-
                 if (colorId) url.searchParams.set("color", colorId);
                 if (sizeId) url.searchParams.set("size", sizeId);
-
-                window.location.href = url.toString(); // Reload with updated values
+                window.history.replaceState({}, '', url);
             }
 
-            document.querySelectorAll(".color-option").forEach(el => {
-                el.addEventListener("click", () => {
-                    const colorId = el.dataset.value;
-                    updateUrlParams(colorId, null);
-                });
-            });
+            function fetchVariantOptions() {
+                const colorId = document.querySelector('.color-option.btn-primary')?.dataset.value;
+                const sizeId = document.querySelector('.size-option.btn-primary')?.dataset.value;
+                const productId = document.getElementById("productId").value;
+                const regionCode = document.getElementById("regionCode").value;
 
-            document.querySelectorAll(".size-option").forEach(el => {
-                el.addEventListener("click", () => {
-                    const sizeId = el.dataset.value;
-                    updateUrlParams(null, sizeId);
+                updateUrlParams(colorId, sizeId);
+
+                $.ajax({
+                    url: `/${productId}/GetVariantPartial/${regionCode}?color=${colorId}&size=${sizeId}`,
+                    type: 'GET',
+                    success: function (response) {
+                        if (response) {
+                            document.getElementById("variant-options").innerHTML = response;
+                            bindOptionEvents();
+                        } else {
+                            alert(response);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error adding to cart: ", error);
+                        alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
+                    }
                 });
-            });
+            }
+
+
+            function bindOptionEvents() {
+                document.querySelectorAll(".color-option").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll(".color-option").forEach(b => b.classList.remove("btn-primary"));
+                        btn.classList.add("btn-primary");
+                        fetchVariantOptions();
+                    });
+                });
+
+                document.querySelectorAll(".size-option").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll(".size-option").forEach(b => b.classList.remove("btn-primary"));
+                        btn.classList.add("btn-primary");
+                        fetchVariantOptions();
+                    });
+                });
+            }
+
+            bindOptionEvents();
 
             $('#addToCartBtn').click(function () {
                 var productId = $(this).data('product-id');
