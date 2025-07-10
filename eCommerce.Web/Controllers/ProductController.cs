@@ -129,5 +129,11 @@ namespace eCommerce.Web.Controllers
             if (data == null) return NotFound();
             return PartialView("_VariantOptionsPartial", data.Data);
         }
+        [HttpGet("{productId}/GetVariantData")]
+        public async Task<IActionResult> GetVariantData(int productId, int? color, int? size)
+        {
+            var data = await _productApiClient.GetVariantAsync(productId, color, size);
+            return Json(data);
+        }
     }
 }

@@ -274,6 +274,40 @@ namespace eCommerce.Application.Services
 
             return ApiResponse<IEnumerable<ProductListDto>>.Success(productList);
         }
+        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? colorId, int? sizeId)
+        {
+            var product = await _context.Products
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.VariantOptionValues)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.Images)
+                .FirstOrDefaultAsync(p => p.Id == productId);
 
+            if (product == null) return ApiResponse<VariantDto>.Failure("Product not found.");
+
+            var selectedVariant = product.Variants
+                .FirstOrDefault(v =>
+                    (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
+                    (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)));
+
+            if (selectedVariant == null) return null;
+
+            var result = new VariantDto
+            {
+                Id = selectedVariant.Id,
+                Sku = selectedVariant.Sku,
+                PriceAdjustment = selectedVariant.PriceAdjustment,
+                Images = selectedVariant.Images.Select(i => new ProductImage
+                {
+                    Id = i.Id,
+                    ImageUrl = i.ImageUrl,
+                    SortOrder = i.SortOrder,
+                    IsPrimary = i.IsPrimary,
+                    ProductVariantId = i.ProductVariantId
+                }).ToList()
+            };
+
+            return ApiResponse<VariantDto>.Success(result);
+        }
     }
 }

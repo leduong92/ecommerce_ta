@@ -48,12 +48,12 @@ namespace eCommerce.Web.Services
             });
         }
 
-        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int variantId, int? colorId, int? sizeId)
+        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? colorId, int? sizeId)
         {
             return await _baseApiClient.SendAsync<VariantDto>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = $"{SD.ApiBaseUrl}product/GetVariant/{variantId}",
+                Url = $"{SD.ApiBaseUrl}product/{productId}/GetVariant?colorId={colorId}&sizeId={sizeId}",
             });
         }
     }

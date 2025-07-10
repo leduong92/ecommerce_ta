@@ -9,7 +9,6 @@ namespace eCommerce.Web.Services.IService
     {
         Task<ApiResponse<List<ProductListDto>>> GetProductsByRegion(string regionCode, string? latitude, string? longitude);
         Task<ApiResponse<ProductDetailDto>> GetProductDetail(int productId, string regionCode, string? latitude, string? longitude, int? colorId = null, int? sizeId = null);
-        Task<ApiResponse<VariantDto>> GetVariantAsync(int variantId, int? colorId, int? sizeId);
-        
+        Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? colorId, int? sizeId);
     }
 }
