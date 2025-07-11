@@ -60,7 +60,7 @@ namespace eCommerce.Application.Services
                 .Include(p => p.Variants)
                     .ThenInclude(v => v.ProductVariantFinishes!)
                         .ThenInclude(pvf => pvf.Finish)
-                 .Include(p => p.Variants)
+                .Include(p => p.Variants)
                     .ThenInclude(v => v.ProductVariantFinishes!)
                         .ThenInclude(pvf => pvf.Images)
                 .Include(p => p.ProductCategory)

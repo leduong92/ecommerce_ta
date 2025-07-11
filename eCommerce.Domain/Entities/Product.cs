@@ -21,6 +21,7 @@
         public decimal GrossWeightLbs { get; set; }
         public int? MaxHeight { get; set; } = 0;
         public int QuantityMultiplier { get; set; } = 1;
+        public bool IsUpholstered { get; set; }
         public int CollectionId { get; set; }
         public virtual Collection Collection { get; set; } = null!;
         public int RoomId { get; set; }

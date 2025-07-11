@@ -13,6 +13,7 @@ namespace eCommerce.Application.Dtos
         public string Name { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
         public string Sku { get; set; } = string.Empty;
+        public bool IsUpholstered { get; set; }
         public decimal? Price { get; set; }
         public string? Currency { get; set; }
         public decimal WeightKg { get; set; }

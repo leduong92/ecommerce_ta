@@ -967,63 +967,42 @@ namespace eCommerce.Infrastructure.Extensions
                 new ProductVariantFinishImage { Id = 3, ProductVariantId = 1, FinishId = 2, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/9020-72.jpg", IsPrimary = true }
             );
 
-            modelBuilder.Entity<ProductOption>().HasData(
-                new ProductOption { Id = 1, Name = "Color"},
-                new ProductOption { Id = 2, Name = "Size" }
-            );
-
-            modelBuilder.Entity<ProductOptionValue>().HasData(
-                new ProductOptionValue { Id = 1, ProductOptionId = 1, Value = "Deep Black" },
-                new ProductOptionValue { Id = 2, ProductOptionId = 1, Value = "White" },
-                new ProductOptionValue { Id = 3, ProductOptionId = 1, Value = "Oak" },
-                // Color (ProductOptionId = 1)
-                new ProductOptionValue { Id = 7, ProductOptionId = 1, Value = "Walnut" },
-
-                new ProductOptionValue { Id = 4, ProductOptionId = 2, Value = "36x12x40" },
-                new ProductOptionValue { Id = 5, ProductOptionId = 2, Value = "42x16x48" },
-                new ProductOptionValue { Id = 6, ProductOptionId = 2, Value = "48x18x52" },
-
-                // Size (ProductOptionId = 2)
-                new ProductOptionValue { Id = 8, ProductOptionId = 2, Value = "180x100x75" },
-                new ProductOptionValue { Id = 9, ProductOptionId = 2, Value = "220x100x75" }
-            );
-
             modelBuilder.Entity<ProductVariant>().HasData(
-                new ProductVariant { Id = 1, ProductId = 1, Sku = "BLK-36", PriceAdjustment = 49.99m },
-                new ProductVariant { Id = 2, ProductId = 1, Sku = "BLK-42", PriceAdjustment = 54.99m },
-                new ProductVariant { Id = 3, ProductId = 1, Sku = "WHT-36", PriceAdjustment = 59.99m },
+                new ProductVariant { Id = 1, ProductId = 1, Sku = "TA84011.1CIR", PriceAdjustment = 49.99m },
+                new ProductVariant { Id = 2, ProductId = 1, Sku = "TA83011.1CIR", PriceAdjustment = 54.99m },
+                new ProductVariant { Id = 3, ProductId = 1, Sku = "TA82011.1CIR", PriceAdjustment = 59.99m },
+
                 new ProductVariant { Id = 4, ProductId = 1, Sku = "OAK-42", PriceAdjustment = 64.99m },
                 new ProductVariant { Id = 5, ProductId = 1, Sku = "OAK-52", PriceAdjustment = 69.99m },
                 new ProductVariant { Id = 6, ProductId = 2, Sku = "MAR-OAK-180", PriceAdjustment = 79.99m },
                 new ProductVariant { Id = 7, ProductId = 2, Sku = "MAR-OAK-220", PriceAdjustment = 89.99m },
                 new ProductVariant { Id = 8, ProductId = 2, Sku = "MAR-WAL-220", PriceAdjustment = 94.99m },
-                new ProductVariant { Id = 10, ProductId = 1, Sku = "VCF1798", PriceAdjustment = 99.99m }
+                new ProductVariant { Id = 10, ProductId = 1, Sku = "VCF1798", PriceAdjustment = 99.99m },
+
+                new ProductVariant { Id = 20, ProductId = 3, Sku = "6005-491", PriceAdjustment = 299.99m },
+                new ProductVariant { Id = 21, ProductId = 3, Sku = "6005-490", PriceAdjustment = 349.99m },
+                new ProductVariant { Id = 22, ProductId = 3, Sku = "6005-492", PriceAdjustment = 399.99m }
+            );
+
+            modelBuilder.Entity<ProductOption>().HasData(
+                new ProductOption { Id = 2, Name = "Size" }
+            );
+
+            modelBuilder.Entity<ProductOptionValue>().HasData(
+                new ProductOptionValue { Id = 4, ProductOptionId = 2, Value = "60x30x80" },
+                new ProductOptionValue { Id = 5, ProductOptionId = 2, Value = "80x40x100" },
+                new ProductOptionValue { Id = 6, ProductOptionId = 2, Value = "100x50x120" }
             );
 
             modelBuilder.Entity<ProductVariantOptionValue>().HasData(
-                new { ProductVariantId = 1, ProductOptionValueId = 1 }, // Deep Black
-                new { ProductVariantId = 1, ProductOptionValueId = 4 }, // 36x12x40
-
-                new { ProductVariantId = 2, ProductOptionValueId = 1 }, // Deep Black
-                new { ProductVariantId = 2, ProductOptionValueId = 5 }, // 42x16x48
-
-                new { ProductVariantId = 3, ProductOptionValueId = 2 }, // White
-                new { ProductVariantId = 3, ProductOptionValueId = 4 }, // 36x12x40
-
-                new { ProductVariantId = 4, ProductOptionValueId = 3 }, // Oak
-                new { ProductVariantId = 4, ProductOptionValueId = 5 }, // 42x16x48
-
-                new { ProductVariantId = 5, ProductOptionValueId = 3 }, // Oak  
-                new { ProductVariantId = 5, ProductOptionValueId = 6 }, // 48x18x52
-
-                new { ProductVariantId = 6, ProductOptionValueId = 3 }, // Oak
-                new { ProductVariantId = 6, ProductOptionValueId = 8 }, // 180x100x75
-
-                new { ProductVariantId = 7, ProductOptionValueId = 3 }, // Oak
-                new { ProductVariantId = 7, ProductOptionValueId = 9 }, // 220x100x75
-
-                new { ProductVariantId = 8, ProductOptionValueId = 7 }, // Walnut
-                new { ProductVariantId = 8, ProductOptionValueId = 9 } // 220x100x75
+                new { ProductVariantId = 1, ProductOptionValueId = 4 },
+                new { ProductVariantId = 2, ProductOptionValueId = 5 },
+                new { ProductVariantId = 3, ProductOptionValueId = 4 },
+                new { ProductVariantId = 4, ProductOptionValueId = 5 },
+                new { ProductVariantId = 5, ProductOptionValueId = 6 },
+                new { ProductVariantId = 20, ProductOptionValueId = 4 }, // 60x30x80
+                new { ProductVariantId = 21, ProductOptionValueId = 5 }, // 80x40x100
+                new { ProductVariantId = 22, ProductOptionValueId = 6 }
             );
 
             modelBuilder.Entity<ProductImage>().HasData(
@@ -1056,14 +1035,21 @@ namespace eCommerce.Infrastructure.Extensions
                 new ProductImage { Id = 16, ProductVariantId = 7, ImageUrl = "/images/mar_oak_220_2.jpg", IsPrimary = false },
 
                 new ProductImage { Id = 17, ProductVariantId = 8, ImageUrl = "/images/mar_wal_220_1.jpg", IsPrimary = true },
-                new ProductImage { Id = 18, ProductVariantId = 8, ImageUrl = "/images/mar_wal_220_2.jpg", IsPrimary = false }
+                new ProductImage { Id = 18, ProductVariantId = 8, ImageUrl = "/images/mar_wal_220_2.jpg", IsPrimary = false },
+
+                new ProductImage { Id = 101, ProductVariantId = 20, ImageUrl = "/images/dresser_60.jpg", IsPrimary = true },
+                new ProductImage { Id = 102, ProductVariantId = 20, ImageUrl = "/images/dresser_61.jpg", IsPrimary = false },
+                new ProductImage { Id = 103, ProductVariantId = 20, ImageUrl = "/images/dresser_62.jpg", IsPrimary = false },
+                new ProductImage { Id = 104, ProductVariantId = 21, ImageUrl = "/images/dresser_80.jpg", IsPrimary = true },
+                new ProductImage { Id = 105, ProductVariantId = 21, ImageUrl = "/images/dresser_100.jpg", IsPrimary = false },
+                new ProductImage { Id = 106, ProductVariantId = 22, ImageUrl = "/images/dresser_200.jpg", IsPrimary = true }
             );
 
 
             modelBuilder.Entity<Product>().HasData(
-                new Product { Id = 1, CollectionId = 8, RoomId = 2, TypeId = 4, LifeStyleId = 4, StyleId = 9, Sku = "TA54027.C301", Slug = "catalina-round-dining-table-ta54027-c301", Name = "Catalina Round Dining Table", NetWeightKg = 91m, Depth = 162.6m, Width = 162.6m, Height = 76.2m, ProductCategoryId = 101, ProductShippingProfileId = 201, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA54027.C301_main_1.jpg" },
-                new Product { Id = 2, CollectionId = 8, RoomId = 1, TypeId = 29, LifeStyleId = 4, StyleId = 9,Sku = "TA51059.C301", Slug = "catalina-cocktail-table-ta51059-c301", Name = "Catalina Cocktail Table", NetWeightKg = 38m, Depth = 71.1m, Width = 122m, Height = 41.9m, ProductCategoryId = 102, ProductShippingProfileId = 202, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA51059.C301_main_1.jpg" },
-                new Product { Id = 3, CollectionId = 8, RoomId = 3, TypeId = 20, LifeStyleId = 4, StyleId = 9, Sku = "TA84012.C306", Slug = "catalina-upholstered-california-king-bed-ta84012-c306", Name = "Designer Vase", NetWeightKg = 2m, Depth = 30m, Width = 20m, Height = 20m, ProductCategoryId = 103, ProductShippingProfileId = 203, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA8/TA84012.C306_main_1.jpg" }
+                new Product { Id = 1, IsUpholstered = true, CollectionId = 8, RoomId = 2, TypeId = 4, LifeStyleId = 4, StyleId = 9, Sku = "TA54027.C301", Slug = "catalina-round-dining-table-ta54027-c301", Name = "Catalina Round Dining Table", NetWeightKg = 91m, Depth = 162.6m, Width = 162.6m, Height = 76.2m, ProductCategoryId = 101, ProductShippingProfileId = 201, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA54027.C301_main_1.jpg" },
+                new Product { Id = 2, IsUpholstered = true, CollectionId = 8, RoomId = 1, TypeId = 29, LifeStyleId = 4, StyleId = 9,Sku = "TA51059.C301", Slug = "catalina-cocktail-table-ta51059-c301", Name = "Catalina Cocktail Table", NetWeightKg = 38m, Depth = 71.1m, Width = 122m, Height = 41.9m, ProductCategoryId = 102, ProductShippingProfileId = 202, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA51059.C301_main_1.jpg" },
+                new Product { Id = 3, IsUpholstered = false, CollectionId = 8, RoomId = 3, TypeId = 20, LifeStyleId = 4, StyleId = 9, Sku = "TA84012.C306", Slug = "catalina-upholstered-california-king-bed-ta84012-c306", Name = "Designer Vase", NetWeightKg = 2m, Depth = 30m, Width = 20m, Height = 20m, ProductCategoryId = 103, ProductShippingProfileId = 203, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA8/TA84012.C306_main_1.jpg" }
             );
 
             modelBuilder.Entity<ProductRegionAvailability>().HasData(
