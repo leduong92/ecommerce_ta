@@ -87,49 +87,55 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-
-            function updateUrlParams(colorId, sizeId) {
+            function updateUrlParams(sizeId, fabricId, finishId) {
                 const url = new URL(window.location.href);
-                if (colorId) url.searchParams.set("color", colorId);
                 if (sizeId) url.searchParams.set("size", sizeId);
+                if (fabricId) url.searchParams.set("fabric", fabricId);
+                if (finishId) url.searchParams.set("finish", finishId);
                 window.history.replaceState({}, '', url);
             }
 
-            function fetchVariantOptions() {
-                const colorId = document.querySelector('.color-option.btn-primary')?.dataset.value;
-                const sizeId = document.querySelector('.size-option.btn-primary')?.dataset.value;
-                const productId = document.getElementById("productId").value;
+            function fetchVariantOptions(productId, sizeId, fabricId, finishId) {
                 const regionCode = document.getElementById("regionCode").value;
 
-                updateUrlParams(colorId, sizeId);
+                updateUrlParams(sizeId, fabricId, finishId); // colorId chưa dùng
+
+                let url = `/${productId}/GetVariantPartial/${regionCode}?`;
+
+                const params = [];
+                if (sizeId) params.push(`sizeId=${sizeId}`);
+                if (fabricId) params.push(`fabricId=${fabricId}`);
+                if (finishId) params.push(`finishId=${finishId}`);
+                url += params.join('&');
 
                 $.ajax({
-                    url: `/${productId}/GetVariantPartial/${regionCode}?color=${colorId}&size=${sizeId}`,
+                    url: url,
                     type: 'GET',
                     success: function (response) {
                         if (response) {
                             document.getElementById("variant-options").innerHTML = response;
-                            bindOptionEvents();
-                            updatePriceAndImages();
+                            bindOptionEvents(); // rebind events
+                            updatePriceAndImages(); // also update price & images
                         } else {
-                            alert(response);
+                            alert("No variant found.");
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error adding to cart: ", error);
+                        console.error("Error fetching variant: ", error);
                         alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
                     }
                 });
             }
 
             function updatePriceAndImages() {
-                const colorId = document.querySelector('.color-option.btn-primary')?.dataset.value;
-                const sizeId = document.querySelector('.size-option.btn-primary')?.dataset.value;
+                const sizeId = document.querySelector('.size-btn.selected')?.dataset.sizeid;
+                const fabricId = document.querySelector('.fabric-btn.selected')?.dataset.fabricid;
+                const finishId = document.querySelector('.finish-btn.selected')?.dataset.finishid;
                 const productId = document.getElementById("productId").value;
                 const regionCode = document.getElementById("regionCode").value;
 
                 $.ajax({
-                    url: `/${productId}/GetVariantData?color=${colorId}&size=${sizeId}`,
+                    url: `/${productId}/GetVariantData?size=${sizeId}&fabric=${fabricId}&finish=${finishId}`,
                     type: 'GET',
                     success: function (response) {
                         if (response.isSuccess) {
@@ -168,23 +174,45 @@
             }
 
             function bindOptionEvents() {
-                document.querySelectorAll(".color-option").forEach(btn => {
-                    btn.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        document.querySelectorAll(".color-option").forEach(b => b.classList.remove("btn-primary"));
-                        btn.classList.add("btn-primary");
-                        fetchVariantOptions();
-                    });
+                document.querySelectorAll(".size-btn").forEach(btn => {
+                    btn.onclick = () => {
+                        const sizeId = btn.dataset.sizeid;
+                         const productId = document.getElementById("productId").value;
+                        const fabricId = document.querySelector(".fabric-btn.selected")?.dataset.fabricid;
+                        const finishId = document.querySelector(".finish-btn.selected")?.dataset.finishid;
+                        fetchVariantOptions(productId, sizeId, fabricId, finishId);
+                    };
                 });
 
-                document.querySelectorAll(".size-option").forEach(btn => {
-                    btn.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        document.querySelectorAll(".size-option").forEach(b => b.classList.remove("btn-primary"));
-                        btn.classList.add("btn-primary");
-                        fetchVariantOptions();
-                    });
+                document.querySelectorAll(".fabric-thumb").forEach(el => {
+                    el.onclick = () => {
+                        // Remove active class from all
+                        document.querySelectorAll(".fabric-thumb").forEach(btn => btn.classList.remove("selected"));
+                        el.classList.add("selected");
+
+                        const fabricId = el.dataset.fabricid;
+                        const productId = document.getElementById("productId").value;
+                        const sizeId = document.querySelector(".size-btn.selected")?.dataset.sizeid;
+                        const finishId = document.querySelector(".finish-btn.selected")?.dataset.finishid;
+
+                        fetchVariantOptions(productId, sizeId, fabricId, finishId);
+                    };
                 });
+
+                document.querySelectorAll(".finish-thumb").forEach(el => {
+                    el.onclick = () => {
+                        document.querySelectorAll(".finish-thumb").forEach(e => e.classList.remove("selected"));
+                        el.classList.add("selected");
+
+                        const finishId = el.dataset.finishid;
+                        const productId = document.getElementById("productId").value;
+                        const sizeId = document.querySelector(".size-btn.selected")?.dataset.sizeid;
+                        const fabricId = document.querySelector(".fabric-thumb.selected")?.dataset.fabricid;
+
+                        fetchVariantOptions(productId, sizeId, fabricId, finishId);
+                    };
+                });
+
             }
 
             bindOptionEvents();

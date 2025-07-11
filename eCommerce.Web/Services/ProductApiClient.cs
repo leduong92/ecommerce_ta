@@ -13,7 +13,14 @@ namespace eCommerce.Web.Services
             _baseApiClient = baseApiClient;
         }
 
-        public async Task<ApiResponse<ProductDetailDto>> GetProductDetail(int productId, string regionCode, string? latitude, string? longitude, int? colorId = null, int? sizeId = null)
+        public async Task<ApiResponse<ProductDetailDto>> GetProductDetail(
+            int productId, 
+            string regionCode, 
+            string? latitude, 
+            string? longitude, 
+            int? sizeId = null, 
+            int? fabricId = null,
+            int? finishId = null)
         {
             string requestUrl = $"{SD.ApiBaseUrl}product/{productId}/detail/{regionCode}";
 
@@ -21,8 +28,9 @@ namespace eCommerce.Web.Services
 
             if (!string.IsNullOrEmpty(latitude)) queryParams.Add($"latitude={latitude}");
             if (!string.IsNullOrEmpty(longitude)) queryParams.Add($"longitude={longitude}");
-            if (colorId.HasValue) queryParams.Add($"colorId={colorId}");
             if (sizeId.HasValue) queryParams.Add($"sizeId={sizeId}");
+            if (fabricId.HasValue) queryParams.Add($"fabricId={fabricId}");
+            if (finishId.HasValue) queryParams.Add($"finishId={finishId}");
 
             if (queryParams.Any())
                 requestUrl += "?" + string.Join("&", queryParams);
@@ -48,12 +56,12 @@ namespace eCommerce.Web.Services
             });
         }
 
-        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? colorId, int? sizeId)
+        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? sizeId, int? fabricId, int? finishId)
         {
             return await _baseApiClient.SendAsync<VariantDto>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = $"{SD.ApiBaseUrl}product/{productId}/GetVariant?colorId={colorId}&sizeId={sizeId}",
+                Url = $"{SD.ApiBaseUrl}product/{productId}/GetVariant?sizeId={sizeId}&fabricId={fabricId}&finishId={finishId}",
             });
         }
     }

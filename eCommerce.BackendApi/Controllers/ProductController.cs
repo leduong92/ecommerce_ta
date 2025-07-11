@@ -49,11 +49,18 @@ namespace eCommerce.BackendApi.Controllers
         /// <param name="longitude">Optional: Customer's longitude for more accurate nearest warehouse finding.</param>
         /// <returns>A ProductDetailDto.</returns>
         [HttpGet("{productId}/detail/{regionCode}")]
-        public async Task<IActionResult> GetProductDetail(int productId, string regionCode, [FromQuery] double? latitude, [FromQuery] double? longitude, int? colorId = null, int? sizeId = null)
+        public async Task<IActionResult> GetProductDetail(
+            int productId, 
+            string regionCode, 
+            [FromQuery] double? latitude, 
+            [FromQuery] double? longitude, 
+            int? sizeId = null, 
+            int? fabricId = null,
+            int? finishId = null)
         {
             try
             {
-                var product = await _productService.GetProductDetailsAsync(productId, regionCode, latitude, longitude, colorId, sizeId);
+                var product = await _productService.GetProductDetailsAsync(productId, regionCode, latitude, longitude, sizeId, fabricId, finishId);
                 if (product == null)
                 {
                     return NotFound($"Product {productId} not found or not available in region '{regionCode}'.");
@@ -66,9 +73,9 @@ namespace eCommerce.BackendApi.Controllers
             }
         }
         [HttpGet("{productId}/GetVariant")]
-        public async Task<IActionResult> GetVariant(int productId,  int? colorId, int? sizeId)
+        public async Task<IActionResult> GetVariant(int productId, int? sizeId, int? fabricId, int? finishId)
         {
-            var variant = await _productService.GetVariantAsync(productId,  colorId, sizeId);
+            var variant = await _productService.GetVariantAsync(productId, sizeId, fabricId, finishId);
             return Ok(variant);
         }
     }

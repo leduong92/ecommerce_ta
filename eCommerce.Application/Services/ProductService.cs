@@ -35,7 +35,14 @@ namespace eCommerce.Application.Services
             return ApiResponse<List<InventoryItemDto>>.Success(warehouses);
         }
 
-        public async Task<ApiResponse<ProductDetailDto>?> GetProductDetailsAsync(int productId, string regionCode, double? customerLatitude, double? customerLongitude, int? colorId = null, int? sizeId = null)
+        public async Task<ApiResponse<ProductDetailDto>?> GetProductDetailsAsync(
+            int productId, 
+            string regionCode, 
+            double? customerLatitude, 
+            double? customerLongitude, 
+            int? sizeId = null, 
+            int? fabricId = null,
+            int? finishId = null)
         {
             var region = await _context.Regions.FirstOrDefaultAsync(r => r.Code == regionCode);
             if (region == null)
@@ -47,24 +54,18 @@ namespace eCommerce.Application.Services
             IQueryable<Product> productQuery = _context.Products
                 .Include(p => p.Variants)
                     .ThenInclude(v => v.VariantOptionValues)
-                        .ThenInclude(p => p.ProductOptionValue)
-                            .ThenInclude(v => v.Option)
-                .Include(p => p.Variants)
-                    .ThenInclude(v => v.Images)
-                .Include(p => p.Variants)
-                    .ThenInclude(v => v.ProductVariantFabrics!)
-                        .ThenInclude(pvf => pvf.Fabric)
-                .Include(p => p.Variants)
-                    .ThenInclude(v => v.ProductVariantFabrics!)
-                        .ThenInclude(pvf => pvf.Images)
-                .Include(p => p.Variants)
-                    .ThenInclude(v => v.ProductVariantFinishes!)
-                        .ThenInclude(pvf => pvf.Finish)
-                .Include(p => p.Variants)
-                    .ThenInclude(v => v.ProductVariantFinishes!)
-                        .ThenInclude(pvf => pvf.Images)
+                        .ThenInclude(vov => vov.ProductOptionValue)
+                            .ThenInclude(pov => pov.Option)
+                .Include(p => p.Variants).ThenInclude(v => v.Images)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFabrics).ThenInclude(f => f.Fabric)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFabrics).ThenInclude(f => f.Images)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFinishes).ThenInclude(f => f.Finish)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFinishes).ThenInclude(f => f.Images)
                 .Include(p => p.ProductCategory)
-                .Include(p => p.Prices!.Where(pp => pp.RegionId == region.Id && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
+                .Include(p => p.Prices!.Where(pp =>
+                    pp.RegionId == region.Id &&
+                    pp.EffectiveDate <= DateTime.UtcNow &&
+                    (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
                 .Include(p => p.RegionAvailabilities!.Where(ra => ra.RegionId == region.Id));
 
             Warehouse? nearestWarehouse = null;
@@ -77,7 +78,6 @@ namespace eCommerce.Application.Services
                 nearestWarehouse = await _context.Warehouses
                                        .FirstOrDefaultAsync(w => w.RegionId == region.Id && w.IsPrimaryWarehouseForRegion);
             }
-
             // Conditionally include InventoryItems for the specific product detail
             if (nearestWarehouse != null)
             {
@@ -85,7 +85,6 @@ namespace eCommerce.Application.Services
             }
 
             var product = await productQuery.FirstOrDefaultAsync(p => p.Id == productId);
-
 
             if (product == null || !product.RegionAvailabilities!.Any())
             {
@@ -95,56 +94,29 @@ namespace eCommerce.Application.Services
             // Note: inventory retrieval is already handled by the .Include above.
             // Just need to access the loaded data.
             var inventory = product.InventoryItems?.FirstOrDefault();
-
             var price = product.Prices?.FirstOrDefault()?.Price;
             var currency = product.Prices?.FirstOrDefault()?.Currency;
 
             // Step 1: CHỌN SELECTED VARIANT ĐÚNG CẢ COLOR + SIZE
             var selectedVariant = product.Variants
-                .FirstOrDefault(v =>
-                    (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
-                    (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)));
+                       .FirstOrDefault(v =>
+                           (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId.Value)));
 
-            // 2. Nếu không có, fallback chỉ theo color
-            if (selectedVariant == null && colorId.HasValue)
-            {
-                selectedVariant = product.Variants.FirstOrDefault(v =>
-                    v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId));
-            }
-
-            if (selectedVariant == null && colorId.HasValue)
-            {
-                selectedVariant = product.Variants.FirstOrDefault(v =>
-                    v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId));
-            }
-            // 3. Nếu vẫn không có, fallback chỉ theo size
-            if (selectedVariant == null && sizeId.HasValue)
-            {
-                selectedVariant = product.Variants.FirstOrDefault(v =>
-                    v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId));
-            }
-
+            // STEP 2: fallback nếu không có sizeId
             selectedVariant ??= product.Variants.FirstOrDefault();
 
-            // Step 2: Tìm colorId / sizeId mặc định từ selectedVariant nếu không có truyền lên
-            var defaultColorId = selectedVariant?.VariantOptionValues
-                .FirstOrDefault(x => x.ProductOptionValue.Option.Name == "Color")?.ProductOptionValueId;
-
+            // STEP 3: Lấy sizeId mặc định từ variant nếu chưa truyền
             var defaultSizeId = selectedVariant?.VariantOptionValues
                 .FirstOrDefault(x => x.ProductOptionValue.Option.Name == "Size")?.ProductOptionValueId;
 
-            // Step 3: Danh sách các variant matching theo color / size
-            var filteredVariantIdsByColor = product.Variants
-                .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (colorId ?? defaultColorId)))
-                .Select(v => v.Id)
-                .ToList();
+            selectedVariant ??= product.Variants.FirstOrDefault();
 
             var filteredVariantIdsBySize = product.Variants
-                .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (sizeId ?? defaultSizeId)))
-                .Select(v => v.Id)
-                .ToList();
+                 .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (sizeId ?? defaultSizeId)))
+                 .Select(v => v.Id)
+                 .ToList();
 
-            // Step 4: Group theo Option (Color/Size)
+            // STEP 4: Tạo nhóm lựa chọn size
             var variantOptionValues = product.Variants
                 .SelectMany(v => v.VariantOptionValues
                     .Select(vov => new { VariantId = v.Id, vov.ProductOptionValue }))
@@ -159,16 +131,7 @@ namespace eCommerce.Application.Services
                         var ov = g2.First().ProductOptionValue;
                         var ovVariantIds = g2.Select(x => x.VariantId).Distinct().ToList();
 
-                        bool isAvailable = true;
-
-                        if (ov.Option.Name == "Size")
-                        {
-                            isAvailable = ovVariantIds.Intersect(filteredVariantIdsByColor).Any();
-                        }
-                        else if (ov.Option.Name == "Color")
-                        {
-                            isAvailable = ovVariantIds.Intersect(filteredVariantIdsBySize).Any();
-                        }
+                        bool isAvailable = ovVariantIds.Intersect(filteredVariantIdsBySize).Any();
 
                         return new OptionDto
                         {
@@ -180,16 +143,9 @@ namespace eCommerce.Application.Services
                         };
                     }).ToList()
                 );
-            var customFabricPrice = selectedVariant?.ProductVariantFabrics
-                    .Where(pvf => pvf.Fabric.IsCustom)
-                    .Sum(pvf => pvf.Fabric.CustomPrice ?? 0) ?? 0;
 
-            int? selectedFabricId = 0;
-
-            if (selectedFabricId == null)
-            {
-                selectedFabricId = selectedVariant?.ProductVariantFabrics?.FirstOrDefault()?.FabricId;
-            }
+            // STEP 5: Fabric
+            int? selectedFabricId = fabricId ?? selectedVariant?.ProductVariantFabrics?.FirstOrDefault()?.FabricId;
 
             var fabricOptions = selectedVariant?.ProductVariantFabrics?.Select(f => new FabricDto
             {
@@ -198,6 +154,7 @@ namespace eCommerce.Application.Services
                 IsCustom = f.Fabric.IsCustom,
                 CustomPrice = f.Fabric.CustomPrice,
                 IsSelected = f.FabricId == selectedFabricId,
+                ImageUrl = f.Images?.Where(x => x.IsPrimary)?.FirstOrDefault()?.ImageUrl ?? "",
                 Images = f.Images.Select(img => new ProductImageDto
                 {
                     Id = img.Id,
@@ -207,18 +164,15 @@ namespace eCommerce.Application.Services
                 }).ToList()
             }).ToList();
 
-            int? selectedFinishId = 0;
-
-            if (selectedFinishId == null)
-            {
-                selectedFinishId = selectedVariant?.ProductVariantFinishes?.FirstOrDefault()?.FinishId;
-            }
+            // STEP 6: Finish
+            int? selectedFinishId = finishId ?? selectedVariant?.ProductVariantFinishes?.FirstOrDefault()?.FinishId;
 
             var finishOptions = selectedVariant?.ProductVariantFinishes?.Select(f => new FinishDto
             {
                 Id = f.FinishId,
                 Name = f.Finish.Name,
                 IsSelected = f.FinishId == selectedFinishId,
+                ImageUrl = f.Images?.Where(x => x.IsPrimary)?.FirstOrDefault()?.ImageUrl ?? "",
                 Images = f.Images.Select(img => new ProductImageDto
                 {
                     Id = img.Id,
@@ -227,6 +181,11 @@ namespace eCommerce.Application.Services
                     ProductVariantId = img.ProductVariantId
                 }).ToList()
             }).ToList();
+
+            // STEP 7: Tính giá cộng thêm nếu dùng custom fabric
+            var customFabricPrice = selectedVariant?.ProductVariantFabrics
+                .Where(pvf => pvf.Fabric.IsCustom)
+                .Sum(pvf => pvf.Fabric.CustomPrice ?? 0) ?? 0;
 
             var result = new ProductDetailDto
             {
@@ -245,14 +204,15 @@ namespace eCommerce.Application.Services
                 EstimatedAvailableStock = inventory?.AvailableQuantity,
                 FulfillingWarehouseName = nearestWarehouse?.Name,
                 FulfillingWarehouseAddress = nearestWarehouse != null ? $"{nearestWarehouse.Address1}, {nearestWarehouse.City}" : null,
+
                 SelectedVariant = selectedVariant != null ? new VariantDto
                 {
                     Id = selectedVariant.Id,
                     Sku = selectedVariant.Sku,
                     PriceAdjustment = selectedVariant.PriceAdjustment + customFabricPrice,
-                    ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault().ImageUrl ?? product.DefaultImageUrl,
+                    ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault()?.ImageUrl ?? product.DefaultImageUrl,
                     Images = selectedVariant.Images.Select(x => new ProductImageDto
-                    { 
+                    {
                         Id = x.Id,
                         ImageUrl = x.ImageUrl,
                         SortOrder = x.SortOrder,
@@ -260,11 +220,14 @@ namespace eCommerce.Application.Services
                         ProductVariantId = x.ProductVariantId
                     }).ToList(),
                 } : null,
+
+                SizeOptions = optionGroups.ContainsKey("Size") ? optionGroups["Size"] : new List<OptionDto>(),
                 FabricOptions = fabricOptions ?? new List<FabricDto>(),
                 FinishOptions = finishOptions ?? new List<FinishDto>(),
-                ColorOptions = optionGroups.ContainsKey("Color") ? optionGroups["Color"] : new List<OptionDto>(),
-                SizeOptions = optionGroups.ContainsKey("Size") ? optionGroups["Size"] : new List<OptionDto>()
+
+                // ColorOptions đã loại bỏ
             };
+
             return ApiResponse<ProductDetailDto>.Success(result);
         }
 
@@ -336,38 +299,91 @@ namespace eCommerce.Application.Services
 
             return ApiResponse<IEnumerable<ProductListDto>>.Success(productList);
         }
-        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? colorId, int? sizeId)
+        public async Task<ApiResponse<VariantDto>> GetVariantAsync(int productId, int? sizeId, int? fabricId, int? finishId)
         {
             var product = await _context.Products
                 .Include(p => p.Variants)
                     .ThenInclude(v => v.VariantOptionValues)
                 .Include(p => p.Variants)
                     .ThenInclude(v => v.Images)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFabrics).ThenInclude(f => f.Fabric)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFabrics).ThenInclude(f => f.Images)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFinishes).ThenInclude(f => f.Finish)
+                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFinishes).ThenInclude(f => f.Images)
                 .FirstOrDefaultAsync(p => p.Id == productId);
 
             if (product == null) return ApiResponse<VariantDto>.Failure("Product not found.");
 
             var selectedVariant = product.Variants
-                .FirstOrDefault(v =>
-                    (!colorId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == colorId)) &&
-                    (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)));
+                    .FirstOrDefault(v =>
+                        (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)) &&
+                        (!fabricId.HasValue || v.ProductVariantFabrics.Any(f => f.FabricId == fabricId)) &&
+                        (!finishId.HasValue || v.ProductVariantFinishes.Any(f => f.FinishId == finishId))
+                    );
 
             if (selectedVariant == null) return null;
+
+            var customFabricPrice = selectedVariant.ProductVariantFabrics?
+                .Where(f => f.Fabric.IsCustom)
+                .Sum(f => f.Fabric.CustomPrice ?? 0) ?? 0;
+
+            var selectedFabric = selectedVariant.ProductVariantFabrics?
+                .FirstOrDefault(f => f.FabricId == fabricId) ??
+                selectedVariant.ProductVariantFabrics?.FirstOrDefault();
+
+            var selectedFinish = selectedVariant.ProductVariantFinishes?
+                .FirstOrDefault(f => f.FinishId == finishId) ??
+                selectedVariant.ProductVariantFinishes?.FirstOrDefault();
+
+            // Ưu tiên ảnh từ Fabric > Finish > Variant
+            string imageUrl = selectedFabric?.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl
+                           ?? selectedFinish?.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl
+                           ?? selectedVariant.Images?.FirstOrDefault(i => i.IsPrimary)?.ImageUrl
+                           ?? product.DefaultImageUrl;
+
+            var allImages = new List<ProductImageDto>();
+
+            if (selectedFabric?.Images != null)
+            {
+                allImages.AddRange(selectedFabric.Images.Select(img => new ProductImageDto
+                {
+                    Id = img.Id,
+                    ImageUrl = img.ImageUrl,
+                    IsPrimary = img.IsPrimary,
+                    ProductVariantId = img.ProductVariantId
+                }));
+            }
+
+            if (selectedFinish?.Images != null)
+            {
+                allImages.AddRange(selectedFinish.Images.Select(img => new ProductImageDto
+                {
+                    Id = img.Id,
+                    ImageUrl = img.ImageUrl,
+                    IsPrimary = img.IsPrimary,
+                    ProductVariantId = img.ProductVariantId
+                }));
+            }
+
+            // Nếu vẫn chưa có ảnh, dùng ảnh variant mặc định
+            if (!allImages.Any() && selectedVariant.Images != null)
+            {
+                allImages.AddRange(selectedVariant.Images.Select(img => new ProductImageDto
+                {
+                    Id = img.Id,
+                    ImageUrl = img.ImageUrl,
+                    IsPrimary = img.IsPrimary,
+                    ProductVariantId = img.ProductVariantId
+                }));
+            }
 
             var result = new VariantDto
             {
                 Id = selectedVariant.Id,
                 Sku = selectedVariant.Sku,
-                PriceAdjustment = selectedVariant.PriceAdjustment,
-                ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault().ImageUrl ?? product.DefaultImageUrl,
-                Images = selectedVariant.Images.Select(i => new ProductImageDto
-                {
-                    Id = i.Id,
-                    ImageUrl = i.ImageUrl,
-                    SortOrder = i.SortOrder,
-                    IsPrimary = i.IsPrimary,
-                    ProductVariantId = i.ProductVariantId
-                }).ToList()
+                PriceAdjustment = selectedVariant.PriceAdjustment + customFabricPrice,
+                ImageUrl = imageUrl,
+                Images = allImages
             };
 
             return ApiResponse<VariantDto>.Success(result);

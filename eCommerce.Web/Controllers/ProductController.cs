@@ -133,16 +133,16 @@ namespace eCommerce.Web.Controllers
         }
 
         [HttpGet("{productId}/GetVariantPartial/{regionCode}")]
-        public async Task<IActionResult> GetVariantPartial(int productId, string regionCode, int? color, int? size)
+        public async Task<IActionResult> GetVariantPartial(int productId, string regionCode, int? size, int? fabricId, int? finishId)
         {
-            var data = await _productApiClient.GetProductDetail(productId, regionCode, null, null, color, size);
+            var data = await _productApiClient.GetProductDetail(productId, regionCode, null, null, size, fabricId, finishId);
             if (data == null) return NotFound();
             return PartialView("_VariantOptionsPartial", data.Data);
         }
         [HttpGet("{productId}/GetVariantData")]
-        public async Task<IActionResult> GetVariantData(int productId, int? color, int? size)
+        public async Task<IActionResult> GetVariantData(int productId, int? size, int? fabricId, int? finishId)
         {
-            var data = await _productApiClient.GetVariantAsync(productId, color, size);
+            var data = await _productApiClient.GetVariantAsync(productId, size, fabricId, finishId);
             return Json(data);
         }
     }
