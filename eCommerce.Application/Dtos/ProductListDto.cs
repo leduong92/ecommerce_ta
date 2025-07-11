@@ -30,6 +30,8 @@ namespace eCommerce.Application.Dtos
         public VariantDto SelectedVariant { get; set; } = null!;
         public List<OptionDto> ColorOptions { get; set; } = [];
         public List<OptionDto> SizeOptions { get; set; } = [];
+        public List<FabricDto> FabricOptions { get; set; } = new();
+        public List<FinishDto> FinishOptions { get; set; } = new();
         public ICollection<InventoryItemDto> InventoryItems { get; set; } = new List<InventoryItemDto>();
     }
 
@@ -44,7 +46,7 @@ namespace eCommerce.Application.Dtos
         public string Sku { get; set; } = string.Empty;
         public decimal PriceAdjustment { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
-        public List<ProductImage> Images { get; set; }
+        public List<ProductImageDto> Images { get; set; }
     }
     public class OptionDto
     {

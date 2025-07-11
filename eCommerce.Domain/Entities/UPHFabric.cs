@@ -36,5 +36,8 @@
         public bool? Pfp { get; set; }
         public string? ImageUrl { get; set; }
         public string? GradeVn { get; set; }
+        public bool IsCustom { get; set; }
+        public decimal? CustomPrice { get; set; }
+        public ICollection<ProductVariantFabric> ProductVariantFabrics { get; set; } = new List<ProductVariantFabric>();
     }
 }

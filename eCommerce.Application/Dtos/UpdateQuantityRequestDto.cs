@@ -9,6 +9,7 @@ namespace eCommerce.Application.Dtos
     public class UpdateQuantityRequestDto
     {
         public int ProductId { get; set; }
+        public int VariantId { get; set; }
         public int Quantity { get; set; }
     }
 }

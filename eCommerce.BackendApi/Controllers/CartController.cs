@@ -104,7 +104,7 @@ namespace eCommerce.BackendApi.Controllers
             var userId = GetCurrentUserId();
             try
             {
-                var cart = await _cartService.UpdateCartItemQuantityAsync(request.ProductId, request.Quantity, userId, request.AnonymousId);
+                var cart = await _cartService.UpdateCartItemQuantityAsync(request.ProductId, request.VariantId, request.Quantity, userId, request.AnonymousId);
                 return Ok(new { Message = "Cart updated.", CartId = cart.Id });
             }
             catch (ArgumentException ex)

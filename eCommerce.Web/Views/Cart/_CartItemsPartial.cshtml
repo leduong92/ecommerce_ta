@@ -29,14 +29,13 @@ else
                     <td>@item.UnitPrice.ToString("N2") @item.Currency</td>
                     <td>
                         <div class="input-group" style="width: 150px;">
-                            <button class="btn btn-outline-secondary btn-decrease-quantity" type="button" data-product-id="@item.ProductId">-</button>
-                            <input type="number" class="form-control text-center item-quantity" value="@item.Quantity" data-product-id="@item.ProductId" min="1">
-                            <button class="btn btn-outline-secondary btn-increase-quantity" type="button" data-product-id="@item.ProductId">+</button>
+                            <button class="btn btn-outline-secondary btn-decrease-quantity" type="button" data-product-id="@item.ProductId" data-variant-id="@item.ProductVariantId">-</button>
+                            <input type="number" class="form-control text-center item-quantity" value="@item.Quantity" data-product-id="@item.ProductId" data-variant-id="@item.ProductVariantId" min="1">
+                            <button class="btn btn-outline-secondary btn-increase-quantity" type="button" data-product-id="@item.ProductId" data-variant-id="@item.ProductVariantId">+</button>
                         </div>
                     </td>
                     <td>@item.TotalPrice.ToString("N2") @item.Currency</td>
                     <td>
-                        <input type="hidden" name="variantId" value="@item.ProductVariantId" />
                         <button class="btn btn-danger btn-sm" onclick="removeCartItem('@item.ProductId')">@SharedLocalizer["Remove"]</button>
                     </td>
                 </tr>

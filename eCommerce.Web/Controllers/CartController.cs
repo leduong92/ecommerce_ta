@@ -102,11 +102,11 @@ namespace eCommerce.Web.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
+        public async Task<IActionResult> UpdateQuantity(int productId, int variantId, int quantity)
         {
             try
             {
-                await _cartService.UpdateItemQuantityAsync(new UpdateQuantityRequestDto { ProductId = productId, Quantity = quantity });
+                await _cartService.UpdateItemQuantityAsync(new UpdateQuantityRequestDto { ProductId = productId, VariantId = variantId, Quantity = quantity });
             }
             catch (HttpRequestException httpEx) when (httpEx.StatusCode == HttpStatusCode.NotFound)
             {

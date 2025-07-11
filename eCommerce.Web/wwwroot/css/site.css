@@ -38,3 +38,12 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.finish-card.active {
+    border: 2px solid #0d6efd !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.finish-card:hover {
+    border-color: #0d6efd;
+}

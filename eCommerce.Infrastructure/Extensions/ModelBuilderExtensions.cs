@@ -934,6 +934,39 @@ namespace eCommerce.Infrastructure.Extensions
                 new Language { Id = 3, Name = "中文 (简体) - ZH", Code = "zh", IsDefault = false }
            );
 
+            modelBuilder.Entity<Finish>().HasData(
+                new Finish { Id = 1, Name = "Matte Walnut", Code = "MAT-WAL" },
+                new Finish { Id = 2, Name = "Glossy Oak", Code = "GL-OAK" }
+            );
+
+            modelBuilder.Entity<UPHFabric>().HasData(
+                new UPHFabric { Id = 1, Fabric = "1020-01", IsCustom = false },
+                new UPHFabric { Id = 2, Fabric = "1020-28", IsCustom = false },
+                new UPHFabric { Id = 3, Fabric = "1025-01", IsCustom = true, CustomPrice = 199.99m }
+            );
+
+            modelBuilder.Entity<ProductVariantFabric>().HasData(
+                new { ProductVariantId = 1, FabricId = 1 },
+                new { ProductVariantId = 1, FabricId = 3 } // Custom Blue
+            );
+
+            modelBuilder.Entity<ProductVariantFabricImage>().HasData(
+               new ProductVariantFabricImage { Id = 1, ProductVariantId = 1, FabricId = 1, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/fabric/8-200.jpg", IsPrimary = true },
+               new ProductVariantFabricImage { Id = 2, ProductVariantId = 1, FabricId = 1, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/fabric/9-225.jpg", IsPrimary = false },
+               new ProductVariantFabricImage { Id = 3, ProductVariantId = 1, FabricId = 3, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/fabric/9-246.jpg", IsPrimary = true }
+           );
+
+            modelBuilder.Entity<ProductVariantFinish>().HasData(
+                new { ProductVariantId = 1, FinishId = 1 },
+                new { ProductVariantId = 1, FinishId = 2 }
+            );
+
+            modelBuilder.Entity<ProductVariantFinishImage>().HasData(
+                new ProductVariantFinishImage { Id = 1, ProductVariantId = 1, FinishId = 1, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/Athenaeum.jpg", IsPrimary = true },
+                new ProductVariantFinishImage { Id = 2, ProductVariantId = 1, FinishId = 1, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/Cadet.jpg", IsPrimary = false },
+                new ProductVariantFinishImage { Id = 3, ProductVariantId = 1, FinishId = 2, ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/9020-72.jpg", IsPrimary = true }
+            );
+
             modelBuilder.Entity<ProductOption>().HasData(
                 new ProductOption { Id = 1, Name = "Color"},
                 new ProductOption { Id = 2, Name = "Size" }
@@ -963,8 +996,8 @@ namespace eCommerce.Infrastructure.Extensions
                 new ProductVariant { Id = 5, ProductId = 1, Sku = "OAK-52", PriceAdjustment = 69.99m },
                 new ProductVariant { Id = 6, ProductId = 2, Sku = "MAR-OAK-180", PriceAdjustment = 79.99m },
                 new ProductVariant { Id = 7, ProductId = 2, Sku = "MAR-OAK-220", PriceAdjustment = 89.99m },
-                new ProductVariant { Id = 8, ProductId = 2, Sku = "MAR-WAL-220", PriceAdjustment = 94.99m }
-
+                new ProductVariant { Id = 8, ProductId = 2, Sku = "MAR-WAL-220", PriceAdjustment = 94.99m },
+                new ProductVariant { Id = 10, ProductId = 1, Sku = "VCF1798", PriceAdjustment = 99.99m }
             );
 
             modelBuilder.Entity<ProductVariantOptionValue>().HasData(

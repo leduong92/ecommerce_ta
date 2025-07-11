@@ -24,39 +24,44 @@ else
         $(document).ready(function () {
             // Sự kiện click cho nút tăng số lượng
             $('#cartItemsContainer').on('click', '.btn-increase-quantity', function () {
-                var productId = $(this).data('product-id');
-                var currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
-                var newQuantity = currentQuantity + 1;
-                updateCartItemQuantity(productId, newQuantity);
+                const productId = $(this).data('product-id');
+                const variantId = $(this).data('variant-id');
+                const currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
+                let newQuantity = currentQuantity + 1;
+                updateCartItemQuantity(productId, variantId, newQuantity);
             });
 
             // Sự kiện click cho nút giảm số lượng
             $('#cartItemsContainer').on('click', '.btn-decrease-quantity', function () {
-                var productId = $(this).data('product-id');
-                var currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
-                var newQuantity = currentQuantity - 1;
-                updateCartItemQuantity(productId, newQuantity);
+                const productId = $(this).data('product-id');
+                const variantId = $(this).data('variant-id');
+                const currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
+                let newQuantity = currentQuantity - 1;
+                updateCartItemQuantity(productId, variantId, newQuantity);
             });
 
             // Sự kiện khi người dùng tự nhập số lượng
             $('#cartItemsContainer').on('change', '.item-quantity', function () {
-                var productId = $(this).data('product-id');
-                var newQuantity = parseInt($(this).val());
+                const productId = $(this).data('product-id');
+                const variantId = $(this).data('variant-id');
+                const newQuantity = parseInt($(this).val());
                 if (isNaN(newQuantity) || newQuantity < 0) {
                     newQuantity = 1; // Đảm bảo số lượng hợp lệ
                     $(this).val(newQuantity);
                 }
-                updateCartItemQuantity(productId, newQuantity);
+                updateCartItemQuantity(productId, variantId, newQuantity);
             });
 
             // Hàm gửi AJAX request để cập nhật số lượng
-            function updateCartItemQuantity(productId, quantity) {
+            function updateCartItemQuantity(productId, variantId, quantity) {
+
                 $.ajax({
                     url: '@Url.Action("UpdateQuantity", "Cart")', // URL tới action UpdateQuantity
                     type: 'POST',
                     data: {
                         productId: productId,
-                        quantity: quantity
+                        quantity: quantity,
+                        variantId: variantId
                     },
                     success: function (result) {
                         $('#cartItemsContainer').html(result); // Cập nhật lại phần giỏ hàng

@@ -36,6 +36,7 @@ namespace eCommerce.Infrastructure.Configurations
             builder.Property(e => e.Pattern).HasMaxLength(128);
             builder.Property(e => e.PatternCode).HasMaxLength(64);
             builder.Property(e => e.QtyOnHand).HasColumnType("decimal(18, 2)");
+            builder.Property(e => e.CustomPrice).HasColumnType("decimal(18, 2)");
             builder.Property(e => e.Rubs).HasMaxLength(50);
             builder.Property(e => e.Sampled).HasMaxLength(255);
             builder.Property(e => e.Um).HasMaxLength(10);

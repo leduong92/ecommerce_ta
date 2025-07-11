@@ -51,6 +51,18 @@ namespace eCommerce.Application.Services
                             .ThenInclude(v => v.Option)
                 .Include(p => p.Variants)
                     .ThenInclude(v => v.Images)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFabrics!)
+                        .ThenInclude(pvf => pvf.Fabric)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFabrics!)
+                        .ThenInclude(pvf => pvf.Images)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFinishes!)
+                        .ThenInclude(pvf => pvf.Finish)
+                 .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFinishes!)
+                        .ThenInclude(pvf => pvf.Images)
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Prices!.Where(pp => pp.RegionId == region.Id && pp.EffectiveDate <= DateTime.UtcNow && (pp.ExpirationDate == null || pp.ExpirationDate >= DateTime.UtcNow)))
                 .Include(p => p.RegionAvailabilities!.Where(ra => ra.RegionId == region.Id));
@@ -168,6 +180,53 @@ namespace eCommerce.Application.Services
                         };
                     }).ToList()
                 );
+            var customFabricPrice = selectedVariant?.ProductVariantFabrics
+                    .Where(pvf => pvf.Fabric.IsCustom)
+                    .Sum(pvf => pvf.Fabric.CustomPrice ?? 0) ?? 0;
+
+            int? selectedFabricId = 0;
+
+            if (selectedFabricId == null)
+            {
+                selectedFabricId = selectedVariant?.ProductVariantFabrics?.FirstOrDefault()?.FabricId;
+            }
+
+            var fabricOptions = selectedVariant?.ProductVariantFabrics?.Select(f => new FabricDto
+            {
+                Id = f.FabricId,
+                Fabric = f.Fabric.Fabric,
+                IsCustom = f.Fabric.IsCustom,
+                CustomPrice = f.Fabric.CustomPrice,
+                IsSelected = f.FabricId == selectedFabricId,
+                Images = f.Images.Select(img => new ProductImageDto
+                {
+                    Id = img.Id,
+                    ImageUrl = img.ImageUrl,
+                    IsPrimary = img.IsPrimary,
+                    ProductVariantId = img.ProductVariantId
+                }).ToList()
+            }).ToList();
+
+            int? selectedFinishId = 0;
+
+            if (selectedFinishId == null)
+            {
+                selectedFinishId = selectedVariant?.ProductVariantFinishes?.FirstOrDefault()?.FinishId;
+            }
+
+            var finishOptions = selectedVariant?.ProductVariantFinishes?.Select(f => new FinishDto
+            {
+                Id = f.FinishId,
+                Name = f.Finish.Name,
+                IsSelected = f.FinishId == selectedFinishId,
+                Images = f.Images.Select(img => new ProductImageDto
+                {
+                    Id = img.Id,
+                    ImageUrl = img.ImageUrl,
+                    IsPrimary = img.IsPrimary,
+                    ProductVariantId = img.ProductVariantId
+                }).ToList()
+            }).ToList();
 
             var result = new ProductDetailDto
             {
@@ -190,17 +249,19 @@ namespace eCommerce.Application.Services
                 {
                     Id = selectedVariant.Id,
                     Sku = selectedVariant.Sku,
-                    PriceAdjustment = selectedVariant.PriceAdjustment,
+                    PriceAdjustment = selectedVariant.PriceAdjustment + customFabricPrice,
                     ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault().ImageUrl ?? product.DefaultImageUrl,
-                    Images = selectedVariant.Images.Select(x => new ProductImage
+                    Images = selectedVariant.Images.Select(x => new ProductImageDto
                     { 
                         Id = x.Id,
                         ImageUrl = x.ImageUrl,
                         SortOrder = x.SortOrder,
                         IsPrimary = x.IsPrimary,
                         ProductVariantId = x.ProductVariantId
-                    }).ToList()
+                    }).ToList(),
                 } : null,
+                FabricOptions = fabricOptions ?? new List<FabricDto>(),
+                FinishOptions = finishOptions ?? new List<FinishDto>(),
                 ColorOptions = optionGroups.ContainsKey("Color") ? optionGroups["Color"] : new List<OptionDto>(),
                 SizeOptions = optionGroups.ContainsKey("Size") ? optionGroups["Size"] : new List<OptionDto>()
             };
@@ -299,7 +360,7 @@ namespace eCommerce.Application.Services
                 Sku = selectedVariant.Sku,
                 PriceAdjustment = selectedVariant.PriceAdjustment,
                 ImageUrl = selectedVariant.Images?.Where(x => x.IsPrimary)?.FirstOrDefault().ImageUrl ?? product.DefaultImageUrl,
-                Images = selectedVariant.Images.Select(i => new ProductImage
+                Images = selectedVariant.Images.Select(i => new ProductImageDto
                 {
                     Id = i.Id,
                     ImageUrl = i.ImageUrl,

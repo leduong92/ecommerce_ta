@@ -121,10 +121,10 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Updates the quantity of a product in the shopping cart.
         /// </summary>
-        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int quantity, Guid userId, string? anonymousId)
+        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int variantId, int quantity, Guid userId, string? anonymousId)
         {
             var cart = await GetOrCreateCartAsync(userId, anonymousId);
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId && ci.ProductVariantId == variantId);
             if (cartItem == null)
             {
                 //throw new ArgumentException("Product not found in cart.");

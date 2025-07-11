@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerce.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using eCommerce.Infrastructure.Data;
 namespace eCommerce.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250711025608_AddFinishAndFinishVariant")]
+    partial class AddFinishAndFinishVariant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,14 +48,14 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("b1d7f736-9c9f-41f5-9179-9d3ce2a1c63a"),
-                            ConcurrencyStamp = "929276bb-353f-4936-9606-4b17218be696",
+                            ConcurrencyStamp = "9d6fc10d-e1f9-40e2-a37e-226fb30ab087",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("f3c6e017-491f-4531-bdf4-60414e5a1c25"),
-                            ConcurrencyStamp = "20c765a8-b155-4b28-90d4-495daf3d06a5",
+                            ConcurrencyStamp = "6afcddc5-a3f5-477f-a9df-c3977681b6c4",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -155,7 +158,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a803e845-a9ed-49a1-a4cf-7ae9b4bbfb95",
+                            ConcurrencyStamp = "c4834086-6283-451f-b4ca-7fe40c1239ce",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "maileduong92@gmail.com",
                             EmailConfirmed = true,
@@ -164,7 +167,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "maileduong92@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAENjDLdRKXsHuBIp7N1wV5qlsWeMR6vUE3OzN3/X96eMC8pqwHAEjxIvR4JTVvOehhw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGPmHTmVvnVZdNeowfpuUfy2dMfxfNlb1BdYTCC4BtJrMe6IzOG4vDGVyTvAGBQBKw==",
                             PhoneNumberConfirmed = false,
                             RegionId = 0,
                             SecurityStamp = "",
@@ -175,7 +178,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("a4cc4bd7-64c7-4b4c-8de8-924a35223ed0"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef18b5a2-e01b-4f89-baf5-39cba02395f4",
+                            ConcurrencyStamp = "0d379cfd-022c-466c-9d52-5165b3404971",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "customer@gmail.com",
                             EmailConfirmed = true,
@@ -184,7 +187,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "customer@gmail.com",
                             NormalizedUserName = "customer",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG4S2atueJ3sm5CsiVwW0/ddg53LbwlchK7ZfxNhEUFjRuf3rNzJ6ylXcD97rEixwQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBAncdtK88Z7fCR5ov27JNUqhV4AlOjUdMCGvixHVtQL3c8b7pngjEZwsIVz+9XI/A==",
                             PhoneNumberConfirmed = false,
                             RegionId = 0,
                             SecurityStamp = "",
@@ -344,7 +347,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Frequently dust exposed surfaces with a clean, damp natural cloth. Dry the surface with another clean, dry cloth. Infrequently polish your furniture (a few times a year at most) with a non-silicon-base furniture polish made by a reputable manufacturer, taking care to follow the instructions. Bear in mind that one manufacturer’s furniture care products should never be used in combination with another. Product formulations are unique to each manufacturer and are made to blend with another, so using different polishes may cause build-up that can appear cloudy or dull over time, and/or feel sticky to the touch. Always polish or dust with a motion that follows the grain of the wood to avoid scratching the surface, and allow polish to dry completely before replacing any objects on the surface.</p>",
                             ContentImageS7 = "Wood",
                             ContentTitle = "Wood",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1763),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9821),
                             DisplayName = "Wood",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -357,7 +360,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Theodore Alexander artists painstakingly create our hand-painted finishes using meticulous brushstrokes and age-old techniques. You can use a good quality furniture polish to maintain and preserve the unique artwork. Take care not to use abrasive cloths or polishes that may scratch a hand-painted finish.</p><ul><li>• Eglomisé – Eglomisé is a hand-made, centuries-old process that creates a stunning reflective surface. Regularly dust with a feather duster and wipe clean with a damp, lint-free cloth.</li><li>• Argento – The Argento finish from Theodore Alexander is the result of an exclusive finishing process. From time to time, wipe clean with a soft, damp cloth, taking care not to over-wet the surface.</li></ul>",
                             ContentImageS7 = "Artistry",
                             ContentTitle = "Artistry",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1793),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9854),
                             DisplayName = "Artistry",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -370,7 +373,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Remove all loose cushions. Loosen dirt with a hand-held dusting brush while using a vacuum brush attachment to remove dust. Vacuum all surfaces of the furniture: back, sides, arms, skirt (if applicable) and the platform beneath the cushions. Vacuum both sides of the loose cushions.</p><p>When necessary, you can use commercially available cleaners on Theodore Alexander upholstery. Be sure to test on an inconspicuous area first. For day-to-day cleaning use a soft clean damp cloth.</p>",
                             ContentImageS7 = "Upholstery",
                             ContentTitle = "Upholstery",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1817),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9875),
                             DisplayName = "Upholstery",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -383,7 +386,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Leather is a naturally hard-wearing and versatile material that will gain a characteristic and pleasing patina over time. Leather will show natural marks with wrinkles, scars, scratches and bites which are all normal. It is these characteristics that differentiate real hide from synthetic or re-constituted coverings. Take care not to expose your leather or hide product to continuous direct sunlight as this might  lead to fading.</p><p>For accidental spills, try to wipe up immediately and don’t allow the stain to dry. Light stains can be removed with a diluted solution of a neutral soap in lukewarm water, but be careful not to soak the leather or hide. Occasionally, pencil marks and other light marks can be removed by rubbing the area lightly with an eraser. If your leather or hide is heavily soiled, we recommend professional cleaning.</p>",
                             ContentImageS7 = "Leather",
                             ContentTitle = "Leather",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1840),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9893),
                             DisplayName = "Leather",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -396,7 +399,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Theodore Alexander lampshades are meticulously handmade by skilled craftspeople. Most shades simply require a light dusting with a feather duster or soft brush to remove dust. Vacuum using smooth, light strokes with the small bristle attachment found on most vacuum cleaners, or gently wipe with a soft, clean cloth.</p>",
                             ContentImageS7 = "Lampshades",
                             ContentTitle = "Lampshades",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1864),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9911),
                             DisplayName = "Lampshades",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -409,7 +412,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>The plain brass and etched tops and panels used on Theodore Alexander furniture require particular care during use and cleaning. Each panel has a rich patina created by a process of natural oxidization that leads to the deep colouration. Having been created by natural elements, etched brass is particularly sensitive to certain compounds and liquids, particularly those with abrasive or acidic bases. This includes wine, spirits and some furniture creams.</p><p>We recommend you take precautions to avoid spills and scratches by using coasters and placemats. Should a spill occur it must be wiped up immediately with a soft, clean cloth. Scratches may be touched up using a dark coloured shoe wax. </p><p>Over time you may see some colouration changes in the finish, such as a soft mottling. This is perfectly natural as the oxidization process continues and will in no way detract from the beauty of the item. </p><p>For everyday cleaning we recommend that you use only a soft, natural fibre cloth and a small amount of oil soap. </p>",
                             ContentImageS7 = "Etched Brass",
                             ContentTitle = "Etched Brass",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1888),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9930),
                             DisplayName = "Etched Brass",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -422,7 +425,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "Each piece of brass inlay is carefully inset by hand by a Theodore Alexander artisan. Simply wipe clean using a soft, damp cloth and a gentle hand.",
                             ContentImageS7 = "Brass Inlay",
                             ContentTitle = "Brass Inlay",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1912),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9950),
                             DisplayName = "Brass Inlay",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -435,7 +438,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "Regularly dust and wipe clean with a good quality furniture polish twice each month. Avoid using soap and water or any water-based cleaning products on iron as this may cause rusting.",
                             ContentImageS7 = "Iron",
                             ContentTitle = "Iron",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1935),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(35),
                             DisplayName = "Iron",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -448,7 +451,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "Brass artworks are hand cast in our own foundry, using age-old techniques. Occasional application of an inert wax that does not contain a cleansing agent will preserve the patina of the metal. Avoid using abrasive cloths or polishes that may damage the surface.",
                             ContentImageS7 = "Brass",
                             ContentTitle = "Brass",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1958),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(56),
                             DisplayName = "Brass",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -461,7 +464,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Warm water and a soft, lint-free cloth are ideal for routine cleaning. Wipe in the direction of the polish lines and dry with a towel or cloth to prevent water spots. Stainless steel cleaner cloths can help minimize scratching, remove stains and polish stainless steel surfaces nicely. Be sure to test in an inconspicuous spot.</p>",
                             ContentImageS7 = "Stainless Steel",
                             ContentTitle = "Stainless Steel",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1981),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(76),
                             DisplayName = "Stainless Steel",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -474,7 +477,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "Rub piece with a non-abrasive nickel-plate cleanser and a clean, dry cloth. Buff gently with smooth strokes to restore lustre.",
                             ContentImageS7 = "Nickel Plate",
                             ContentTitle = "Nickel Plate",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2004),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(94),
                             DisplayName = "Nickel Plate",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -487,7 +490,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Coasters should be used under all glasses, particularly those with alcohol or citrus content. Avoid placing hot items directly on the stone surface. Trivets or mats should be used under hot dishes and placemats under china, ceramics, silver or other objects that could scratch the surface. For calcareous (chalky) stones, many common foods and drinks that contain acids will etch or dull the surface.</p><ul><li>Clean stone surfaces with a few drops of neutral cleaner, stone soap, or a mild liquid dishwashing detergent and warm water. Use a clean soft cloth for best results. Excessive cleaner or soap could leave a film and cause streaks. Do not use products that contain lemon, vinegar, or other acids or bleach on marble or limestone. The surface should be thoroughly rinsed after washing with the soap solution and dried with a soft cloth. Avoid the use of scouring powders or creams; these abrasives will scratch the surface.</li></ul>",
                             ContentImageS7 = "Stone",
                             ContentTitle = "Stone",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2026),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(112),
                             DisplayName = "Nickel Plate",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -500,7 +503,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "A light dusting with a soft brush is all that is needed to clean bone, horn and antler objects. Bone and horn that are in good condition (that is with a smooth, glossy surface) and have no applied decoration can be cleaned with a little water and a soft, clean cloth. Dry the object immediately with another cloth.",
                             ContentImageS7 = "Bone / Horn",
                             ContentTitle = "Bone / Horn",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2049),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(129),
                             DisplayName = "Bone / Horn",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -513,7 +516,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Theodore Alexander artists painstakingly create our hand-painted finishes using meticulous brushstrokes and age-old techniques. You can use a good quality furniture polish to maintain and preserve the unique artwork. Take care not to use abrasive cloths or polishes that may scratch a hand-painted finish.</p><ul><li>• Eglomisé – Eglomisé is a hand-made, centuries-old process that creates a stunning reflective surface. Regularly dust with a feather duster and wipe clean with a damp, lint-free cloth.</li><li>• Argento – The Argento finish from Theodore Alexander is the result of an exclusive finishing process. From time to time, wipe clean with a soft, damp cloth, taking care not to over-wet the surface.</li></ul>",
                             ContentImageS7 = "Hand Painting Eglomisé",
                             ContentTitle = "Hand Painting Eglomisé",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2072),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(148),
                             DisplayName = "Hand Painting Eglomisé",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -526,7 +529,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "Hand-blown glass is created by artisans and each piece is unique. There will be variations in shape and form that are illustrative of the hand-made nature of each piece. Hand-blown glass tends to be more delicate than mass-produced glass and we recommend gentle cleaning with a damp, soft cloth to maintain the lustre and beauty of the original piece.",
                             ContentImageS7 = "Glass",
                             ContentTitle = "Glass",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2094),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(166),
                             DisplayName = "Glass",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -539,7 +542,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "Once a week, dust exposed surfaces with a clean and moist cotton cloth. Then dry the surface with a clean and dry cloth. Once a month, polish your furniture with a non-silicone good quality paste wax made by a reputable manufacturer, taking care to follow the instructions. Always polish or dust with a motion that follows the grain of the wood to avoid scratching the surface, and allow polish to dry completely before replacing any objects on the surface. For greasy stains or waxy build-up use a diluted dish detergent which should be wiped on with a clean cloth and removed with another. The whole affected surface should be waxed after this process to maintain consistency in protection.",
                             ContentImageS7 = "Crotch",
                             ContentTitle = "Crotch",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2117),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(184),
                             DisplayName = "Crotch",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -552,7 +555,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Dust with a soft, damp cloth or chamois. Dry or gritty cloths may cause surface scratches and create a static electric charge on the surface. Clean Acrylic with a solution of mild soap or detergent and lukewarm water. Use a clean soft cloth, applying only light pressure. Rinse with clean water and dry by blotting with a damp cloth or chamois. DO NOT USE: Window cleaning sprays, kitchen scouring compounds or solvents such as acetone, gasoline, benzene, alcohol, carbon tetrachloride, or lacquer thinner. These can scratch the surface and/or weaken it causing small surface cracks called, “crazing.”</p>",
                             ContentImageS7 = "Acrylic",
                             ContentTitle = "Acrylic",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2140),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(202),
                             DisplayName = "Acrylic",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -565,7 +568,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Coasters should be used under all glasses, particularly those with alcohol or citrus content. Avoid placing hot items directly on the surface. Trivets or mats should be used under hot dishes and placemats under china, ceramics, silver or other objects that could scratch the surface. Many common foods and drinks that contain acids can etch or dull the surface.</p><ul><li>Clean surfaces with a few drops of neutral cleaner, or a mild liquid dishwashing detergent and warm water. Use a clean soft cloth for best results. Excessive cleaner or soap could leave a film and cause streaks. Thoroughly wipe surface with a water dampened soft cloth to remove any remaining soap. Avoid the use of scouring powders or creams; these abrasives will scratch the surface. Do not use products that contain lemon, vinegar, or other acids or bleach.</li></ul>",
                             ContentImageS7 = "COMPOSITE",
                             ContentTitle = "COMPOSITE",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2164),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(221),
                             DisplayName = "COMPOSITE",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -578,7 +581,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Clean with a damp, clean cloth. Avoid using cleansers with a highly acidic base or ones that are extremely abrasive. Cleaners formulated with bleach can also damage eggshell pieces, particularly those with a polished or coated finish.</p>",
                             ContentImageS7 = "Eggshell",
                             ContentTitle = "Eggshell",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2187),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(240),
                             DisplayName = "Eggshell",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -591,7 +594,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Regularly dust and wipe clean with a good quality furniture polish twice each month. Avoid using soap and water or any water-based cleaning products on aluminum as this may cause tarnishing.</p>",
                             ContentImageS7 = "Aluminium",
                             ContentTitle = "Aluminium",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2242),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(258),
                             DisplayName = "Aluminium",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -604,7 +607,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             ContentBody = "<p>Regularly dust and wipe clean with a good quality furniture polish twice each month. Avoid using soap and water or any water-based cleaning products on steel as this may cause rusting.</p>",
                             ContentImageS7 = "Steel",
                             ContentTitle = "Steel",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2267),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(276),
                             DisplayName = "Steel",
                             IamgeUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/furniture-care/wood.jpg",
                             IsActive = true,
@@ -805,7 +808,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1025),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9063),
                             Description = "From New York City to Hangzhou, China, Alexa Hampton’s project portfolio encompasses luxe, beautifully layered urban apartments, expansive town and country residences, private airplanes, and yachts. Regularly named to Architectural Digest’s AD100 and House Beautiful’s Top Designer list as well as Elle Décor’s A-List, Hampton translates the classical principles of good design and decoration into some of today’s most elegant, enduring, and functional domestic landscapes.",
                             IsActive = true,
                             IsCarousel = true,
@@ -819,7 +822,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1051),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9110),
                             Description = "The Iconic Collection makes careful use of rich materials and elevated forms for a discerning aesthetic that emphasizes luxury and eclectic refinement. Bronze outlines, asymmetric surfaces, sumptuous tufting, and bold, textural bases are beautifully concluded in an Icon Bronze finish.",
                             IsActive = true,
                             IsCarousel = true,
@@ -833,7 +836,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1069),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9135),
                             Description = "The histories of the Spencer Family’s Heritage and Althorp are so tightly entwined that they would be impossible to unravel and separate. These Spencer ancestors were able to indulge their tastes – to commission art, furniture, and all the finer things in life. You can see the Spencer touch in every corner of Althorp – this historic house that my family has called “home” for over 500 years, and which for the past decade, has been given unprecedented care and attention.",
                             IsActive = true,
                             IsCarousel = true,
@@ -847,7 +850,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1085),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9155),
                             Description = "A modern view of transitional luxe, Balboa creates an air of timeless elegance that blends seamlessly with today’s contemporary style. Simplistic forms and clean architectural lines, influenced by the works of George Hepplewhite, are paired with reeded carvings as a nod to the French Provincial aesthetic. Oak wood in a Coastal Grey finish is complemented with reeding and Dark Nickel.",
                             IsActive = true,
                             IsCarousel = true,
@@ -861,7 +864,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1102),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9187),
                             Description = "Organic modern forms are boldly reimagined in Breeze. Across the collection, a striking elegance is conveyed through faceted angles, beveled profiles, sunburst veneers, and unique Dark Sterling hardware. Using a handcrafted wire-brushed pine, each piece is then perfectly finished in a light and subdued Sea Salt. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -875,7 +878,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1125),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9222),
                             Description = "In the Brooksby Collection, classical forms enjoy a refined simplicity across hand-carved motifs, saber legs, and traditional European silhouettes. Beautifully crafted from mahogany and cerejeira veneer for a distinguished elegance. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -889,7 +892,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1142),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9309),
                             Description = "The Castle Bromwich collection exudes a polished sophistication in pieces that carefully reflect a classical influence. Gracefully showcasing the refined elegance of traditional forms, antiqued mahogany is exquisitely shaped with pedestal bases, turnings, and scroll carvings. ",
                             IsActive = true,
                             IsCarousel = false,
@@ -903,7 +906,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1158),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9331),
                             Description = "Drawing inspiration from organic silhouettes and centered by the beauty of ash, a refined minimalism brings attention toward highly textural forms, rich grains, and porous stones. Perfectly hand-finished in a choice of Dune or Earth. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -917,7 +920,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1261),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9355),
                             Description = "The Dorchester Collection is an accomplished reimagining of early 20th century design. Pairing decorative ornamentation with masterfully sculpted forms, handcrafted silhouettes lend themselves to a refined and sumptuous presence across swooping curves, tapered lines, and modern profiles.",
                             IsActive = true,
                             IsCarousel = true,
@@ -931,7 +934,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1280),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9379),
                             Description = "The Echoes Collection is a material story of oak wood, intricate parquetry and hand-cast aluminum, plus distressed leather and Belgian linens with widely spaced nailhead to soften the look. Our specially calibrated industrial chic finishes are weathered and dry, but full of tactile appeal and vivacity.",
                             IsActive = true,
                             IsCarousel = true,
@@ -945,7 +948,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1309),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9400),
                             Description = "The Essence collection is composed from an alluring blend of rich materials and imaginative forms. Tasteful, softened lines are gracefully juxtaposed by organic shapes and highly textural silhouettes. Compellingly crafted from white oak and hand-finished in a choice of Blonde or Opal. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -959,7 +962,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1325),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9513),
                             Description = "The gracefully rounded forms of  the Horizon collection paired with  the fine reeded details of these oak  designs provide airy silhouettes that  are ideal for laid back contemporary  living. The Horizon collection is  offered in a light Day finish ensuring  a sleek finish, clean lines, versatility  and elegance to spare.",
                             IsActive = true,
                             IsCarousel = true,
@@ -973,7 +976,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1341),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9535),
                             Description = "Luxurious upholstered pieces pair elegantly with rich maple veneers and contrasting metal accents in Theodore Alexander’s Hudson Collection. A curated assortment of exquisite designs, the feeling of Art Deco luxury follows muted burl finished in exquisite maple grey with polished stainless-steel accents. From contrasting maple drawers to white marble tops, the Hudson Collection places an emphasis on sleek and modern sophistication. Finished in Pebble Grey with stainless steel hardware.",
                             IsActive = true,
                             IsCarousel = true,
@@ -987,7 +990,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1358),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9555),
                             Description = "Luxurious materials and unparalleled craftsmanship form a bold complexity in the Isola collection. Pieces enjoy a varied aesthetic that centers on geometric shapes in the form of chevron relief, nested squares, and asymmetrical patterns. Finished in a choice of Gowan or Charteris. ",
                             IsActive = true,
                             IsCarousel = false,
@@ -1001,7 +1004,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1373),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9575),
                             Description = "Immerse yourself in the opulent world of Judith Leiber Couture with our inaugural collection, a showcase of indulgent sophistication that pays homage to the iconic aesthetic of the revered fashion designer. Each piece is a creative masterpiece, adorned with resplendent details such as mother-of-pearl encrusted inlays, meticulously hand-painted details, and polished brass accents. Presented in the exquisite Mink or Martini oak finishes, these luxurious statement pieces, mirroring the essence of the brand’s iconic handbags, are tailored to individuals who embrace an elegant approach to life.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1015,7 +1018,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1389),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9596),
                             Description = "The Kesden Collection tells a story that begins with the depth and richness of Theodore Alexander’s veneers and ends with clean and transitional lines that promote gorgeous finishes and metal accents. The Kesden Collection possesses a feeling of effortless sophistication. With graceful silhouettes and gentle figures, Kesden is a harmonious blend of organic, sculpted bamboo forms and contrasting marbles, metals and veneers. From exquisite legs in bronze to Tamo ash burl tops, each piece serves as functional art for the home.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1029,7 +1032,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1405),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9722),
                             Description = "A modern view of transitional luxe, Lido creates an air of timeless elegance that blends seamlessly with today’s contemporary style. Simplistic forms and clean architectural lines, influenced by the works of George Hepplewhite, are paired with reeded carvings as a nod to the French Provincial aesthetic. Figured Prima Vera and Beech, featured in our dark Bistre finish, is complimented by a beautifully honed Crema Marfil marble stone top. Lido’s custom forged hardware adds an alluring air of sophistication in a dark rubbed bronze finish, echoing the reeding details throughout.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1043,7 +1046,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1422),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9756),
                             Description = "A tease between understated glamor  and coastal ease, the Luna collection’s  gentle round edges and stylish  silhouettes infuse contemporary comfort  in two colorways: dark Palmer and  light Cascade. This collection’s suite of  thoughtfully designed oak furnishings  adapts to a wide range of settings from  seaside estate to bustling city lofts and  everything in between.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1057,7 +1060,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1438),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9776),
                             Description = "Taking cues from sophistication of  simplicity, the Maxwell collection’s pared  down shapes make way for its textural  shagreen surfaces. Available in Obsidian  and Cashmere finishes, this handsome  collection of oak furnishings is versatile  and sculptural while delivering an elevated  and modern air to the spaces they inhabit.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1071,7 +1074,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1452),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9796),
                             Description = "The Montauk collection is a seamlessly  crafted ensemble of transitional  wooden case goods that effortlessly  blends contemporary design with  timeless elegance. The finishes  options enhance the organic appeal  of this offering, while the clean lines  and subtle detailing lend a modern  touch to the furniture. Available in  a bold Jetty and soft Lighthouse  colorway this collection’s chameleon  ability to morph between aesthetics  solidifies its heirloom qualities that will  stand the test of time.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1085,7 +1088,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1468),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9817),
                             Description = "Morning Room",
                             IsActive = true,
                             IsCarousel = false,
@@ -1099,7 +1102,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1482),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9837),
                             Description = "Refined and minimal, a feeling of subdued elegance surrounds the NOVA collection. Pleasing details of hand-carved starburst and herringbone parquetry, rustic oak, and verde bronzed hardware add to the quiet simplicity. Beautifully finished in a choice of Dawn or Dusk. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -1113,7 +1116,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1499),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9857),
                             Description = "Inspired by an appreciation of Art Deco and Streamline Moderne, the sketches of Paul Maitland-Smith are reimagined in Origins. Long, low profiles, limited ornamentation, and attenuated forms embody the spirit of the collection, while the pieces themselves offer a sense of forward movement that can be both seen and felt.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1127,7 +1130,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1514),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9877),
                             Description = "Elevated by a carefully sculpted minimalism, the Repose collection beautifully plays sinuous curves against distinctly shaped forms in a relaxed palette of soothing neutrals. Wire-brushed white oak is elegantly finished in a choice of Charcoal Oak or Grey Oak. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -1141,7 +1144,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1530),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9898),
                             Description = "The Rome collection is expanded  beyond tables this spring,  translating its organic, slender  framework into wood. The warmth  of the oak paired with graceful  curves creates sculptural pieces that  are offered in a rich Nera finish.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1155,7 +1158,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1565),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 398, DateTimeKind.Utc).AddTicks(9917),
                             Description = "Seated",
                             IsActive = true,
                             IsCarousel = true,
@@ -1169,7 +1172,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1584),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(124),
                             Description = "A contemporary reinterpretation of designs from the 18th and 19th centuries, the Sloane Collection is a refined homage to the American Federal era and its English influences. Artisanal craftsmanship brings to life the balanced forms and pleasing silhouettes, while resplendent materials elegantly complete the pieces.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1183,7 +1186,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1612),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(146),
                             Description = "Marrying styles of Lord Spencer’s London home  with the exquisite capabilities of Theodore  Alexander’s craftsmanship, the Spencer London  collection brings fresh perspective to elegant  metro living. A consistent thread of chic,  mixed metal inlays are seen throughout the  furniture forms, bringing England’s rich history  to a current day contemporary style. Crafted  in figured sycamore, maple, and khaya crotch  wood, these designs have been painstakingly  fine tuned to offer a tailored product that is  uncompromising, timeless and approachable.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1197,7 +1200,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 29,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1629),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(167),
                             Description = "A striking capsule collection, Spencer St. James is made of oak and adorned with crocodile-embossed leather, creating textural, statement-making experiences within the home. Available in a light Argento finish or a dark Onyx finish, the Spencer St. James collection blends contemporary flair with exquisite creativity and luxury details. These focal points elevate modern living spaces, whether hosting guests around sleek occasional tables or pouring spirits from its low-profile bar that has a colorful element of surprise inside.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1211,7 +1214,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1652),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(193),
                             Description = "Stephen Church is a Master Cabinetmaker who designs as well as crafts fine furniture following the tradition of English 18th century cabinet makers from Adam and Chippendale to Hepplewhite and Sheraton. Today those traditions are maintained with pride by a selected team of craftsmen working at Theodore Alexander.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1225,7 +1228,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1698),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(216),
                             Description = "The Iconic Collection makes careful use of rich materials and elevated forms for a discerning aesthetic that emphasizes luxury and eclectic refinement. Bronze outlines, asymmetric surfaces, sumptuous tufting, and bold, textural bases are beautifully concluded in an Icon Bronze finish.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1239,7 +1242,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 32,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1715),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(236),
                             Description = "TA Artistry",
                             IsActive = true,
                             IsCarousel = false,
@@ -1253,7 +1256,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 33,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1731),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(256),
                             Description = "Rich, one-of-a-kind forms handcrafted in the finest materials and finishes. The TA Originals Collection brings artistic visions to life.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1267,7 +1270,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1747),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(277),
                             Description = "TA Studio is an elegant, highly polished presentation of luxurious forms. Rich details of metallic accents, embossed shagreen leather wrappings, and superb finishes offer a sense of refinement atop designs composed from crisp angles, soft curves, and tapered silhouettes. ",
                             IsActive = true,
                             IsCarousel = true,
@@ -1281,7 +1284,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 35,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1765),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(297),
                             Description = "Inspired by the “Golden Age” of French Decorative Art, the Tavel collection gracefully echoes the intricate details and masterful craftsmanship of the late 18th century. Hand-carved motifs, saber legs, molded cornices, and serpentine drawers are exquisitely formed from beech, walnut, and oak woods. Finished in a refined selection of Avesta, Nora, and Elsa.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1295,7 +1298,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 36,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1780),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(318),
                             Description = "The Theodore Alexander brand is synonymous with innovative designs that speak to today's lifestyles in ways that excite and entice. Theodore Alexander Upholstery is created with uncompromising standards and attention to detail.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1309,7 +1312,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 37,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1796),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(339),
                             Description = "Introducing a symphony of form and function that  harmoniously blends diverse materials to elevate your  living spaces. From elegant bookends to captivating  sculptures, each piece in this collection is meticulously  crafted to enhance your home decor.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1323,7 +1326,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 38,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1811),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(436),
                             Description = "Embracing a contemporary, casual aesthetic, the Urbane collection is a fashion forward collection made of wire-brushed pine. The legs are designed to create an eye-catching floating appearance, while its long, slender hardware is inspired by the texture of lizard skin. The Urbane collection debuts in two refined finishes: Campfire and Sundew. From bedrooms to dining rooms, each piece delivers a minimalist charm and artisanal warmth.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1337,7 +1340,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 39,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1828),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(498),
                             Description = "Introducing ART by TA, an exclusive collection of unique, curated wall art that adds a finishing touch to every space.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1351,7 +1354,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 40,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1844),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(518),
                             Description = "Introducing the “TA Illuminations” Lighting Collection by  Theodore Alexander – where artistry meets illumination.  This curated collection celebrates the interplay of  materials, styles, and sizes, creating a symphony of light  that transforms any space into a captivating haven.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1365,7 +1368,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 41,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1860),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(537),
                             Description = "Defying style boundaries, the Floored Collection encompasses our carefully curated portfolio of designs, offerings rugs with a variety of dimensions to fit the aesthetic of any room.</br>Choosing a hand-woven or hand-knotted rug within our Stocked Collection allows for fulfillment along a convenient quick-ship timeline, perfect for projects with tight turnaround times. Love a Stocked design but need a custom size? Pieces within Floored’s Stocked program can also be crafted to suit alternative sizing requirements, extending the production timeline but offering the same gorgeous designs to perfectly fit unique spaces.</br>Bespoke spaces often call for custom-tailored floor coverings, and Floored’s Custom Collection provides solutions for rooms requiring that personal touch. Floored’s Custom Rugs are hand tufted and hand woven with Axminster and Hand Loomed constructions, offering an extensive assortment of options for color, pattern, style, sizing and more.",
                             IsActive = true,
                             IsCarousel = true,
@@ -1379,7 +1382,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 42,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1876),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(557),
                             Description = "THEO by Theodore Alexander",
                             IsActive = true,
                             IsCarousel = true,
@@ -1443,7 +1446,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1913),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(638),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/1.jpg",
                             IsActive = true,
@@ -1453,7 +1456,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1939),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(681),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/2.jpg",
                             IsActive = true,
@@ -1463,7 +1466,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1960),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(705),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/3.jpg",
                             IsActive = true,
@@ -1473,7 +1476,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(1981),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(727),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/4.jpg",
                             IsActive = true,
@@ -1483,7 +1486,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 5,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2002),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(751),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/5.jpg",
                             IsActive = true,
@@ -1493,7 +1496,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2022),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(775),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/6.jpg",
                             IsActive = true,
@@ -1503,7 +1506,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2042),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(799),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/7.jpg",
                             IsActive = true,
@@ -1513,7 +1516,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 8,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2062),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(823),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/8.jpg",
                             IsActive = true,
@@ -1523,7 +1526,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 9,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2081),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(845),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/9.jpg",
                             IsActive = true,
@@ -1533,7 +1536,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 10,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2181),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(868),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/10.jpg",
                             IsActive = true,
@@ -1543,7 +1546,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 11,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2204),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(892),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/11.jpg",
                             IsActive = true,
@@ -1553,7 +1556,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 12,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2224),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(917),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/12.jpg",
                             IsActive = true,
@@ -1563,7 +1566,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 13,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2244),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(941),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/13.jpg",
                             IsActive = true,
@@ -1573,7 +1576,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 14,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2265),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(966),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/14.jpg",
                             IsActive = true,
@@ -1583,7 +1586,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 15,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2285),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(990),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/15.jpg",
                             IsActive = true,
@@ -1593,7 +1596,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 16,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2306),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(1012),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/16.jpg",
                             IsActive = true,
@@ -1603,7 +1606,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 17,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2325),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(1034),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/17.jpg",
                             IsActive = true,
@@ -1613,7 +1616,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 18,
                             CollectionId = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2348),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(1059),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-alexa-hampton-collection/18.jpg",
                             IsActive = true,
@@ -1623,7 +1626,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 19,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2370),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(1127),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/1.jpg",
                             IsActive = true,
@@ -1633,7 +1636,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 20,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2391),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 399, DateTimeKind.Utc).AddTicks(1154),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/2.jpg",
                             IsActive = true,
@@ -1643,7 +1646,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 21,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2412),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8662),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/3.jpg",
                             IsActive = true,
@@ -1653,7 +1656,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 22,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2432),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8762),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/4.jpg",
                             IsActive = true,
@@ -1663,7 +1666,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 23,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2452),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8783),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/5.jpg",
                             IsActive = true,
@@ -1673,7 +1676,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 24,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2472),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8802),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/6.jpg",
                             IsActive = true,
@@ -1683,7 +1686,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 25,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2492),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8822),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/7.jpg",
                             IsActive = true,
@@ -1693,7 +1696,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 26,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2512),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8842),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/8.jpg",
                             IsActive = true,
@@ -1703,7 +1706,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 27,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2532),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8860),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/9.jpg",
                             IsActive = true,
@@ -1713,7 +1716,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 28,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2552),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8879),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp-living-history/10.jpg",
                             IsActive = true,
@@ -1723,7 +1726,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 29,
                             CollectionId = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2572),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8897),
                             ImageType = 1,
                             ImageUrl = "https://theodorealexander.sirv.com/Videos/Althorp%20for%20website_Collection%20banner_with_captions.mp4",
                             IsActive = true,
@@ -1733,7 +1736,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 30,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2592),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8915),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/1.jpg",
                             IsActive = true,
@@ -1743,7 +1746,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 31,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2613),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8933),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/2.jpg",
                             IsActive = true,
@@ -1753,7 +1756,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 32,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2634),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8951),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/3.jpg",
                             IsActive = true,
@@ -1763,7 +1766,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 33,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2653),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(8969),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/4.jpg",
                             IsActive = true,
@@ -1773,7 +1776,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 34,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2729),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9020),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/5.jpg",
                             IsActive = true,
@@ -1783,7 +1786,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 35,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2750),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9038),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/6.jpg",
                             IsActive = true,
@@ -1793,7 +1796,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 36,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2770),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9056),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/7.jpg",
                             IsActive = true,
@@ -1803,7 +1806,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 37,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2790),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9074),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/8.jpg",
                             IsActive = true,
@@ -1813,7 +1816,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 38,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2810),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9119),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/9.jpg",
                             IsActive = true,
@@ -1823,7 +1826,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 39,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2830),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9150),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/althorp--victory-oak/10.jpg",
                             IsActive = true,
@@ -1833,7 +1836,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 40,
                             CollectionId = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2850),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9168),
                             ImageType = 1,
                             ImageUrl = "https://theodorealexander.sirv.com/Videos/Althorp%20for%20website_Collection%20banner_with_captions.mp4",
                             IsActive = true,
@@ -1843,7 +1846,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 41,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2870),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9187),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/1.jpg",
                             IsActive = true,
@@ -1853,7 +1856,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 42,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2890),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9208),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/2.jpg",
                             IsActive = true,
@@ -1863,7 +1866,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 43,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2910),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9295),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/3.jpg",
                             IsActive = true,
@@ -1873,7 +1876,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 44,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2930),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9331),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/4.jpg",
                             IsActive = true,
@@ -1883,7 +1886,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 45,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2950),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9350),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/5.jpg",
                             IsActive = true,
@@ -1893,7 +1896,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 46,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2971),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9368),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/6.jpg",
                             IsActive = true,
@@ -1903,7 +1906,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 47,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(2992),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9385),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/7.jpg",
                             IsActive = true,
@@ -1913,7 +1916,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 48,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3012),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9403),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/8.jpg",
                             IsActive = true,
@@ -1923,7 +1926,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 49,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3033),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9420),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/9.jpg",
                             IsActive = true,
@@ -1933,7 +1936,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 50,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3054),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9436),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/10.jpg",
                             IsActive = true,
@@ -1943,7 +1946,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 51,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3073),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9453),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/11.jpg",
                             IsActive = true,
@@ -1953,7 +1956,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 52,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3093),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9469),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/12.jpg",
                             IsActive = true,
@@ -1963,7 +1966,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 53,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3112),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9487),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/13.jpg",
                             IsActive = true,
@@ -1973,7 +1976,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 54,
                             CollectionId = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3132),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9503),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/balboa/14.jpg",
                             IsActive = true,
@@ -1983,7 +1986,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 55,
                             CollectionId = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3152),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9520),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/breeze-collection/1.jpg",
                             IsActive = true,
@@ -1993,7 +1996,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 56,
                             CollectionId = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3173),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9538),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/breeze-collection/2.jpg",
                             IsActive = true,
@@ -2003,7 +2006,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 57,
                             CollectionId = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3193),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9555),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/breeze-collection/3.jpg",
                             IsActive = true,
@@ -2013,7 +2016,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 58,
                             CollectionId = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3249),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9572),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/breeze-collection/4.jpg",
                             IsActive = true,
@@ -2023,7 +2026,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 59,
                             CollectionId = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3274),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9589),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/breeze-collection/5.jpg",
                             IsActive = true,
@@ -2033,7 +2036,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 60,
                             CollectionId = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3295),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9606),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/brooksby/1.jpg",
                             IsActive = true,
@@ -2043,7 +2046,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 61,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3316),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9623),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/1.jpg",
                             IsActive = true,
@@ -2053,7 +2056,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 62,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3336),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9641),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/2.jpg",
                             IsActive = true,
@@ -2063,7 +2066,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 63,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3357),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9657),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/3.jpg",
                             IsActive = true,
@@ -2073,7 +2076,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 64,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3393),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9674),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/4.jpg",
                             IsActive = true,
@@ -2083,7 +2086,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 65,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3413),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9691),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/5.jpg",
                             IsActive = true,
@@ -2093,7 +2096,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 66,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3436),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9755),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/6.jpg",
                             IsActive = true,
@@ -2103,7 +2106,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 67,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3457),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9774),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/7.jpg",
                             IsActive = true,
@@ -2113,7 +2116,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 68,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3487),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9791),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/8.jpg",
                             IsActive = true,
@@ -2123,7 +2126,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 69,
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3507),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9808),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/catalina/9.jpg",
                             IsActive = true,
@@ -2133,7 +2136,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 70,
                             CollectionId = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3528),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9826),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/dorchester/1.jpg",
                             IsActive = true,
@@ -2143,7 +2146,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 71,
                             CollectionId = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3559),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9843),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/dorchester/2.jpg",
                             IsActive = true,
@@ -2153,7 +2156,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 72,
                             CollectionId = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3579),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9859),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/dorchester/3.jpg",
                             IsActive = true,
@@ -2163,7 +2166,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 73,
                             CollectionId = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3601),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9876),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/dorchester/4.jpg",
                             IsActive = true,
@@ -2173,7 +2176,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 74,
                             CollectionId = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3620),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9893),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/dorchester/5.jpg",
                             IsActive = true,
@@ -2183,7 +2186,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 75,
                             CollectionId = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3648),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9910),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-echoes-collection/1.jpg",
                             IsActive = true,
@@ -2193,7 +2196,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 76,
                             CollectionId = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3668),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9926),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-echoes-collection/2.jpg",
                             IsActive = true,
@@ -2203,7 +2206,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 77,
                             CollectionId = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3687),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9942),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-echoes-collection/3.jpg",
                             IsActive = true,
@@ -2213,7 +2216,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 78,
                             CollectionId = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3717),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9959),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-echoes-collection/4.jpg",
                             IsActive = true,
@@ -2223,7 +2226,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 79,
                             CollectionId = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3737),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9977),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-echoes-collection/5.jpg",
                             IsActive = true,
@@ -2233,7 +2236,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 80,
                             CollectionId = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3758),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 400, DateTimeKind.Utc).AddTicks(9996),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-echoes-collection/6.jpg",
                             IsActive = true,
@@ -2243,7 +2246,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 81,
                             CollectionId = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3828),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(12),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/essence-collection/1.jpg",
                             IsActive = true,
@@ -2253,7 +2256,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 82,
                             CollectionId = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3850),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(29),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/essence-collection/2.jpg",
                             IsActive = true,
@@ -2263,7 +2266,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 83,
                             CollectionId = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3879),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(46),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/essence-collection/3.jpg",
                             IsActive = true,
@@ -2273,7 +2276,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 84,
                             CollectionId = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3899),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(63),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/essence-collection/4.jpg",
                             IsActive = true,
@@ -2283,7 +2286,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 85,
                             CollectionId = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3919),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(79),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/essence-collection/5.jpg",
                             IsActive = true,
@@ -2293,7 +2296,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 86,
                             CollectionId = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3948),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(97),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/essence-collection/6.jpg",
                             IsActive = true,
@@ -2303,7 +2306,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 87,
                             CollectionId = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3969),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(114),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/horizon/1.jpg",
                             IsActive = true,
@@ -2313,7 +2316,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 88,
                             CollectionId = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(3989),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(130),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/hudson-collection/1.jpg",
                             IsActive = true,
@@ -2323,7 +2326,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 89,
                             CollectionId = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4018),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(147),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/hudson-collection/2.jpg",
                             IsActive = true,
@@ -2333,7 +2336,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 90,
                             CollectionId = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4044),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(163),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/hudson-collection/3.jpg",
                             IsActive = true,
@@ -2343,7 +2346,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 91,
                             CollectionId = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4066),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(204),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/hudson-collection/4.jpg",
                             IsActive = true,
@@ -2353,7 +2356,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 92,
                             CollectionId = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4096),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(223),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/judith-leiber-couture/1.jpg",
                             IsActive = true,
@@ -2363,7 +2366,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 93,
                             CollectionId = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4116),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(239),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/judith-leiber-couture/2.jpg",
                             IsActive = true,
@@ -2373,7 +2376,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 94,
                             CollectionId = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4136),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(257),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/kesden-collection/1.jpg",
                             IsActive = true,
@@ -2383,7 +2386,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 95,
                             CollectionId = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4165),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(273),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/kesden-collection/2.jpg",
                             IsActive = true,
@@ -2393,7 +2396,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 96,
                             CollectionId = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4186),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(290),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/kesden-collection/3.jpg",
                             IsActive = true,
@@ -2403,7 +2406,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 97,
                             CollectionId = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4206),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(307),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/lido-collection/1.jpg",
                             IsActive = true,
@@ -2413,7 +2416,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 98,
                             CollectionId = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4226),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(324),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/lido-collection/2.jpg",
                             IsActive = true,
@@ -2423,7 +2426,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 99,
                             CollectionId = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4255),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(340),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/lido-collection/3.jpg",
                             IsActive = true,
@@ -2433,7 +2436,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 100,
                             CollectionId = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4277),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(359),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/lido-collection/4.jpg",
                             IsActive = true,
@@ -2443,7 +2446,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 101,
                             CollectionId = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4297),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(376),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/lido-collection/5.jpg",
                             IsActive = true,
@@ -2453,7 +2456,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 102,
                             CollectionId = 18,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4326),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(393),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/luna/1.jpg",
                             IsActive = true,
@@ -2463,7 +2466,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 103,
                             CollectionId = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4347),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(410),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/maxwell/1.jpg",
                             IsActive = true,
@@ -2473,7 +2476,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 104,
                             CollectionId = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4366),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(426),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/maxwell/2.jpg",
                             IsActive = true,
@@ -2483,7 +2486,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 105,
                             CollectionId = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4386),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(444),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/maxwell/3.jpg",
                             IsActive = true,
@@ -2493,7 +2496,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 106,
                             CollectionId = 20,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4464),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(460),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/montauk/1.jpg",
                             IsActive = true,
@@ -2503,7 +2506,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 107,
                             CollectionId = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4495),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(477),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/nova-collection/1.jpg",
                             IsActive = true,
@@ -2513,7 +2516,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 108,
                             CollectionId = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4516),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(494),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/nova-collection/2.jpg",
                             IsActive = true,
@@ -2523,7 +2526,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 109,
                             CollectionId = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4536),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(511),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/nova-collection/3.jpg",
                             IsActive = true,
@@ -2533,7 +2536,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 110,
                             CollectionId = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4565),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(527),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/nova-collection/4.jpg",
                             IsActive = true,
@@ -2543,7 +2546,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 111,
                             CollectionId = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4586),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(543),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/nova-collection/5.jpg",
                             IsActive = true,
@@ -2553,7 +2556,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 112,
                             CollectionId = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4605),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(560),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/nova-collection/6.jpg",
                             IsActive = true,
@@ -2563,7 +2566,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 113,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4625),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(577),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/1.jpg",
                             IsActive = true,
@@ -2573,7 +2576,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 114,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4655),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(595),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/2.jpg",
                             IsActive = true,
@@ -2583,7 +2586,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 115,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4676),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(612),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/3.jpg",
                             IsActive = true,
@@ -2593,7 +2596,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 116,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4697),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(703),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/4.jpg",
                             IsActive = true,
@@ -2603,7 +2606,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 117,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4717),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(726),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/5.jpg",
                             IsActive = true,
@@ -2613,7 +2616,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 118,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4745),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(743),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/6.jpg",
                             IsActive = true,
@@ -2623,7 +2626,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 119,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4766),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(760),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/7.jpg",
                             IsActive = true,
@@ -2633,7 +2636,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 120,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4785),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(776),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/8.jpg",
                             IsActive = true,
@@ -2643,7 +2646,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 121,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4805),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(794),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/9.jpg",
                             IsActive = true,
@@ -2653,7 +2656,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 122,
                             CollectionId = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4832),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(810),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/origins/10.jpg",
                             IsActive = true,
@@ -2663,7 +2666,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 123,
                             CollectionId = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4851),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(828),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/repose/1.jpg",
                             IsActive = true,
@@ -2673,7 +2676,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 124,
                             CollectionId = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4871),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(846),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/repose/2.jpg",
                             IsActive = true,
@@ -2683,7 +2686,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 125,
                             CollectionId = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4908),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(862),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/repose/3.jpg",
                             IsActive = true,
@@ -2693,7 +2696,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 126,
                             CollectionId = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4928),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(878),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/repose/4.jpg",
                             IsActive = true,
@@ -2703,7 +2706,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 127,
                             CollectionId = 25,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4952),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(894),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/rome/1.jpg",
                             IsActive = true,
@@ -2713,7 +2716,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 128,
                             CollectionId = 25,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4972),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(911),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/rome/2.jpg",
                             IsActive = true,
@@ -2723,7 +2726,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 129,
                             CollectionId = 25,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(4992),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(927),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/rome/3.jpg",
                             IsActive = true,
@@ -2733,7 +2736,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 130,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5064),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(948),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/1.jpg",
                             IsActive = true,
@@ -2743,7 +2746,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 131,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5093),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(964),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/2.jpg",
                             IsActive = true,
@@ -2753,7 +2756,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 132,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5114),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(981),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/3.jpg",
                             IsActive = true,
@@ -2763,7 +2766,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 133,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5135),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(997),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/4.jpg",
                             IsActive = true,
@@ -2773,7 +2776,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 134,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5154),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1013),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/5.jpg",
                             IsActive = true,
@@ -2783,7 +2786,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 135,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5191),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1080),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/6.jpg",
                             IsActive = true,
@@ -2793,7 +2796,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 136,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5211),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1102),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/7.jpg",
                             IsActive = true,
@@ -2803,7 +2806,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 137,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5231),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1119),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/8.jpg",
                             IsActive = true,
@@ -2813,7 +2816,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 138,
                             CollectionId = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5261),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1135),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/sloane/9.jpg",
                             IsActive = true,
@@ -2823,7 +2826,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 139,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5281),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1152),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/1.jpg",
                             IsActive = true,
@@ -2833,7 +2836,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 140,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5301),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1170),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/2.jpg",
                             IsActive = true,
@@ -2843,7 +2846,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 141,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5331),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1186),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/3.jpg",
                             IsActive = true,
@@ -2853,7 +2856,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 142,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5352),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1202),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/4.jpg",
                             IsActive = true,
@@ -2863,7 +2866,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 143,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5373),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1220),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/5.jpg",
                             IsActive = true,
@@ -2873,7 +2876,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 144,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5393),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1237),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/6.jpg",
                             IsActive = true,
@@ -2883,7 +2886,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 145,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5421),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1255),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/7.jpg",
                             IsActive = true,
@@ -2893,7 +2896,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 146,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5441),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1273),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-london/8.jpg",
                             IsActive = true,
@@ -2903,7 +2906,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 147,
                             CollectionId = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5461),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1289),
                             ImageType = 1,
                             ImageUrl = "https://theodorealexander.sirv.com/Videos/spencer.mp4",
                             IsActive = true,
@@ -2913,7 +2916,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 148,
                             CollectionId = 29,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5490),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1305),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/spencer-st-james/1.jpg",
                             IsActive = true,
@@ -2923,7 +2926,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 149,
                             CollectionId = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5510),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1321),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-stephen-church-collection/1.jpg",
                             IsActive = true,
@@ -2933,7 +2936,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 150,
                             CollectionId = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5530),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1338),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-stephen-church-collection/2.jpg",
                             IsActive = true,
@@ -2943,7 +2946,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 151,
                             CollectionId = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5606),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1356),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-stephen-church-collection/3.jpg",
                             IsActive = true,
@@ -2953,7 +2956,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 152,
                             CollectionId = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5628),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1373),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-stephen-church-collection/4.jpg",
                             IsActive = true,
@@ -2963,7 +2966,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 153,
                             CollectionId = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5657),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1390),
                             ImageType = 1,
                             ImageUrl = "https://theodorealexander.sirv.com/Videos/Stephen_Church_with_caption.mp4",
                             IsActive = true,
@@ -2973,7 +2976,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 154,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5678),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1407),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/1.jpg",
                             IsActive = true,
@@ -2983,7 +2986,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 155,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5699),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1424),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/2.jpg",
                             IsActive = true,
@@ -2993,7 +2996,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 156,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5729),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1443),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/3.jpg",
                             IsActive = true,
@@ -3003,7 +3006,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 157,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5749),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1459),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/4.jpg",
                             IsActive = true,
@@ -3013,7 +3016,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 158,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5768),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1474),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/5.jpg",
                             IsActive = true,
@@ -3023,7 +3026,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 159,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5789),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1490),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/6.jpg",
                             IsActive = true,
@@ -3033,7 +3036,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 160,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5818),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1507),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/7.jpg",
                             IsActive = true,
@@ -3043,7 +3046,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 161,
                             CollectionId = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5839),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1562),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/surrey/8.jpg",
                             IsActive = true,
@@ -3053,7 +3056,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 162,
                             CollectionId = 33,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5859),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1581),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-originals/1.jpg",
                             IsActive = true,
@@ -3063,7 +3066,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 163,
                             CollectionId = 33,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5889),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1598),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-originals/2.jpg",
                             IsActive = true,
@@ -3073,7 +3076,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 164,
                             CollectionId = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5910),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1616),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-studio/1.jpg",
                             IsActive = true,
@@ -3083,7 +3086,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 165,
                             CollectionId = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5930),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1633),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-studio/2.jpg",
                             IsActive = true,
@@ -3093,7 +3096,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 166,
                             CollectionId = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5950),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1649),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-studio/3.jpg",
                             IsActive = true,
@@ -3103,7 +3106,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 167,
                             CollectionId = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5978),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1844),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-studio/4.jpg",
                             IsActive = true,
@@ -3113,7 +3116,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 168,
                             CollectionId = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(5999),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1884),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-studio/5.jpg",
                             IsActive = true,
@@ -3123,7 +3126,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 169,
                             CollectionId = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6019),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(1994),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-studio/6.jpg",
                             IsActive = true,
@@ -3133,7 +3136,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 170,
                             CollectionId = 35,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6048),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2084),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-tavel-collection/1.jpg",
                             IsActive = true,
@@ -3143,7 +3146,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 171,
                             CollectionId = 35,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6068),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2105),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-tavel-collection/2.jpg",
                             IsActive = true,
@@ -3153,7 +3156,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 172,
                             CollectionId = 35,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6088),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2123),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/the-tavel-collection/3.jpg",
                             IsActive = true,
@@ -3163,7 +3166,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 173,
                             CollectionId = 36,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6118),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2141),
                             ImageType = 1,
                             ImageUrl = "https://theodorealexander.sirv.com/Videos/TA_Upholstery_Factory_120423_1080p_Final_Lowres.mp4",
                             IsActive = true,
@@ -3173,7 +3176,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 174,
                             CollectionId = 36,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6138),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2158),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/upholstery/1.jpg",
                             IsActive = true,
@@ -3183,7 +3186,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 175,
                             CollectionId = 37,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6157),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2176),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/accessories/1.jpg",
                             IsActive = true,
@@ -3193,7 +3196,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 176,
                             CollectionId = 38,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6178),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2195),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/urbane/1.jpg",
                             IsActive = true,
@@ -3203,7 +3206,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 177,
                             CollectionId = 38,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6232),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2213),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/urbane/2.jpg",
                             IsActive = true,
@@ -3213,7 +3216,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 178,
                             CollectionId = 39,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6252),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2232),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/art-by-ta/1.jpg",
                             IsActive = true,
@@ -3223,7 +3226,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 179,
                             CollectionId = 40,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6281),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2251),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-illuminations/1.jpg",
                             IsActive = true,
@@ -3233,7 +3236,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 180,
                             CollectionId = 40,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6301),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2269),
                             ImageType = 0,
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Collection/ta-illuminations/2.jpg",
                             IsActive = true,
@@ -3311,9 +3314,6 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -3340,18 +3340,26 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Code = "MAT-WAL",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2882),
+                            Code = "VCF1798",
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1037),
                             IsActive = true,
-                            Name = "Matte Walnut"
+                            Name = "VCF1798 - Silent Black"
                         },
                         new
                         {
                             Id = 2,
-                            Code = "GL-OAK",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2883),
+                            Code = "PCF1039.2B",
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1039),
                             IsActive = true,
-                            Name = "Glossy Oak"
+                            Name = "PCF1039.2B - Seal"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "VCF1976.2B",
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1040),
+                            IsActive = true,
+                            Name = "VCF1976 - Lighthouse"
                         });
                 });
 
@@ -3422,7 +3430,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2568),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(617),
                             DestinationShippingZoneId = 102,
                             EstimatedTransitDaysMax = 35,
                             EstimatedTransitDaysMin = 20,
@@ -3436,7 +3444,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2572),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(623),
                             DestinationShippingZoneId = 102,
                             EstimatedTransitDaysMax = 10,
                             EstimatedTransitDaysMin = 5,
@@ -3450,7 +3458,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2574),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(625),
                             DestinationShippingZoneId = 106,
                             EstimatedTransitDaysMax = 45,
                             EstimatedTransitDaysMin = 28,
@@ -3464,7 +3472,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2576),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(627),
                             DestinationShippingZoneId = 102,
                             EstimatedTransitDaysMax = 30,
                             EstimatedTransitDaysMin = 18,
@@ -3478,7 +3486,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2578),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(628),
                             DestinationShippingZoneId = 111,
                             EstimatedTransitDaysMax = 7,
                             EstimatedTransitDaysMin = 3,
@@ -3492,7 +3500,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2579),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(630),
                             DestinationShippingZoneId = 110,
                             EstimatedTransitDaysMax = 5,
                             EstimatedTransitDaysMin = 2,
@@ -3506,7 +3514,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2581),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(631),
                             DestinationShippingZoneId = 109,
                             EstimatedTransitDaysMax = 25,
                             EstimatedTransitDaysMin = 15,
@@ -3581,7 +3589,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3694),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1757),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 5,
@@ -3593,7 +3601,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3699),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1760),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 10,
@@ -3605,7 +3613,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3700),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1761),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 3,
@@ -3617,7 +3625,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3701),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1762),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 7,
@@ -3629,7 +3637,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3702),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1764),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 2,
@@ -3641,7 +3649,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3793),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1765),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 5,
@@ -3653,7 +3661,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3795),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1766),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 10,
@@ -3665,7 +3673,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3796),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1767),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 15,
@@ -3677,7 +3685,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3797),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1768),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 20,
@@ -3689,7 +3697,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3798),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1769),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 15,
@@ -3701,7 +3709,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3799),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1770),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 1,
@@ -3713,7 +3721,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3800),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1772),
                             IsActive = true,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MinimumStockLevel = 3,
@@ -3772,7 +3780,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Code = "en",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2839),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(991),
                             IsActive = true,
                             IsDefault = true,
                             Name = "English - EN"
@@ -3781,7 +3789,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             Code = "vi",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2842),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(993),
                             IsActive = true,
                             IsDefault = false,
                             Name = "Vietnamese - VN"
@@ -3790,7 +3798,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             Code = "zh",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2843),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(994),
                             IsActive = true,
                             IsDefault = false,
                             Name = "中文 (简体) - ZH"
@@ -3867,7 +3875,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6486),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2793),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -3878,7 +3886,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6510),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2816),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -3889,7 +3897,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6538),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2834),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -3900,7 +3908,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6557),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2852),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -3911,7 +3919,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6576),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2868),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -3970,7 +3978,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7678),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3817),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Aluminium",
@@ -3979,7 +3987,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7699),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3837),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Brass",
@@ -3988,7 +3996,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7715),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3853),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Gilt Metal",
@@ -3997,7 +4005,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7733),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3868),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Iron",
@@ -4006,7 +4014,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7750),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3960),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Nickel Plated Brass",
@@ -4015,7 +4023,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7769),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3999),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Paktong",
@@ -4024,7 +4032,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7785),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4053),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Stainless Steel",
@@ -4033,7 +4041,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7802),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4069),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Steel",
@@ -4042,7 +4050,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7818),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4085),
                             IsActive = true,
                             MaterialCategoryId = 1,
                             Name = "Zinc",
@@ -4051,7 +4059,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7836),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4102),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Cow Hide ",
@@ -4060,7 +4068,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7851),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4118),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Embossed Leather",
@@ -4069,7 +4077,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7867),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4132),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Fabric",
@@ -4078,7 +4086,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7884),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4148),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Hair on Hide",
@@ -4087,7 +4095,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7900),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4163),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Leather",
@@ -4096,7 +4104,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7916),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4178),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Silk ",
@@ -4105,7 +4113,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7932),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4194),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Suede",
@@ -4114,7 +4122,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7949),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4209),
                             IsActive = true,
                             MaterialCategoryId = 2,
                             Name = "Upholstery",
@@ -4123,7 +4131,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7967),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4225),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Agate",
@@ -4132,7 +4140,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7983),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4240),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Alabaster",
@@ -4141,7 +4149,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8034),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4255),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Amethyst",
@@ -4150,7 +4158,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8053),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4271),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Carrara Marble",
@@ -4159,7 +4167,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8069),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4287),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Crystal",
@@ -4168,7 +4176,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8085),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4303),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Iron Pyrite",
@@ -4177,7 +4185,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8101),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4318),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Jade",
@@ -4186,7 +4194,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8117),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4333),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Lapis Lazuli",
@@ -4195,7 +4203,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8133),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4347),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Malachite",
@@ -4204,7 +4212,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8150),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4362),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Marble",
@@ -4213,7 +4221,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8167),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4378),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Onyx",
@@ -4222,7 +4230,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 29,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8184),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4393),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Quartz",
@@ -4231,7 +4239,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8202),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4407),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Red Jasper",
@@ -4240,7 +4248,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8220),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4460),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Soapstone",
@@ -4249,7 +4257,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 32,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8237),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4477),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Tiger Eye",
@@ -4258,7 +4266,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 33,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8255),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4493),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Travertine",
@@ -4267,7 +4275,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8274),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4509),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Turquoise Stone",
@@ -4276,7 +4284,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 35,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8293),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4525),
                             IsActive = true,
                             MaterialCategoryId = 3,
                             Name = "Variegated Black Marble",
@@ -4285,7 +4293,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 36,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8310),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4541),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Acacia",
@@ -4294,7 +4302,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 37,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8326),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4556),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Acacia Oyster Veneer",
@@ -4303,7 +4311,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 38,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8343),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4572),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Acacia Veneer",
@@ -4312,7 +4320,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 39,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8359),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4587),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Aged Oak Veneer",
@@ -4321,7 +4329,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 40,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8376),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4602),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Alder",
@@ -4330,7 +4338,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 41,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8393),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4726),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amara Ebony Veneer",
@@ -4339,7 +4347,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 42,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8411),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4745),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amara grained Veneer",
@@ -4348,7 +4356,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 43,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8427),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4760),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amara Veneer",
@@ -4357,7 +4365,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 44,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8477),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(4775),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amarello Veneer",
@@ -4366,7 +4374,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 45,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8496),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6695),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amboyna Burl",
@@ -4375,7 +4383,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 46,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8513),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6747),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amboyna Burl Veneer",
@@ -4384,7 +4392,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 47,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8530),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6763),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Amotique Veneer",
@@ -4393,7 +4401,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 48,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8548),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6779),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Anagre Veneer",
@@ -4402,7 +4410,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 49,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8564),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6795),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Argentinean Walnut Veneer",
@@ -4411,7 +4419,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 50,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8582),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6812),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Ash Burl Veneer",
@@ -4420,7 +4428,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 51,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8600),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6827),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Ash Crown Veneer",
@@ -4429,7 +4437,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 52,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8617),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6842),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Ash Veneer",
@@ -4438,7 +4446,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 53,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8633),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6858),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Bamboo",
@@ -4447,7 +4455,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 54,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8651),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6873),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Beech",
@@ -4456,7 +4464,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 55,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8669),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6966),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Birds Eye Maple Veneer",
@@ -4465,7 +4473,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 56,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8686),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6983),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Block Anegre",
@@ -4474,7 +4482,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 57,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8703),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(6998),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Bocote Veneer",
@@ -4483,7 +4491,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 58,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8721),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7012),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Brown Oak Burl",
@@ -4492,7 +4500,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 59,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8738),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7027),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Bubinga Veneer",
@@ -4501,7 +4509,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 60,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8757),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7041),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Cerejeira Veneer",
@@ -4510,7 +4518,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 61,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8774),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7056),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Cerejeria Veneer",
@@ -4519,7 +4527,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 62,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8791),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7070),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Cherry",
@@ -4528,7 +4536,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 63,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8808),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7085),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Cherry Crown Veneer",
@@ -4537,7 +4545,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 64,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8826),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7100),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Cherry Veneer",
@@ -4546,7 +4554,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 65,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8845),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7115),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Cherry Wood",
@@ -4555,7 +4563,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 66,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8863),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7144),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Chestnut Burl",
@@ -4564,7 +4572,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 67,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8913),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7158),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Chestnut Burl Veneer",
@@ -4573,7 +4581,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 68,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8932),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7173),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Chestnut Veneer",
@@ -4582,7 +4590,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 69,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8951),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7188),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Curly Maple Veneer",
@@ -4591,7 +4599,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 70,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8966),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7202),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Dragonwood",
@@ -4600,7 +4608,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 71,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8983),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7217),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Ebony Veneer",
@@ -4609,7 +4617,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 72,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(8999),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7232),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Elm Burl Veneer",
@@ -4618,7 +4626,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 73,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9015),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7247),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Engineered Ebony Veneer",
@@ -4627,7 +4635,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 74,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9033),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7262),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Etimoe Veneer",
@@ -4636,7 +4644,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 75,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9050),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7277),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Fiddle Back Maple Veneer",
@@ -4645,7 +4653,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 76,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9067),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7291),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Fiddle Back Sycamore Veneer",
@@ -4654,7 +4662,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 77,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9084),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7342),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Anegre Veneer",
@@ -4663,7 +4671,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 78,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9100),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7359),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Ash Veneer",
@@ -4672,7 +4680,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 79,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9117),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7374),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Birch",
@@ -4681,7 +4689,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 80,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9134),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7389),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Etimoe Veneer",
@@ -4690,7 +4698,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 81,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9151),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7404),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Eucalyptus Veneer",
@@ -4699,7 +4707,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 82,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9169),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7419),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Makore",
@@ -4708,7 +4716,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 83,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9187),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7433),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Ofram",
@@ -4717,7 +4725,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 84,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9204),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7448),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Ofram Veneer",
@@ -4726,7 +4734,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 85,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9221),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7464),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Sycamore Veneer",
@@ -4735,7 +4743,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 86,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9237),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7478),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Figured Walnut Veneer",
@@ -4744,7 +4752,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 87,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9255),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7494),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Bubinga Veneer",
@@ -4753,7 +4761,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 88,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9271),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7508),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Figured Veneer",
@@ -4762,7 +4770,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 89,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9289),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7522),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Mahogany",
@@ -4771,7 +4779,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 90,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9316),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7536),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Mahogany Veneer",
@@ -4780,7 +4788,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 91,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9334),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7552),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Veneer",
@@ -4789,7 +4797,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 92,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9389),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7566),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Walnut",
@@ -4798,7 +4806,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 93,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9407),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7581),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Flame Walnut Veneer",
@@ -4807,7 +4815,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 94,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9425),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7596),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Fumed Figured Eucalyptus Veneer",
@@ -4816,7 +4824,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 95,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9442),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7611),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Fumed Mahogany Veneer",
@@ -4825,7 +4833,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 96,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9457),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7625),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Golden Madrone Burl Veneer",
@@ -4834,7 +4842,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 97,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9475),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7640),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Golden Madrone Veneer",
@@ -4843,7 +4851,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 98,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9493),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7670),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Granadillo Veneer",
@@ -4852,7 +4860,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 99,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9510),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7696),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Grey Vine Veneer",
@@ -4861,7 +4869,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 100,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9527),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7711),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Hickory Veneer",
@@ -4870,7 +4878,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 101,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9545),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7727),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Hyedua Veneer",
@@ -4879,7 +4887,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 102,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9562),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7742),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Imbuya Burl Veneer",
@@ -4888,7 +4896,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 103,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9579),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7797),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Imbuya Veneer",
@@ -4897,7 +4905,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 104,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9595),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7823),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Karelian Birch Veneer",
@@ -4906,7 +4914,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 105,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9614),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7847),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Khaya",
@@ -4915,7 +4923,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 106,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9631),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7863),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Khaya Crotch Veneer",
@@ -4924,7 +4932,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 107,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9647),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7881),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Khaya Veneer",
@@ -4933,7 +4941,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 108,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9665),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7896),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Lacewood Veneer",
@@ -4942,7 +4950,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 109,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9682),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7911),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Lati Veneer",
@@ -4951,7 +4959,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 110,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9699),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7934),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Laurel Burl Veneer",
@@ -4960,7 +4968,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 111,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9716),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7949),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Layered Hardwood",
@@ -4969,7 +4977,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 112,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9733),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7963),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Lenga",
@@ -4978,7 +4986,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 113,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9750),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7977),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Louro Preto Veneer",
@@ -4987,7 +4995,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 114,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9771),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(7991),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Macassar Ebony Veneer",
@@ -4996,7 +5004,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 115,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9788),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8005),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Madrone Burl Veneer",
@@ -5005,7 +5013,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 116,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9805),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8020),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Mahogany",
@@ -5014,7 +5022,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 117,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9823),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8035),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Mahogany Swirl",
@@ -5023,7 +5031,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 118,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9860),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8050),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Mahogany Veneer",
@@ -5032,7 +5040,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 119,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9879),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8065),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Maple",
@@ -5041,7 +5049,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 120,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9896),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8080),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Maple Burl Veneer",
@@ -5050,7 +5058,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 121,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9922),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8095),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Maple Veneer",
@@ -5059,7 +5067,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 122,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9939),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8120),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Marbled Sapele",
@@ -5068,7 +5076,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 123,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9957),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8135),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Morado Veneer",
@@ -5077,7 +5085,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 124,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9973),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8150),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Movingue",
@@ -5086,7 +5094,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 125,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(9991),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8164),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Movingue Veneer",
@@ -5095,7 +5103,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 126,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(8),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8179),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Oak",
@@ -5104,7 +5112,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 127,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(34),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8194),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Oak Burl Veneer",
@@ -5113,7 +5121,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 128,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(51),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8208),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Oak Heart Veneer",
@@ -5122,7 +5130,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 129,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(69),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8261),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Oak Veneer",
@@ -5131,7 +5139,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 130,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(88),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8279),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Ofram Veneer",
@@ -5140,7 +5148,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 131,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(105),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8293),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Okoume Veneer/Mop Inlay",
@@ -5149,7 +5157,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 132,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(131),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8309),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Okumé Crotch Veneer",
@@ -5158,7 +5166,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 133,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(149),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8323),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Okumé Veneer",
@@ -5167,7 +5175,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 134,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(165),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8338),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Olive Ash Burl Veneer",
@@ -5176,7 +5184,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 135,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(181),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8352),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Olive Ash Swirl Veneer",
@@ -5185,7 +5193,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 136,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(258),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8366),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Oyster Veneer",
@@ -5194,7 +5202,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 137,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(279),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8381),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pacific walnut",
@@ -5203,7 +5211,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 138,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(295),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8397),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pacific Walnut Veneer",
@@ -5212,7 +5220,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 139,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(313),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8412),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Paldao Veneer",
@@ -5221,7 +5229,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 140,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(330),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8427),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Parawood",
@@ -5230,7 +5238,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 141,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(347),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8442),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Parchment",
@@ -5239,7 +5247,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 142,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(364),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8457),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pepperwood Burl Veneer",
@@ -5248,7 +5256,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 143,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(381),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8471),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Perota Veneer",
@@ -5257,7 +5265,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 144,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(399),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8486),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pine",
@@ -5266,7 +5274,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 145,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(416),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8501),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pippy Oak Veneer",
@@ -5275,7 +5283,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 146,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(434),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8515),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pollard Burl Veneer",
@@ -5284,7 +5292,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 147,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(451),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8530),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pollard Oak Burl",
@@ -5293,7 +5301,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 148,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(468),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8566),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Pollard Oak Veneer",
@@ -5302,7 +5310,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 149,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(484),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8581),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Poplar",
@@ -5311,7 +5319,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 150,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(502),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8597),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Poplar Burl Veneer",
@@ -5320,7 +5328,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 151,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(519),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8612),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Primavera Veneer",
@@ -5329,7 +5337,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 152,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(537),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8627),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Quartered Etimoe Veneer",
@@ -5338,7 +5346,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 153,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(554),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8641),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Reclaimed Oak Veneer",
@@ -5347,7 +5355,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 154,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(571),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8657),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Redwood Burl Veneer",
@@ -5356,7 +5364,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 155,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(588),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8671),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Rosewood Veneer",
@@ -5365,7 +5373,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 156,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(606),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8685),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Santo Domingo Veneer",
@@ -5374,7 +5382,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 157,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(623),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8700),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Sapele",
@@ -5383,7 +5391,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 158,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(640),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8715),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Satinwood Veneer",
@@ -5392,7 +5400,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 159,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(657),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8729),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Simulated Amara Veneer",
@@ -5401,7 +5409,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 160,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(674),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8744),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Simulated Ebony Veneer",
@@ -5410,7 +5418,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 161,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(693),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8759),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Solid Babool",
@@ -5419,7 +5427,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 162,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(757),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8774),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Solid Wood",
@@ -5428,7 +5436,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 163,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(776),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8789),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Sucupira Veneer",
@@ -5437,7 +5445,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 164,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(793),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8804),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Swirl Mahogany Veneer",
@@ -5446,7 +5454,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 165,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(810),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8818),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Swirl Walnut Veneer",
@@ -5455,7 +5463,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 166,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(827),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8834),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Sycamore Veneer",
@@ -5464,7 +5472,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 167,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(846),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8849),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Tamo Ash Veneer",
@@ -5473,7 +5481,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 168,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(863),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8864),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Tamo Veneer",
@@ -5482,7 +5490,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 169,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(880),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8878),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Tiger Maple Veneer",
@@ -5491,7 +5499,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 170,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(897),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8892),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Tulip",
@@ -5500,7 +5508,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 171,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(915),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(8907),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Tulip Wood",
@@ -5509,7 +5517,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 172,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(932),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9033),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Tulipifera",
@@ -5518,7 +5526,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 173,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(949),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9053),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Veneer",
@@ -5527,7 +5535,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 174,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(965),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9069),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Walnut",
@@ -5536,7 +5544,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 175,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(982),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9083),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Walnut Burl Veneer",
@@ -5545,7 +5553,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 176,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(999),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9098),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Walnut Crown Veneer",
@@ -5554,7 +5562,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 177,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1017),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9114),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Walnut Grained Veneer",
@@ -5563,7 +5571,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 178,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1034),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9128),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Walnut Veneer",
@@ -5572,7 +5580,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 179,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1052),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9144),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Waterfall Bubinga Veneer",
@@ -5581,7 +5589,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 180,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1068),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9159),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Wenge Veneer",
@@ -5590,7 +5598,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 181,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1085),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9173),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Wood",
@@ -5599,7 +5607,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 182,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1102),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9187),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Woven Cane",
@@ -5608,7 +5616,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 183,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1119),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9203),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Woven Rattan",
@@ -5617,7 +5625,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 184,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1136),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9217),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Yew Burl Veneer",
@@ -5626,7 +5634,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 185,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1153),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9232),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Yew Veneer",
@@ -5635,7 +5643,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 186,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1170),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9246),
                             IsActive = true,
                             MaterialCategoryId = 4,
                             Name = "Zebrano Veneer",
@@ -5644,7 +5652,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 187,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1187),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9262),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Acrylic",
@@ -5653,7 +5661,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 188,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1239),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9277),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Bone",
@@ -5662,7 +5670,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 189,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1258),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9292),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Buffalo Horn",
@@ -5671,7 +5679,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 190,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1275),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9306),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Cane",
@@ -5680,7 +5688,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 191,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1292),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9320),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Canvas",
@@ -5689,7 +5697,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 192,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1309),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9335),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Ceramic",
@@ -5698,7 +5706,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 193,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1327),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9351),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Composite",
@@ -5707,7 +5715,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 194,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1344),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9365),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Découpage",
@@ -5716,7 +5724,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 195,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1362),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9383),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Eggshell",
@@ -5725,7 +5733,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 196,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1379),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9399),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Faux Bone",
@@ -5734,7 +5742,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 197,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1397),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9415),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Faux Horn",
@@ -5743,7 +5751,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 198,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1414),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9537),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Faux Shagreen",
@@ -5752,7 +5760,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 199,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1432),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9556),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Felt",
@@ -5761,7 +5769,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 200,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1449),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9571),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Fiberglass",
@@ -5770,7 +5778,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 201,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1466),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9586),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Glass",
@@ -5779,7 +5787,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 202,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1483),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9601),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Horn",
@@ -5788,7 +5796,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 203,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1500),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9616),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Kalahari",
@@ -5797,7 +5805,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 204,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1517),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9630),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Komodo",
@@ -5806,7 +5814,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 205,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1534),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9645),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Lacquer",
@@ -5815,7 +5823,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 206,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1552),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9660),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Mirror",
@@ -5824,7 +5832,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 207,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1568),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9675),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Mother of Pearl",
@@ -5833,7 +5841,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 208,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1586),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9691),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Paper",
@@ -5842,7 +5850,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 209,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1602),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9706),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Penshell",
@@ -5851,7 +5859,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 210,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1619),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9721),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Rush",
@@ -5860,7 +5868,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 211,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1637),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9736),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Shagreen",
@@ -5869,7 +5877,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 212,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1655),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9750),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Shagreen Embossed Leather",
@@ -5878,7 +5886,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 213,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1707),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9765),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Velvet",
@@ -5887,7 +5895,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 214,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(1726),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(9780),
                             IsActive = true,
                             MaterialCategoryId = 5,
                             Name = "Zebra Dyed Cow Hide",
@@ -5934,35 +5942,35 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7542),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3723),
                             IsActive = true,
                             Name = "Metal"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7596),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3747),
                             IsActive = true,
                             Name = "Upholstery Materials"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7617),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3762),
                             IsActive = true,
                             Name = "Stone"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7636),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3777),
                             IsActive = true,
                             Name = "Woods"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7654),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3791),
                             IsActive = true,
                             Name = "Other Textures & Surface Treatments"
                         });
@@ -6339,7 +6347,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1,
                             AdditionalFeatures = "",
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3512),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1536),
                             DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA54027.C301_main_1.jpg",
                             Depth = 162.6m,
                             Description = "",
@@ -6370,7 +6378,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 2,
                             AdditionalFeatures = "",
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3523),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1546),
                             DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA51059.C301_main_1.jpg",
                             Depth = 71.1m,
                             Description = "",
@@ -6401,7 +6409,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 3,
                             AdditionalFeatures = "",
                             CollectionId = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3527),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1550),
                             DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA8/TA84012.C306_main_1.jpg",
                             Depth = 30m,
                             Description = "",
@@ -6515,7 +6523,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 101,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3627),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1686),
                             DefaultDimensionalFactor = 6000.0,
                             IsActive = true,
                             IsBulky = true,
@@ -6526,7 +6534,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 102,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3628),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1689),
                             DefaultDimensionalFactor = 5000.0,
                             IsActive = true,
                             IsBulky = true,
@@ -6537,7 +6545,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 103,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3630),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1690),
                             DefaultDimensionalFactor = 4000.0,
                             IsActive = true,
                             IsBulky = false,
@@ -6649,7 +6657,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3371),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1465),
                             ImageUrl = "/images/blk_36_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6659,7 +6667,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3374),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1468),
                             ImageUrl = "/images/blk_36_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6669,7 +6677,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3375),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1470),
                             ImageUrl = "/images/blk_36_3.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6679,7 +6687,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3376),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1471),
                             ImageUrl = "/images/blk_42_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6689,7 +6697,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3377),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1471),
                             ImageUrl = "/images/blk_42_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6699,7 +6707,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3378),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1472),
                             ImageUrl = "/images/wht_36_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6709,7 +6717,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3379),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1473),
                             ImageUrl = "/images/wht_36_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6719,7 +6727,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3380),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1474),
                             ImageUrl = "/images/oak_42_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6729,7 +6737,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3381),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1475),
                             ImageUrl = "/images/oak_42_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6739,7 +6747,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3382),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1477),
                             ImageUrl = "/images/oak_52_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6749,7 +6757,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3383),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1478),
                             ImageUrl = "/images/oak_52_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6759,7 +6767,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3384),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1479),
                             ImageUrl = "/images/oak_52_3.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6769,7 +6777,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3385),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1480),
                             ImageUrl = "/images/mar_oak_180_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6779,7 +6787,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3446),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1481),
                             ImageUrl = "/images/mar_oak_180_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6789,7 +6797,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3447),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1481),
                             ImageUrl = "/images/mar_oak_220_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6799,7 +6807,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3448),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1482),
                             ImageUrl = "/images/mar_oak_220_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6809,7 +6817,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3449),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1483),
                             ImageUrl = "/images/mar_wal_220_1.jpg",
                             IsActive = true,
                             IsPrimary = true,
@@ -6819,7 +6827,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3450),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1484),
                             ImageUrl = "/images/mar_wal_220_2.jpg",
                             IsActive = true,
                             IsPrimary = false,
@@ -6866,14 +6874,14 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3180),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1119),
                             IsActive = true,
                             Name = "Color"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3181),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1121),
                             IsActive = true,
                             Name = "Size"
                         });
@@ -6922,7 +6930,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3210),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1151),
                             IsActive = true,
                             ProductOptionId = 1,
                             Value = "Deep Black"
@@ -6930,7 +6938,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3212),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1154),
                             IsActive = true,
                             ProductOptionId = 1,
                             Value = "White"
@@ -6938,7 +6946,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3213),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1155),
                             IsActive = true,
                             ProductOptionId = 1,
                             Value = "Oak"
@@ -6946,7 +6954,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3214),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1156),
                             IsActive = true,
                             ProductOptionId = 1,
                             Value = "Walnut"
@@ -6954,7 +6962,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3215),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1157),
                             IsActive = true,
                             ProductOptionId = 2,
                             Value = "36x12x40"
@@ -6962,7 +6970,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3216),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1158),
                             IsActive = true,
                             ProductOptionId = 2,
                             Value = "42x16x48"
@@ -6970,7 +6978,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3217),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1159),
                             IsActive = true,
                             ProductOptionId = 2,
                             Value = "48x18x52"
@@ -6978,7 +6986,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3218),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1160),
                             IsActive = true,
                             ProductOptionId = 2,
                             Value = "180x100x75"
@@ -6986,7 +6994,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3220),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1161),
                             IsActive = true,
                             ProductOptionId = 2,
                             Value = "220x100x75"
@@ -7052,7 +7060,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3855),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1806),
                             Currency = "USD",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7063,7 +7071,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4018),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1989),
                             Currency = "VND",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7074,7 +7082,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4026),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1996),
                             Currency = "GBP",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7085,7 +7093,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4031),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2001),
                             Currency = "SGD",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7096,7 +7104,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4035),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2005),
                             Currency = "CNY",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7107,7 +7115,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4042),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2019),
                             Currency = "RUB",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7118,7 +7126,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4050),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2023),
                             Currency = "IDR",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7129,7 +7137,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4054),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2027),
                             Currency = "USD",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7140,7 +7148,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4059),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2032),
                             Currency = "VND",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7151,7 +7159,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4063),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2036),
                             Currency = "GBP",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7162,7 +7170,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4082),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2058),
                             Currency = "SGD",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7173,7 +7181,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4086),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2063),
                             Currency = "CNY",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7184,7 +7192,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4090),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2067),
                             Currency = "RUB",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7195,7 +7203,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4095),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2071),
                             Currency = "IDR",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7206,7 +7214,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4099),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2075),
                             Currency = "USD",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7217,7 +7225,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4409),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2102),
                             Currency = "VND",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7228,7 +7236,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4429),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2107),
                             Currency = "GBP",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7239,7 +7247,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4434),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2112),
                             Currency = "SGD",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7250,7 +7258,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4439),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2116),
                             Currency = "CNY",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7261,7 +7269,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4444),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2120),
                             Currency = "RUB",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7272,7 +7280,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(4448),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(2124),
                             Currency = "IDR",
                             EffectiveDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -7336,7 +7344,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3569),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1591),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7346,7 +7354,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3572),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1594),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7356,7 +7364,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3573),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1595),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7366,7 +7374,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3577),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1595),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7376,7 +7384,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 5,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3577),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1596),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7386,7 +7394,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3578),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1597),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7396,7 +7404,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3579),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1598),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 1,
@@ -7406,7 +7414,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 8,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3580),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1599),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 2,
@@ -7416,7 +7424,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 9,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3581),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1599),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 2,
@@ -7426,7 +7434,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 10,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3581),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1600),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 2,
@@ -7436,7 +7444,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 11,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3582),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1601),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 2,
@@ -7446,7 +7454,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 12,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3583),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1602),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7456,7 +7464,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 13,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3584),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1603),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7466,7 +7474,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 14,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3585),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1603),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7476,7 +7484,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 15,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3585),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1604),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7486,7 +7494,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 16,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3586),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1605),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7496,7 +7504,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 17,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3587),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1606),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7506,7 +7514,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 18,
                             AvailableFrom = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3588),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1607),
                             IsActive = true,
                             IsAvailable = false,
                             ProductId = 3,
@@ -7568,7 +7576,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 201,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3657),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1718),
                             DefaultDimensionalFactor = 6000.0,
                             Description = "Requires freight shipping, often palletized",
                             IsActive = true,
@@ -7580,7 +7588,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 202,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3662),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1723),
                             DefaultDimensionalFactor = 5000.0,
                             Description = "Can be shipped as large parcel or small freight",
                             IsActive = true,
@@ -7592,7 +7600,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 203,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3664),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1724),
                             DefaultDimensionalFactor = 4000.0,
                             Description = "Small, non-bulky items, suitable for courier",
                             IsActive = true,
@@ -7723,7 +7731,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6893),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3101),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7735,7 +7743,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6913),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3120),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7747,7 +7755,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6928),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3135),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7759,7 +7767,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6943),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3149),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7771,7 +7779,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6958),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3201),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7783,7 +7791,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6974),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3218),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7795,7 +7803,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6989),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3232),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7807,7 +7815,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7005),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3246),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7819,7 +7827,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7029),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3261),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7831,7 +7839,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7046),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3276),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7843,7 +7851,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7062),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3292),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7855,7 +7863,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7077),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3307),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7867,7 +7875,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7092),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3321),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7879,7 +7887,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7108),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3335),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7891,7 +7899,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7123),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3349),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7903,7 +7911,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7147),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3363),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7915,7 +7923,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7164),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3375),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7927,7 +7935,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7233),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3391),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7939,7 +7947,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7249),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3405),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7951,7 +7959,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7263),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3419),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7963,7 +7971,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7279),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3433),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7975,7 +7983,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7294),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3448),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7987,7 +7995,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7309),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3462),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -7999,7 +8007,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7324),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3477),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8011,7 +8019,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7338),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3490),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8023,7 +8031,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7355),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3541),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8035,7 +8043,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7370),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3558),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8047,7 +8055,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7385),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3572),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8059,7 +8067,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 29,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7401),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3585),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8071,7 +8079,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 30,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7416),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3602),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8083,7 +8091,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 31,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7430),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3616),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8095,7 +8103,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 32,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7446),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3629),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8107,7 +8115,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 33,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7461),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3644),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8119,7 +8127,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 34,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7478),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3662),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8131,7 +8139,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 35,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7494),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3676),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8143,7 +8151,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 36,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(7509),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3692),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -8168,6 +8176,9 @@ namespace eCommerce.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<int?>("FinishId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -8194,6 +8205,8 @@ namespace eCommerce.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FinishId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductVariants", (string)null);
@@ -8202,7 +8215,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3265),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1200),
                             IsActive = true,
                             PriceAdjustment = 49.99m,
                             ProductId = 1,
@@ -8211,7 +8224,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3268),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1203),
                             IsActive = true,
                             PriceAdjustment = 54.99m,
                             ProductId = 1,
@@ -8220,7 +8233,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3270),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1204),
                             IsActive = true,
                             PriceAdjustment = 59.99m,
                             ProductId = 1,
@@ -8229,7 +8242,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3272),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1205),
                             IsActive = true,
                             PriceAdjustment = 64.99m,
                             ProductId = 1,
@@ -8238,7 +8251,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3274),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1207),
                             IsActive = true,
                             PriceAdjustment = 69.99m,
                             ProductId = 1,
@@ -8247,7 +8260,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3275),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1208),
                             IsActive = true,
                             PriceAdjustment = 79.99m,
                             ProductId = 2,
@@ -8256,7 +8269,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3277),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1209),
                             IsActive = true,
                             PriceAdjustment = 89.99m,
                             ProductId = 2,
@@ -8265,7 +8278,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3278),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1211),
                             IsActive = true,
                             PriceAdjustment = 94.99m,
                             ProductId = 2,
@@ -8274,7 +8287,8 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3279),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1212),
+                            FinishId = 1,
                             IsActive = true,
                             PriceAdjustment = 99.99m,
                             ProductId = 1,
@@ -8299,197 +8313,13 @@ namespace eCommerce.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            ProductVariantId = 1,
+                            ProductVariantId = 10,
                             FabricId = 1
                         },
                         new
                         {
-                            ProductVariantId = 1,
+                            ProductVariantId = 10,
                             FabricId = 3
-                        });
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFabricImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<int>("FabricId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPrimary")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductVariantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime?>("UpdateddAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductVariantId", "FabricId");
-
-                    b.ToTable("ProductVariantFabricImages", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3023),
-                            FabricId = 1,
-                            ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/fabric/8-200.jpg",
-                            IsActive = true,
-                            IsPrimary = true,
-                            ProductVariantId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3026),
-                            FabricId = 1,
-                            ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/fabric/9-225.jpg",
-                            IsActive = true,
-                            IsPrimary = false,
-                            ProductVariantId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3028),
-                            FabricId = 3,
-                            ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/fabric/9-246.jpg",
-                            IsActive = true,
-                            IsPrimary = true,
-                            ProductVariantId = 1
-                        });
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFinish", b =>
-                {
-                    b.Property<int>("ProductVariantId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FinishId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("PriceAdjustment")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ProductVariantId", "FinishId");
-
-                    b.HasIndex("FinishId");
-
-                    b.ToTable("ProductVariantFinishs", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ProductVariantId = 1,
-                            FinishId = 1
-                        },
-                        new
-                        {
-                            ProductVariantId = 1,
-                            FinishId = 2
-                        });
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFinishImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<int>("FinishId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPrimary")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductVariantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<DateTime?>("UpdateddAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductVariantId", "FinishId");
-
-                    b.ToTable("ProductVariantFinishImages", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3110),
-                            FinishId = 1,
-                            ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/Athenaeum.jpg",
-                            IsActive = true,
-                            IsPrimary = true,
-                            ProductVariantId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3134),
-                            FinishId = 1,
-                            ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/Cadet.jpg",
-                            IsActive = true,
-                            IsPrimary = false,
-                            ProductVariantId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(3136),
-                            FinishId = 2,
-                            ImageUrl = "https://theodorealexander.sirv.com/website/Frontend/Live/assests/finish/9020-72.jpg",
-                            IsActive = true,
-                            IsPrimary = true,
-                            ProductVariantId = 1
                         });
                 });
 
@@ -8650,7 +8480,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Code = "US",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2306),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(314),
                             Currency = "USD",
                             Description = "North American Region",
                             IsActive = true,
@@ -8662,7 +8492,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             Code = "VN",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2310),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(318),
                             Currency = "VND",
                             Description = "Southeast Asia Region",
                             IsActive = true,
@@ -8674,7 +8504,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             Code = "GB",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2312),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(320),
                             Currency = "GBP",
                             Description = "European Region",
                             IsActive = true,
@@ -8686,7 +8516,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 4,
                             Code = "SG",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2313),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(321),
                             Currency = "SGD",
                             Description = "Southeast Asia Hub",
                             IsActive = true,
@@ -8698,7 +8528,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 5,
                             Code = "CN",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2315),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(322),
                             Currency = "CNY",
                             Description = "East Asia Region",
                             IsActive = true,
@@ -8710,7 +8540,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 6,
                             Code = "RU",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2316),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(323),
                             Currency = "RUB",
                             Description = "Eurasia Region",
                             IsActive = true,
@@ -8722,7 +8552,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 7,
                             Code = "ID",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2317),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(324),
                             Currency = "IDR",
                             Description = "Southeast Asia Archipelago",
                             IsActive = true,
@@ -8734,7 +8564,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 8,
                             Code = "CA",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2319),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(326),
                             Currency = "CAD",
                             Description = "North American Region",
                             IsActive = true,
@@ -8746,7 +8576,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 9,
                             Code = "MX",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2320),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(327),
                             Currency = "MXN",
                             Description = "North American Region",
                             IsActive = true,
@@ -8758,7 +8588,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 10,
                             Code = "BR",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2321),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(328),
                             Currency = "BRL",
                             Description = "South American Region",
                             IsActive = true,
@@ -8770,7 +8600,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 11,
                             Code = "DE",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2322),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(330),
                             Currency = "EUR",
                             Description = "European Region",
                             IsActive = true,
@@ -8782,7 +8612,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 12,
                             Code = "IT",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2324),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(333),
                             Currency = "EUR",
                             Description = "European Region",
                             IsActive = true,
@@ -8794,7 +8624,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 13,
                             Code = "ES",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2325),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(334),
                             Currency = "EUR",
                             Description = "European Region",
                             IsActive = true,
@@ -8806,7 +8636,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 14,
                             Code = "AU",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2326),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(335),
                             Currency = "AUD",
                             Description = "Oceania Region",
                             IsActive = true,
@@ -8818,7 +8648,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 15,
                             Code = "JP",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2327),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(336),
                             Currency = "JPY",
                             Description = "East Asia Region",
                             IsActive = true,
@@ -8830,7 +8660,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 16,
                             Code = "IN",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2329),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(338),
                             Currency = "INR",
                             Description = "South Asia Region",
                             IsActive = true,
@@ -8842,7 +8672,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 17,
                             Code = "AE",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2330),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(339),
                             Currency = "AED",
                             Description = "Middle East Region",
                             IsActive = true,
@@ -8854,7 +8684,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 18,
                             Code = "ZA",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2332),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(340),
                             Currency = "ZAR",
                             Description = "African Regio",
                             IsActive = true,
@@ -8866,7 +8696,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 19,
                             Code = "KR",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2333),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(408),
                             Currency = "KRW",
                             Description = "East Asia Region",
                             IsActive = true,
@@ -8878,7 +8708,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         {
                             Id = 20,
                             Code = "PH",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2334),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(410),
                             Currency = "PHP",
                             Description = "Southeast Asia Region",
                             IsActive = true,
@@ -8957,7 +8787,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6335),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2303),
                             Description = "living",
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Room/living-room/1.jpg",
                             IsActive = true,
@@ -8968,7 +8798,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6378),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2563),
                             Description = "dining",
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Room/dining-room/1.jpg",
                             IsActive = true,
@@ -8979,7 +8809,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6395),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2589),
                             Description = "bedroom",
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Room/bedroom/1.jpg",
                             IsActive = true,
@@ -8990,7 +8820,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6411),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2606),
                             Description = "office",
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Room/office/1.jpg",
                             IsActive = true,
@@ -9001,7 +8831,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6427),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2621),
                             Description = "lighting",
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Room/lighting/1.jpg",
                             IsActive = true,
@@ -9012,7 +8842,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6444),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2757),
                             Description = "decor",
                             ImageUrl = "https://ik.imagekit.io/9float9hy/Banner_for_Room/decor/1.jpg",
                             IsActive = true,
@@ -9176,7 +9006,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1001,
                             ApplyFloorSurcharge = false,
                             BaseRate = 500m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2719),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(833),
                             DestinationShippingZoneId = 102,
                             FlatSurcharge = 50m,
                             FreeShippingMinOrderValue = 0m,
@@ -9214,7 +9044,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1002,
                             ApplyFloorSurcharge = true,
                             BaseRate = 250m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2728),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(845),
                             DestinationShippingZoneId = 103,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9251,7 +9081,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1003,
                             ApplyFloorSurcharge = false,
                             BaseRate = 1200m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2732),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(850),
                             DestinationShippingZoneId = 102,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9289,7 +9119,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1004,
                             ApplyFloorSurcharge = false,
                             BaseRate = 0m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2734),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(853),
                             DestinationShippingZoneId = 102,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 5000m,
@@ -9324,7 +9154,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1005,
                             ApplyFloorSurcharge = false,
                             BaseRate = 300000m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2737),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(855),
                             DestinationShippingZoneId = 105,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9359,7 +9189,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1006,
                             ApplyFloorSurcharge = false,
                             BaseRate = 450m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2775),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(857),
                             DestinationShippingZoneId = 102,
                             FlatSurcharge = 45m,
                             FreeShippingMinOrderValue = 0m,
@@ -9397,7 +9227,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1007,
                             ApplyFloorSurcharge = false,
                             BaseRate = 100m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2778),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(860),
                             DestinationShippingZoneId = 103,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9432,7 +9262,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1008,
                             ApplyFloorSurcharge = true,
                             BaseRate = 200m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2789),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(869),
                             DestinationShippingZoneId = 103,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9468,7 +9298,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1009,
                             ApplyFloorSurcharge = false,
                             BaseRate = 150m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2792),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(872),
                             DestinationShippingZoneId = 110,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9505,7 +9335,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1010,
                             ApplyFloorSurcharge = true,
                             BaseRate = 100m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2794),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(875),
                             DestinationShippingZoneId = 110,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9541,7 +9371,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1011,
                             ApplyFloorSurcharge = false,
                             BaseRate = 800m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2797),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(878),
                             DestinationShippingZoneId = 109,
                             FlatSurcharge = 100m,
                             FreeShippingMinOrderValue = 0m,
@@ -9579,7 +9409,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Id = 1012,
                             ApplyFloorSurcharge = false,
                             BaseRate = 50m,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2800),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(946),
                             DestinationShippingZoneId = 109,
                             FlatSurcharge = 0m,
                             FreeShippingMinOrderValue = 0m,
@@ -9666,7 +9496,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2616),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(661),
                             FixedTierCost = 0m,
                             IsActive = true,
                             MaxValue = 100m,
@@ -9678,7 +9508,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2622),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(669),
                             FixedTierCost = 50m,
                             IsActive = true,
                             MaxValue = 300m,
@@ -9690,7 +9520,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2625),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(672),
                             FixedTierCost = 0m,
                             IsActive = true,
                             MaxValue = 100m,
@@ -9702,7 +9532,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2626),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(674),
                             FixedTierCost = 20m,
                             IsActive = true,
                             MaxValue = 500m,
@@ -9769,7 +9599,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2485),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(568),
                             DeliveryType = 0,
                             Description = "Bulk freight via ocean, port-to-port",
                             EstimatedDeliveryDaysMax = 40,
@@ -9782,7 +9612,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2523),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(572),
                             DeliveryType = 3,
                             Description = "Last-mile delivery, includes unboxing & assembly",
                             EstimatedDeliveryDaysMax = 7,
@@ -9795,7 +9625,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2525),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(574),
                             DeliveryType = 0,
                             Description = "Faster air cargo, port-to-port",
                             EstimatedDeliveryDaysMax = 14,
@@ -9808,7 +9638,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2527),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(576),
                             DeliveryType = 1,
                             Description = "Standard road freight within Vietnam",
                             EstimatedDeliveryDaysMax = 5,
@@ -9821,7 +9651,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2528),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(577),
                             DeliveryType = 1,
                             Description = "Standard road freight within US",
                             EstimatedDeliveryDaysMax = 10,
@@ -9834,7 +9664,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2530),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(578),
                             DeliveryType = 3,
                             Description = "Local delivery with assembly in Indonesia",
                             EstimatedDeliveryDaysMax = 5,
@@ -9847,7 +9677,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2531),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(580),
                             DeliveryType = 0,
                             Description = "Freight via rail, suitable for Eurasia",
                             EstimatedDeliveryDaysMax = 25,
@@ -9907,7 +9737,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 101,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2378),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(465),
                             Description = "Major export ports in Vietnam (HCM, Hai Phong)",
                             IsActive = true,
                             Name = "Vietnam Export Hub",
@@ -9916,7 +9746,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 102,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2381),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(468),
                             Description = "Major import ports on US West Coast (LA, Long Beach, Seattle)",
                             IsActive = true,
                             Name = "US West Coast Freight Hub",
@@ -9925,7 +9755,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 103,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2382),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(469),
                             Description = "Last-mile delivery area for Los Angeles County",
                             IsActive = true,
                             Name = "Los Angeles Metro Area",
@@ -9934,7 +9764,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 104,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2383),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(470),
                             Description = "Southern provinces including Ho Chi Minh City",
                             IsActive = true,
                             Name = "Vietnam Southern Region",
@@ -9943,7 +9773,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 105,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2384),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(471),
                             Description = "Northern provinces including Hanoi",
                             IsActive = true,
                             Name = "Vietnam Northern Region",
@@ -9952,7 +9782,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 106,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2385),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(472),
                             Description = "Major import ports in United Kingdom",
                             IsActive = true,
                             Name = "UK Freight Hub",
@@ -9961,7 +9791,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 107,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2386),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(473),
                             Description = "Last-mile delivery for London",
                             IsActive = true,
                             Name = "London Metro Area",
@@ -9970,7 +9800,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 108,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2387),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(474),
                             Description = "Major export ports in China (Shenzhen, Shanghai)",
                             IsActive = true,
                             Name = "China Export Hub",
@@ -9979,7 +9809,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 109,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2388),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(476),
                             Description = "Moscow and surrounding regions",
                             IsActive = true,
                             Name = "Russia Moscow Area",
@@ -9988,7 +9818,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 110,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2389),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(478),
                             Description = "Jakarta and surrounding regions",
                             IsActive = true,
                             Name = "Indonesia Jakarta Area",
@@ -9997,7 +9827,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 111,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2390),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(479),
                             Description = "Main island of Singapore",
                             IsActive = true,
                             Name = "Singapore Main Island",
@@ -10057,7 +9887,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2427),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(519),
                             Description = "Los Angeles City (900xx zip codes)",
                             DetailType = 0,
                             IsActive = true,
@@ -10067,7 +9897,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2430),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(522),
                             Description = "TP.HCM",
                             DetailType = 1,
                             IsActive = true,
@@ -10077,7 +9907,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2432),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(523),
                             Description = "Hà Nội",
                             DetailType = 1,
                             IsActive = true,
@@ -10087,7 +9917,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2433),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(524),
                             Description = "East Central London",
                             DetailType = 0,
                             IsActive = true,
@@ -10097,7 +9927,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2434),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(525),
                             Description = "West End London",
                             DetailType = 0,
                             IsActive = true,
@@ -10107,7 +9937,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2435),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(526),
                             Description = "Moscow and surrounding oblast",
                             DetailType = 1,
                             IsActive = true,
@@ -10117,7 +9947,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2436),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(527),
                             Description = "Jakarta Province",
                             DetailType = 1,
                             IsActive = true,
@@ -10127,7 +9957,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2438),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(528),
                             Description = "All of Singapore",
                             DetailType = 2,
                             IsActive = true,
@@ -10205,7 +10035,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6613),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2902),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10216,7 +10046,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6639),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2924),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10227,7 +10057,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6658),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2941),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10238,7 +10068,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6676),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2958),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10249,7 +10079,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6693),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2973),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10260,7 +10090,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6712),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(2991),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10271,7 +10101,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6791),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3007),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10282,7 +10112,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6813),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3023),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10293,7 +10123,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6831),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3039),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10304,7 +10134,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6850),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3057),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10315,7 +10145,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 635, DateTimeKind.Utc).AddTicks(6868),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 401, DateTimeKind.Utc).AddTicks(3074),
                             Description = "",
                             ImageUrl = "",
                             IsActive = true,
@@ -10587,33 +10417,36 @@ namespace eCommerce.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2917),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1075),
                             Fabric = "1020-01",
                             InStock = false,
                             IsActive = true,
                             IsCustom = false,
-                            IsEnabledOnWeb = false
+                            IsEnabledOnWeb = false,
+                            Name = "1020-01"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2920),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1080),
                             Fabric = "1020-28",
                             InStock = false,
                             IsActive = true,
                             IsCustom = false,
-                            IsEnabledOnWeb = false
+                            IsEnabledOnWeb = false,
+                            Name = "1020-28"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2921),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(1081),
                             CustomPrice = 199.99m,
                             Fabric = "1025-01",
                             InStock = false,
                             IsActive = true,
                             IsCustom = true,
-                            IsEnabledOnWeb = false
+                            IsEnabledOnWeb = false,
+                            Name = "1025-01"
                         });
                 });
 
@@ -10775,7 +10608,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Los Angeles",
                             CountryCode = "US",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2665),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(780),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = 34.052199999999999,
@@ -10792,7 +10625,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Ho Chi Minh City",
                             CountryCode = "VN",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2673),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(787),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = 10.762622,
@@ -10809,7 +10642,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Birmingham",
                             CountryCode = "GB",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2676),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(789),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = 52.486199999999997,
@@ -10826,7 +10659,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Singapore",
                             CountryCode = "SG",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2678),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(791),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = 1.3521000000000001,
@@ -10843,7 +10676,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Shanghai",
                             CountryCode = "CN",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2680),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(793),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = 31.230399999999999,
@@ -10860,7 +10693,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Moscow",
                             CountryCode = "RU",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2682),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(795),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = 55.755800000000001,
@@ -10877,7 +10710,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
                             Address2 = "",
                             City = "Jakarta",
                             CountryCode = "ID",
-                            CreatedAt = new DateTime(2025, 7, 11, 4, 29, 3, 636, DateTimeKind.Utc).AddTicks(2684),
+                            CreatedAt = new DateTime(2025, 7, 11, 2, 56, 6, 402, DateTimeKind.Utc).AddTicks(797),
                             IsActive = true,
                             IsPrimaryWarehouseForRegion = true,
                             Latitude = -6.2088000000000001,
@@ -11160,11 +10993,17 @@ namespace eCommerce.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariant", b =>
                 {
+                    b.HasOne("eCommerce.Domain.Entities.Finish", "Finish")
+                        .WithMany("ProductVariants")
+                        .HasForeignKey("FinishId");
+
                     b.HasOne("eCommerce.Domain.Entities.Product", "Product")
                         .WithMany("Variants")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Finish");
 
                     b.Navigation("Product");
                 });
@@ -11186,47 +11025,6 @@ namespace eCommerce.Infrastructure.Data.Migrations
                     b.Navigation("Fabric");
 
                     b.Navigation("ProductVariant");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFabricImage", b =>
-                {
-                    b.HasOne("eCommerce.Domain.Entities.ProductVariantFabric", "ProductVariantFabric")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductVariantId", "FabricId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductVariantFabric");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFinish", b =>
-                {
-                    b.HasOne("eCommerce.Domain.Entities.Finish", "Finish")
-                        .WithMany("ProductVariantFinishes")
-                        .HasForeignKey("FinishId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eCommerce.Domain.Entities.ProductVariant", "ProductVariant")
-                        .WithMany("ProductVariantFinishes")
-                        .HasForeignKey("ProductVariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Finish");
-
-                    b.Navigation("ProductVariant");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFinishImage", b =>
-                {
-                    b.HasOne("eCommerce.Domain.Entities.ProductVariantFinish", "ProductVariantFinish")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductVariantId", "FinishId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductVariantFinish");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantOptionValue", b =>
@@ -11346,7 +11144,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("eCommerce.Domain.Entities.Finish", b =>
                 {
-                    b.Navigation("ProductVariantFinishes");
+                    b.Navigation("ProductVariants");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.MaterialCategory", b =>
@@ -11393,19 +11191,7 @@ namespace eCommerce.Infrastructure.Data.Migrations
 
                     b.Navigation("ProductVariantFabrics");
 
-                    b.Navigation("ProductVariantFinishes");
-
                     b.Navigation("VariantOptionValues");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFabric", b =>
-                {
-                    b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Entities.ProductVariantFinish", b =>
-                {
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entities.Region", b =>
