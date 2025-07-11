@@ -135,7 +135,7 @@
                 const regionCode = document.getElementById("regionCode").value;
 
                 $.ajax({
-                    url: `/${productId}/GetVariantData?size=${sizeId}&fabric=${fabricId}&finish=${finishId}`,
+                    url: `/${productId}/GetVariantData?sizeId=${sizeId}&fabricId=${fabricId}&finishId=${finishId}`,
                     type: 'GET',
                     success: function (response) {
                         if (response.isSuccess) {
@@ -176,10 +176,14 @@
             function bindOptionEvents() {
                 document.querySelectorAll(".size-btn").forEach(btn => {
                     btn.onclick = () => {
+                        document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("selected"));
+                        btn.classList.add("selected");
+
                         const sizeId = btn.dataset.sizeid;
-                         const productId = document.getElementById("productId").value;
-                        const fabricId = document.querySelector(".fabric-btn.selected")?.dataset.fabricid;
-                        const finishId = document.querySelector(".finish-btn.selected")?.dataset.finishid;
+                        const productId = document.getElementById("productId").value;
+                        const fabricId = document.querySelector(".fabric-thumb.selected")?.dataset.fabricid;
+                        const finishId = document.querySelector(".finish-thumb.selected")?.dataset.finishid;
+
                         fetchVariantOptions(productId, sizeId, fabricId, finishId);
                     };
                 });
@@ -193,7 +197,7 @@
                         const fabricId = el.dataset.fabricid;
                         const productId = document.getElementById("productId").value;
                         const sizeId = document.querySelector(".size-btn.selected")?.dataset.sizeid;
-                        const finishId = document.querySelector(".finish-btn.selected")?.dataset.finishid;
+                        const finishId = document.querySelector(".finish-thumb.selected")?.dataset.finishid;
 
                         fetchVariantOptions(productId, sizeId, fabricId, finishId);
                     };

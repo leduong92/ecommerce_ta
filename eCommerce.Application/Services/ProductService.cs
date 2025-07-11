@@ -109,12 +109,12 @@ namespace eCommerce.Application.Services
             var defaultSizeId = selectedVariant?.VariantOptionValues
                 .FirstOrDefault(x => x.ProductOptionValue.Option.Name == "Size")?.ProductOptionValueId;
 
-            selectedVariant ??= product.Variants.FirstOrDefault();
+            int? selectedSizeId = sizeId ?? defaultSizeId;
 
             var filteredVariantIdsBySize = product.Variants
-                 .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (sizeId ?? defaultSizeId)))
-                 .Select(v => v.Id)
-                 .ToList();
+                .Where(v => v.VariantOptionValues.Any(x => x.ProductOptionValueId == (sizeId ?? defaultSizeId)))
+                .Select(v => v.Id)
+                .ToList();
 
             // STEP 4: Tạo nhóm lựa chọn size
             var variantOptionValues = product.Variants
@@ -131,14 +131,24 @@ namespace eCommerce.Application.Services
                         var ov = g2.First().ProductOptionValue;
                         var ovVariantIds = g2.Select(x => x.VariantId).Distinct().ToList();
 
-                        bool isAvailable = ovVariantIds.Intersect(filteredVariantIdsBySize).Any();
+                        bool isAvailable = true;
+
+                        if (ov.Option.Name == "Size")
+                        {
+                            isAvailable = ovVariantIds.Intersect(filteredVariantIdsBySize).Any();
+                        }
+
+                        // Get the IDs of all ProductOptionValues for the selected variant
+                        var selectedVariantOptionValueIds = selectedVariant?.VariantOptionValues
+                                                                .Select(vov => vov.ProductOptionValueId)
+                                                                .ToList();
 
                         return new OptionDto
                         {
                             ValueId = ov.Id,
                             Value = ov.Value,
                             VariantIds = ovVariantIds,
-                            IsSelected = selectedVariant?.VariantOptionValues.Any(vov => vov.ProductOptionValueId == ov.Id) ?? false,
+                            IsSelected = selectedSizeId.HasValue && ov.Id == selectedSizeId.Value,
                             IsAvailable = isAvailable
                         };
                     }).ToList()

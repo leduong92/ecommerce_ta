@@ -4,13 +4,11 @@
 {
     <div class="option-group size-options mb-3">
         <label class="fw-bold d-block mb-2">Size:</label>
-        <div class="btn-group flex-wrap" role="group">
+        <div class="btn-group flex-wrap" role="group" id="size-options-container">
             @foreach (var opt in Model.SizeOptions)
             {
                 <button type="button"
-                        class="btn btn-outline-dark size-btn me-2 mb-2
-                               @(opt.IsSelected ? "active" : "")
-                               @(opt.IsAvailable ? "" : "disabled")"
+                        class="btn btn-outline-secondary size-btn me-2 mb-2 @(opt.IsSelected ? "selected" : "") @(opt.IsAvailable ? "" : "disabled")"
                         data-sizeid="@opt.ValueId">
                     @opt.Value
                 </button>

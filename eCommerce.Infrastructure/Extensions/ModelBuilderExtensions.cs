@@ -996,6 +996,8 @@ namespace eCommerce.Infrastructure.Extensions
 
             modelBuilder.Entity<ProductVariantOptionValue>().HasData(
                 new { ProductVariantId = 1, ProductOptionValueId = 4 },
+                new { ProductVariantId = 1, ProductOptionValueId = 5 },
+                new { ProductVariantId = 1, ProductOptionValueId = 6 },
                 new { ProductVariantId = 2, ProductOptionValueId = 5 },
                 new { ProductVariantId = 3, ProductOptionValueId = 4 },
                 new { ProductVariantId = 4, ProductOptionValueId = 5 },
