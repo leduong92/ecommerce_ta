@@ -1,65 +1,133 @@
 ﻿@model ProductDetailDto
 
-@if (Model.SizeOptions?.Any() == true)
-{
-    <div class="option-group size-options mb-3">
-        <label class="fw-bold d-block mb-2">Size:</label>
-        <div class="btn-group flex-wrap" role="group" id="size-options-container">
-            @foreach (var opt in Model.SizeOptions)
-            {
-                <button type="button"
-                        class="btn btn-outline-secondary size-btn me-2 mb-2 @(opt.IsSelected ? "selected" : "") @(opt.IsAvailable ? "" : "disabled")"
-                        data-sizeid="@opt.ValueId">
-                    @opt.Value
-                </button>
-            }
-        </div>
-    </div>
-}
-
-@if (Model.FabricOptions?.Any() == true)
-{
-    <div class="option-group fabric-options mb-3">
-        <label class="fw-bold d-block mb-2">Fabric:</label>
-        <div class="d-flex flex-wrap gap-3" id="fabric-options-container">
-            @foreach (var opt in Model.FabricOptions)
-            {
-                var isSelected = opt.IsSelected ? "selected" : "";
-                <div class="fabric-thumb border rounded p-1 @(isSelected)"
-                     data-fabricid="@opt.Id"
-                     style="cursor: pointer; width: 120px; text-align: center;">
-                    <img src="@($"{opt.Images?.FirstOrDefault()?.ImageUrl}?profile=basic")"
-                         alt="@opt.Fabric"
-                         class="img-thumbnail"
-                         style="width: 100px; height: 100px; object-fit: cover;" />
-                    <div class="small mt-1">
-                        @opt.Fabric
-                        @(opt.IsCustom ? $" (+${opt.CustomPrice:F2})" : "")
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-6 p-1">
+            <img class="img-fluid product-image Sirv" src="@Model?.DefaultImageUrl?profile=basic?w=300" alt="@Model?.Name">
+            <div id="variant-images">
+                @if (Model.SelectedVariant?.Images != null && Model.SelectedVariant.Images.Any())
+                {
+                    <div class="image-gallery">
+                        @foreach (var img in Model.SelectedVariant.Images)
+                        {
+                            <img src="@img.ImageUrl" alt="Product Image" class="img-thumbnail me-2" style="max-height: 100px;" />
+                        }
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
-}
 
-@if (Model.FinishOptions?.Any() == true)
-{
-    <div class="option-group finish-options mb-3">
-        <label class="fw-bold d-block mb-2">Finish:</label>
-        <div class="d-flex flex-wrap gap-3" id="finish-options-container">
-            @foreach (var opt in Model.FinishOptions)
+        <div class="col-md-6">
+            <h3 class="my-3">@SharedLocalizer["ProductDetails"]</h3>
+            <p>@SharedLocalizer["Sku"]: @(Model?.SelectedVariant.Sku)</p>
+            <p id="product-price">@SharedLocalizer["Price"]: $@(Model.SelectedVariant.PriceAdjustment) @Model.Currency</p>
+            <p>@SharedLocalizer["Category"]: @Model?.Category</p>
+            <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
+            <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
+            <p>
+                @if (Model?.EstimatedAvailableStock.HasValue == true)
+                {
+                    if (Model.EstimatedAvailableStock.Value > 0)
+                    {
+                        <span class="text-success fw-bold">@SharedLocalizer["EstimatedStock"]: @Model.EstimatedAvailableStock.Value</span>
+                        if (Model.EstimatedAvailableStock.Value <= 5)
+                        {
+                            <span class="text-warning fw-bold">@SharedLocalizer["LowStock"] (@SharedLocalizer["FromWarehouse"] @Model.FulfillingWarehouseName)</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-danger fw-bold">@SharedLocalizer["OutofStock"]</span>
+                    }
+                }
+                else
+                {
+                    <span class="text-info">@SharedLocalizer["StockInfoNotAvailable"] @SharedLocalizer["TrySettingLocationOnHomePage"]</span>
+                }
+            </p>
+            @if (!string.IsNullOrEmpty(Model?.FulfillingWarehouseName))
             {
-                var isSelected = opt.IsSelected ? "selected" : "";
-                <div class="finish-thumb border rounded p-1 @(isSelected)"
-                     data-finishid="@opt.Id"
-                     style="cursor: pointer; width: 120px; text-align: center;">
-                    <img src="@($"{opt.Images?.FirstOrDefault()?.ImageUrl}?profile=basic")"
-                         alt="@opt.Name"
-                         class="img-thumbnail"
-                         style="width: 100px; height: 100px; object-fit: cover;" />
-                    <div class="small mt-1">@opt.Name</div>
-                </div>
+                <p class="text-muted">@SharedLocalizer["FulfillingFrom"] @Model.FulfillingWarehouseName (@Model.FulfillingWarehouseAddress)</p>
             }
+
+            <div id="variant-options">
+                @if (Model.SizeOptions?.Any() == true)
+                {
+                    <div class="option-group size-options mb-3">
+                        <label class="fw-bold d-block mb-2">Size:</label>
+                        <div class="btn-group flex-wrap" role="group" id="size-options-container">
+                            @foreach (var opt in Model.SizeOptions)
+                            {
+                                <button type="button"
+                                        class="btn btn-outline-secondary size-btn me-2 mb-2 @(opt.IsSelected ? "selected" : "") @(opt.IsAvailable ? "" : "disabled")"
+                                        data-sizeid="@opt.ValueId">
+                                    @opt.Value
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (Model.FabricOptions?.Any() == true)
+                {
+                    <div class="option-group fabric-options mb-3">
+                        <label class="fw-bold d-block mb-2">Fabric:</label>
+                        <div class="d-flex flex-wrap gap-3" id="fabric-options-container">
+                            @foreach (var opt in Model.FabricOptions)
+                            {
+                                var isSelected = opt.IsSelected ? "selected" : "";
+                                <div class="fabric-thumb border rounded p-1 @(isSelected)"
+                                     data-fabricid="@opt.Id"
+                                     style="cursor: pointer; width: 120px; text-align: center;">
+                                    <img src="@($"{opt.Images?.FirstOrDefault()?.ImageUrl}?profile=basic")"
+                                         alt="@opt.Fabric"
+                                         class="img-thumbnail"
+                                         style="width: 100px; height: 100px; object-fit: cover;" />
+                                    <div class="small mt-1">
+                                        @opt.Fabric
+                                        @(opt.IsCustom ? $" (+${opt.CustomPrice:F2})" : "")
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (Model.FinishOptions?.Any() == true)
+                {
+                    <div class="option-group finish-options mb-3">
+                        <label class="fw-bold d-block mb-2">Finish:</label>
+                        <div class="d-flex flex-wrap gap-3" id="finish-options-container">
+                            @foreach (var opt in Model.FinishOptions)
+                            {
+                                var isSelected = opt.IsSelected ? "selected" : "";
+                                <div class="finish-thumb border rounded p-1 @(isSelected)"
+                                     data-finishid="@opt.Id"
+                                     style="cursor: pointer; width: 120px; text-align: center;">
+                                    <img src="@($"{opt.Images?.FirstOrDefault()?.ImageUrl}?profile=basic")"
+                                         alt="@opt.Name"
+                                         class="img-thumbnail"
+                                         style="width: 100px; height: 100px; object-fit: cover;" />
+                                    <div class="small mt-1">@opt.Name</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="input-group mb-3" style="max-width: 200px;">
+                <input type="number" id="cart-quantity" class="form-control" value="1" min="1" max="100" />
+                <button id="addToCartBtn" class="btn btn-primary" @(Model?.EstimatedAvailableStock == 0 ? "disabled" : "")>
+                    <i class="bi bi-cart-plus"></i> @SharedLocalizer["AddtoCart"]
+                </button>
+            </div>
+            @if (Model?.EstimatedAvailableStock == 0)
+            {
+                <p class="text-danger">@SharedLocalizer["ThisProductIsCurrentlyOutOfStock"]</p>
+            }
+
         </div>
     </div>
-}
+</div>
+

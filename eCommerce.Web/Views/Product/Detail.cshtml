@@ -13,73 +13,8 @@
 
 
 <div class="card mb-4">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6 p-1">
-                <img class="img-fluid product-image Sirv" src="@Model?.DefaultImageUrl?profile=basic?w=300" alt="@Model?.Name">
-                <div id="variant-images">
-                    @if (Model.SelectedVariant?.Images != null && Model.SelectedVariant.Images.Any())
-                    {
-                        <div class="image-gallery">
-                            @foreach (var img in Model.SelectedVariant.Images)
-                            {
-                                <img src="@img.ImageUrl" alt="Product Image" class="img-thumbnail me-2" style="max-height: 100px;" />
-                            }
-                        </div>
-                    }
-                </div>
-            </div>
-            
-            <div class="col-md-6">
-                <h3 class="my-3">@SharedLocalizer["ProductDetails"]</h3>
-                <p>@SharedLocalizer["Sku"]: @Model?.Sku</p>
-                <p id="product-price">@SharedLocalizer["Price"]: $@Model?.Price?.ToString("0.00") @Model.Currency</p>
-                <p>@SharedLocalizer["Category"]: @Model?.Category</p>
-                <p>@SharedLocalizer["Weight"]: @Model?.WeightKg kg</p>
-                <p>@SharedLocalizer["Dimensions"]: @Model?.LengthCm cm x @Model?.WidthCm cm x @Model?.HeightCm cm</p>
-                <p>
-                    @if (Model?.EstimatedAvailableStock.HasValue == true)
-                    {
-                        if (Model.EstimatedAvailableStock.Value > 0)
-                        {
-                            <span class="text-success fw-bold">@SharedLocalizer["EstimatedStock"]: @Model.EstimatedAvailableStock.Value</span>
-                            if (Model.EstimatedAvailableStock.Value <= 5)
-                            {
-                                <span class="text-warning fw-bold">@SharedLocalizer["LowStock"] (@SharedLocalizer["FromWarehouse"] @Model.FulfillingWarehouseName)</span>
-                            }
-                        }
-                        else
-                        {
-                            <span class="text-danger fw-bold">@SharedLocalizer["OutofStock"]</span>
-                        }
-                    }
-                    else
-                    {
-                        <span class="text-info">@SharedLocalizer["StockInfoNotAvailable"] @SharedLocalizer["TrySettingLocationOnHomePage"]</span>
-                    }
-                </p>
-                @if (!string.IsNullOrEmpty(Model?.FulfillingWarehouseName))
-                {
-                    <p class="text-muted">@SharedLocalizer["FulfillingFrom"] @Model.FulfillingWarehouseName (@Model.FulfillingWarehouseAddress)</p>
-                }
-
-                <div id="variant-options">
-                    @Html.Partial("_VariantOptionsPartial", Model)
-                </div>
-
-                <div class="input-group mb-3" style="max-width: 200px;">
-                    <input type="number" id="cart-quantity" class="form-control" value="1" min="1" max="100" />
-                    <button id="addToCartBtn" class="btn btn-primary" @(Model?.EstimatedAvailableStock == 0 ? "disabled" : "")>
-                        <i class="bi bi-cart-plus"></i> @SharedLocalizer["AddtoCart"]
-                    </button>
-                </div>
-                @if (Model?.EstimatedAvailableStock == 0)
-                {
-                    <p class="text-danger">@SharedLocalizer["ThisProductIsCurrentlyOutOfStock"]</p>
-                }
-
-            </div>
-        </div>
+    <div id="product-detail-id">
+        @Html.Partial("_VariantOptionsPartial", Model)
     </div>
 </div>
 
@@ -113,9 +48,9 @@
                     type: 'GET',
                     success: function (response) {
                         if (response) {
-                            document.getElementById("variant-options").innerHTML = response;
+                            document.getElementById("product-detail-id").innerHTML = response;
                             bindOptionEvents(); // rebind events
-                            updatePriceAndImages(); // also update price & images
+                           // updatePriceAndImages(response); // also update price & images
                         } else {
                             alert("No variant found.");
                         }
@@ -127,49 +62,29 @@
                 });
             }
 
-            function updatePriceAndImages() {
-                const sizeId = document.querySelector('.size-btn.selected')?.dataset.sizeid;
-                const fabricId = document.querySelector(".fabric-thumb.selected")?.dataset.fabricid;
-                const finishId = document.querySelector(".finish-thumb.selected")?.dataset.finishid;
-                const productId = document.getElementById("productId").value;
-                const regionCode = document.getElementById("regionCode").value;
+            function updatePriceAndImages(response) {
+                const data = response.data.selectedVariant;
+                if (data && data.priceAdjustment) {
+                    const price = @Html.Raw(Json.Serialize(Model.Price));
+                    const basePrice = parseFloat(price);
+                    const totalPrice = basePrice + parseFloat(data.priceAdjustment);
+                    document.getElementById("product-price").innerText = `$${totalPrice.toFixed(2)}`;
+                }
 
-                $.ajax({
-                    url: `/${productId}/GetVariantData?sizeId=${sizeId}&fabricId=${fabricId}&finishId=${finishId}`,
-                    type: 'GET',
-                    success: function (response) {
-                        if (response.isSuccess) {
-                            const data = response.data;
-                            if (data && data.priceAdjustment) {
-                                const price = @Html.Raw(Json.Serialize(Model.Price));
-                                const basePrice = parseFloat(price);
-                                const totalPrice = basePrice + parseFloat(data.priceAdjustment);
-                                document.getElementById("product-price").innerText = `$${totalPrice.toFixed(2)}`;
-                            }
-
-                            const imageContainer = document.getElementById("variant-images");
-                            imageContainer.innerHTML = "";
-                            if (data.images && data.images.length > 0) {
-                                const gallery = document.createElement("div");
-                                gallery.className = "image-gallery";
-                                data.images.forEach(img => {
-                                    const image = document.createElement("img");
-                                    image.src = img.imageUrl;
-                                    image.className = "img-thumbnail me-2";
-                                    image.style.maxHeight = "100px";
-                                    gallery.appendChild(image);
-                                });
-                                imageContainer.appendChild(gallery);
-                            }
-                        } else {
-                            alert(data);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error adding to cart: ", error);
-                        alert('@SharedLocalizer["ErrorAddingProductToCart"].Value');
-                    }
-                });
+                const imageContainer = document.getElementById("variant-images");
+                imageContainer.innerHTML = "";
+                if (data.images && data.images.length > 0) {
+                    const gallery = document.createElement("div");
+                    gallery.className = "image-gallery";
+                    data.images.forEach(img => {
+                        const image = document.createElement("img");
+                        image.src = img.imageUrl;
+                        image.className = "img-thumbnail me-2";
+                        image.style.maxHeight = "100px";
+                        gallery.appendChild(image);
+                    });
+                    imageContainer.appendChild(gallery);
+                }
 
             }
 
