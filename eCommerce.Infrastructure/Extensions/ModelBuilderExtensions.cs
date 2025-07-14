@@ -969,8 +969,8 @@ namespace eCommerce.Infrastructure.Extensions
 
             modelBuilder.Entity<ProductVariant>().HasData(
                 new ProductVariant { Id = 1, ProductId = 1, Sku = "TA84011.1CIR", PriceAdjustment = 49.99m },
-                new ProductVariant { Id = 2, ProductId = 1, Sku = "TA83011.1CIR", PriceAdjustment = 54.99m },
-                new ProductVariant { Id = 3, ProductId = 1, Sku = "TA82011.1CIR", PriceAdjustment = 59.99m },
+                new ProductVariant { Id = 2, ProductId = 1, Sku = "TA83011.1CIS", PriceAdjustment = 54.99m },
+                new ProductVariant { Id = 3, ProductId = 1, Sku = "TA82011.1CIT", PriceAdjustment = 59.99m },
 
                 new ProductVariant { Id = 4, ProductId = 1, Sku = "OAK-42", PriceAdjustment = 64.99m },
                 new ProductVariant { Id = 5, ProductId = 1, Sku = "OAK-52", PriceAdjustment = 69.99m },
@@ -1052,7 +1052,6 @@ namespace eCommerce.Infrastructure.Extensions
                 new { Id = 2, ProductVariantId = 1, ProductOptionValueId = 4, FabricId = 3, FinishId = 2, ImageUrl = "/images/variant1_60_fabCustom_finishGlossy.jpg", IsPrimary = true },
                 new { Id = 3, ProductVariantId = 2, ProductOptionValueId = 5, FabricId = 1, FinishId = 1, ImageUrl = "/images/variant2_80_fab1020_finishMatte.jpg", IsPrimary = true }
             );
-
 
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, IsUpholstered = true, CollectionId = 8, RoomId = 2, TypeId = 4, LifeStyleId = 4, StyleId = 9, Sku = "TA54027.C301", Slug = "catalina-round-dining-table-ta54027-c301", Name = "Catalina Round Dining Table", NetWeightKg = 91m, Depth = 162.6m, Width = 162.6m, Height = 76.2m, ProductCategoryId = 101, ProductShippingProfileId = 201, DefaultImageUrl = "https://theodorealexander.sirv.com/ProductphotoCrop/TA5/TA54027.C301_main_1.jpg" },

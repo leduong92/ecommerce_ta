@@ -104,6 +104,9 @@ namespace eCommerce.Application.Services
                     RegionCode = customerRegionCode,
                     Currency = productPrice.Currency,
                     ProductVariantId = variantId,
+                    SizeId = sizeId,
+                    FabricId = fabricId,
+                    FinishId = finishId,
                     UnitPrice = unitPrice // Use the region-specific price
                 };
                 cart.CartItems.Add(newItem);
@@ -195,13 +198,20 @@ namespace eCommerce.Application.Services
                         .ThenInclude(pov => pov.Option)
                 .Include(x => x.ProductVariant.ProductVariantFabrics)
                     .ThenInclude(pvf => pvf.Fabric)
+                .Include(x => x.ProductVariant.ProductVariantFabrics)
+                    .ThenInclude(pvf => pvf.Images)
                 .Include(x => x.ProductVariant.ProductVariantFinishes)
                     .ThenInclude(pvf => pvf.Finish)
+                .Include(x => x.ProductVariant.ProductVariantFinishes)
+                    .ThenInclude(pvf => pvf.Images)
+                .Include(x => x.ProductVariant.ProductVariantCombinationImages)
                 .Where(x => x.CartId == cart.Id)
                 .ToListAsync();
 
             var result = items.Select(x =>
             {
+                var variant = x.ProductVariant;
+
                 var sizeId = x.ProductVariant.VariantOptionValues
                                 .FirstOrDefault(vov => vov.ProductOptionValue.Option.Name == "Size")?.ProductOptionValueId;
 
@@ -214,7 +224,7 @@ namespace eCommerce.Application.Services
                 var summaryParts = new List<string>();
 
                 // Add size from options
-                summaryParts.AddRange(x.ProductVariant.VariantOptionValues
+                summaryParts.AddRange(x.ProductVariant.VariantOptionValues.Where(vov => vov.ProductOptionValueId == sizeId)
                     .Select(vov => $"{vov.ProductOptionValue.Option.Name}: {vov.ProductOptionValue.Value}"));
 
                 // Add fabric info if available
@@ -229,6 +239,24 @@ namespace eCommerce.Application.Services
                     summaryParts.Add($"Finish: {finish.Finish.Name}");
                 }
 
+                var selectedCombinationImage = variant.ProductVariantCombinationImages?
+                    .FirstOrDefault(img =>
+                        (!sizeId.HasValue || img.ProductOptionValueId == sizeId) &&
+                        (!fabricId.HasValue || img.FabricId == fabricId) &&
+                        (!finishId.HasValue || img.FinishId == finishId));
+
+                var finishImage = finish?.Images?.FirstOrDefault(i => i.IsPrimary);
+                var fabricImage = fabric?.Images?.FirstOrDefault(i => i.IsPrimary);
+                var variantImage = variant.Images?.FirstOrDefault(i => i.IsPrimary);
+                var productDefaultImage = variant.Product.DefaultImageUrl;
+
+                string imageUrl =
+                    selectedCombinationImage?.ImageUrl ??
+                    finishImage?.ImageUrl ??
+                    fabricImage?.ImageUrl ??
+                    variantImage?.ImageUrl ??
+                    productDefaultImage;
+
                 return new CartItemDto
                 {
                     ProductId = x.ProductVariant.ProductId,
@@ -239,7 +267,7 @@ namespace eCommerce.Application.Services
                     Currency = x.Currency,
                     UnitPrice = x.UnitPrice,
                     TotalPrice = x.Quantity * x.UnitPrice,
-                    ImageUrl = x.ProductVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl,
+                    ImageUrl = imageUrl,
                     SizeId = sizeId,
                     FabricId = fabricId,
                     FinishId = finishId,
