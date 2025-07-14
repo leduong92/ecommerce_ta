@@ -101,7 +101,10 @@ namespace eCommerce.Web.Controllers
                 ProductId = request.ProductId,
                 Quantity = request.Quantity,
                 CustomerRegionCode = request.CustomerRegionCode,
-                VariantId = request.VariantId
+                VariantId = request.VariantId,
+                SizeId = request.SizeId,
+                FabricId = request.FabricId,
+                FinishId = request.FinishId
             };
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");

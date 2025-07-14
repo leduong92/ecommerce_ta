@@ -47,7 +47,7 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Adds a product to the shopping cart.
         /// </summary>
-        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId, string? anonymousId, int variantId)
+        public async Task<Cart> AddToCartAsync(int productId, int quantity, string customerRegionCode, Guid userId, string? anonymousId, int variantId, int? sizeId, int? fabricId, int? finishId)
         {
             var cart = await GetOrCreateCartAsync(userId, anonymousId);
 
@@ -187,28 +187,64 @@ namespace eCommerce.Application.Services
             var cart = await GetOrCreateCartAsync(userId, anonymousId);
 
             var items = await _context.CartItems
-                        .Include(x => x.ProductVariant)
-                            .ThenInclude(v => v.Product)
-                        .Include(x => x.ProductVariant.Images)
-                        .Include(x => x.ProductVariant.VariantOptionValues)
-                            .ThenInclude(vov => vov.ProductOptionValue)
-                                .ThenInclude(pov => pov.Option)
-                        .Where(x => x.CartId == cart.Id)
-                        .ToListAsync();
+                .Include(x => x.ProductVariant)
+                    .ThenInclude(v => v.Product)
+                .Include(x => x.ProductVariant.Images)
+                .Include(x => x.ProductVariant.VariantOptionValues)
+                    .ThenInclude(vov => vov.ProductOptionValue)
+                        .ThenInclude(pov => pov.Option)
+                .Include(x => x.ProductVariant.ProductVariantFabrics)
+                    .ThenInclude(pvf => pvf.Fabric)
+                .Include(x => x.ProductVariant.ProductVariantFinishes)
+                    .ThenInclude(pvf => pvf.Finish)
+                .Where(x => x.CartId == cart.Id)
+                .ToListAsync();
 
-            var result = items.Select(x => new CartItemDto
+            var result = items.Select(x =>
             {
-                ProductId = x.ProductVariant.ProductId,
-                ProductName = x.ProductVariant.Product.Name,
-                ProductVariantId = x.ProductVariantId,
-                Sku = x.ProductVariant.Sku,
-                Quantity = x.Quantity,
-                Currency = x.Currency,
-                UnitPrice = x.UnitPrice,
-                TotalPrice = x.Quantity * x.UnitPrice,
-                ImageUrl = x.ProductVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl,
-                VariantSummary = string.Join(", ", x.ProductVariant.VariantOptionValues
-            .Select(vov => $"{vov.ProductOptionValue.Option.Name}: {vov.ProductOptionValue.Value}"))
+                var sizeId = x.ProductVariant.VariantOptionValues
+                                .FirstOrDefault(vov => vov.ProductOptionValue.Option.Name == "Size")?.ProductOptionValueId;
+
+                var fabric = x.ProductVariant.ProductVariantFabrics?.FirstOrDefault();
+                var finish = x.ProductVariant.ProductVariantFinishes?.FirstOrDefault();
+
+                var fabricId = fabric?.FabricId;
+                var finishId = finish?.FinishId;
+
+                var summaryParts = new List<string>();
+
+                // Add size from options
+                summaryParts.AddRange(x.ProductVariant.VariantOptionValues
+                    .Select(vov => $"{vov.ProductOptionValue.Option.Name}: {vov.ProductOptionValue.Value}"));
+
+                // Add fabric info if available
+                if (fabric?.Fabric != null)
+                {
+                    summaryParts.Add($"Fabric: {fabric.Fabric.Fabric}");
+                }
+
+                // Add finish info if available
+                if (finish?.Finish != null)
+                {
+                    summaryParts.Add($"Finish: {finish.Finish.Name}");
+                }
+
+                return new CartItemDto
+                {
+                    ProductId = x.ProductVariant.ProductId,
+                    ProductName = x.ProductVariant.Product.Name,
+                    ProductVariantId = x.ProductVariantId,
+                    Sku = x.ProductVariant.Sku,
+                    Quantity = x.Quantity,
+                    Currency = x.Currency,
+                    UnitPrice = x.UnitPrice,
+                    TotalPrice = x.Quantity * x.UnitPrice,
+                    ImageUrl = x.ProductVariant.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl,
+                    SizeId = sizeId,
+                    FabricId = fabricId,
+                    FinishId = finishId,
+                    VariantSummary = string.Join(", ", summaryParts)
+                };
             }).ToList();
 
             return ApiResponse<List<CartItemDto>>.Success(result);

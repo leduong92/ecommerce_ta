@@ -129,8 +129,8 @@
 
             function updatePriceAndImages() {
                 const sizeId = document.querySelector('.size-btn.selected')?.dataset.sizeid;
-                const fabricId = document.querySelector('.fabric-btn.selected')?.dataset.fabricid;
-                const finishId = document.querySelector('.finish-btn.selected')?.dataset.finishid;
+                const fabricId = document.querySelector(".fabric-thumb.selected")?.dataset.fabricid;
+                const finishId = document.querySelector(".finish-thumb.selected")?.dataset.finishid;
                 const productId = document.getElementById("productId").value;
                 const regionCode = document.getElementById("regionCode").value;
 
@@ -227,6 +227,10 @@
                 const variantId = document.getElementById("variantId").value;
                 const regionCode = document.getElementById("regionCode").value;
 
+                const sizeId = document.querySelector(".size-btn.selected")?.dataset.sizeid;
+                const fabricId = document.querySelector(".fabric-thumb.selected")?.dataset.fabricid;
+                const finishId = document.querySelector(".finish-thumb.selected")?.dataset.finishid;
+
                 $.ajax({
                     url: '@Url.Action("AddToCart", "Product")',
                     type: 'POST',
@@ -234,6 +238,9 @@
                         productId: productId,
                         quantity: quantity,
                         variantId: variantId,
+                        sizeId: sizeId,
+                        fabricId: fabricId,
+                        finishId: finishId,
                         customerRegionCode: regionCode
                     },
                     success: function (response) {

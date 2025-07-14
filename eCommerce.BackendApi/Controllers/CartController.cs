@@ -90,7 +90,17 @@ namespace eCommerce.BackendApi.Controllers
 
             try
             {
-                var cart = await _cartService.AddToCartAsync(request.ProductId, request.Quantity, request.CustomerRegionCode, userId, request.AnonymousId, request.VariantId);
+                var cart = await _cartService.AddToCartAsync(
+                    request.ProductId, 
+                    request.Quantity, 
+                    request.CustomerRegionCode, 
+                    userId, 
+                    request.AnonymousId, 
+                    request.VariantId,
+                    request.SizeId,
+                    request.FabricId,
+                    request.FinishId
+                    );
                 return Ok(new { Message = "Product added to cart.", CartId = cart.Id });
             }
             catch (ArgumentException ex)

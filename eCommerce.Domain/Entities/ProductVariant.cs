@@ -11,5 +11,7 @@
         public ICollection<ProductVariantOptionValue> VariantOptionValues { get; set; }
         public ICollection<ProductVariantFabric> ProductVariantFabrics { get; set; } = new List<ProductVariantFabric>();
         public ICollection<ProductVariantFinish> ProductVariantFinishes { get; set; } = new List<ProductVariantFinish>();
+        public ICollection<ProductVariantCombinationImage> ProductVariantCombinationImages { get; set; } = new List<ProductVariantCombinationImage>();
+        
     }
 }

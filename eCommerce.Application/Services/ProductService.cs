@@ -316,77 +316,132 @@ namespace eCommerce.Application.Services
                     .ThenInclude(v => v.VariantOptionValues)
                 .Include(p => p.Variants)
                     .ThenInclude(v => v.Images)
-                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFabrics).ThenInclude(f => f.Fabric)
-                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFabrics).ThenInclude(f => f.Images)
-                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFinishes).ThenInclude(f => f.Finish)
-                .Include(p => p.Variants).ThenInclude(v => v.ProductVariantFinishes).ThenInclude(f => f.Images)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFabrics)
+                        .ThenInclude(f => f.Fabric)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFabrics)
+                        .ThenInclude(f => f.Images)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFinishes)
+                        .ThenInclude(f => f.Finish)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantFinishes)
+                        .ThenInclude(f => f.Images)
+                .Include(p => p.Variants)
+                    .ThenInclude(v => v.ProductVariantCombinationImages)
                 .FirstOrDefaultAsync(p => p.Id == productId);
 
-            if (product == null) return ApiResponse<VariantDto>.Failure("Product not found.");
+            if (product == null)
+                return ApiResponse<VariantDto>.Failure("Product not found.");
 
-            var selectedVariant = product.Variants
-                    .FirstOrDefault(v =>
-                        (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)) &&
-                        (!fabricId.HasValue || v.ProductVariantFabrics.Any(f => f.FabricId == fabricId)) &&
-                        (!finishId.HasValue || v.ProductVariantFinishes.Any(f => f.FinishId == finishId))
-                    );
+            // STEP 1: Tìm variant chính xác nhất theo các ID truyền vào
+            var selectedVariant = product.Variants.FirstOrDefault(v =>
+                (!sizeId.HasValue || v.VariantOptionValues.Any(x => x.ProductOptionValueId == sizeId)) &&
+                (!fabricId.HasValue || v.ProductVariantFabrics.Any(f => f.FabricId == fabricId)) &&
+                (!finishId.HasValue || v.ProductVariantFinishes.Any(f => f.FinishId == finishId))
+            ) ?? product.Variants.FirstOrDefault();
 
-            if (selectedVariant == null) return null;
+            // Fallback nếu không có
+            if (selectedVariant == null)
+            {
+                selectedVariant = product.Variants.FirstOrDefault();
+                if (selectedVariant == null)
+                    return ApiResponse<VariantDto>.Failure("No variant found.");
+            }
 
-            var customFabricPrice = selectedVariant.ProductVariantFabrics?
-                .Where(f => f.Fabric.IsCustom)
-                .Sum(f => f.Fabric.CustomPrice ?? 0) ?? 0;
-
+            // STEP 2: Lấy Fabric và Finish theo ID hoặc mặc định đầu tiên
             var selectedFabric = selectedVariant.ProductVariantFabrics?
-                .FirstOrDefault(f => f.FabricId == fabricId) ??
-                selectedVariant.ProductVariantFabrics?.FirstOrDefault();
+                .FirstOrDefault(f => f.FabricId == fabricId)
+                ?? selectedVariant.ProductVariantFabrics?.FirstOrDefault();
 
             var selectedFinish = selectedVariant.ProductVariantFinishes?
-                .FirstOrDefault(f => f.FinishId == finishId) ??
-                selectedVariant.ProductVariantFinishes?.FirstOrDefault();
+                .FirstOrDefault(f => f.FinishId == finishId)
+                ?? selectedVariant.ProductVariantFinishes?.FirstOrDefault();
 
-            // Ưu tiên ảnh từ Fabric > Finish > Variant
-            string imageUrl = selectedFabric?.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl
-                           ?? selectedFinish?.Images.FirstOrDefault(i => i.IsPrimary)?.ImageUrl
-                           ?? selectedVariant.Images?.FirstOrDefault(i => i.IsPrimary)?.ImageUrl
-                           ?? product.DefaultImageUrl;
+            // STEP 3: Tính tổng CustomPrice nếu có
+            var customFabricPrice = selectedFabric?.Fabric.IsCustom == true
+                ? selectedFabric.Fabric.CustomPrice ?? 0
+                : 0;
 
+            // STEP 4: Lấy ảnh theo thứ tự ưu tiên: Fabric > Finish > Variant > Product default
+            // STEP 4A: Tìm ảnh theo tổ hợp nếu có
+            var selectedCombinationImage = selectedVariant.ProductVariantCombinationImages?
+                .FirstOrDefault(img =>
+                    (!sizeId.HasValue || img.ProductOptionValueId == sizeId) &&
+                    (!fabricId.HasValue || img.FabricId == fabricId) &&
+                    (!finishId.HasValue || img.FinishId == finishId)
+                );
+
+            // STEP 4B: Tìm ảnh theo Finish, Fabric, Variant, Product
+            var finishImage = selectedFinish?.Images?.FirstOrDefault(i => i.IsPrimary);
+            var fabricImage = selectedFabric?.Images?.FirstOrDefault(i => i.IsPrimary);
+            var variantImage = selectedVariant.Images?.FirstOrDefault(i => i.IsPrimary);
+            var productDefaultImage = product.DefaultImageUrl;
+
+            // STEP 4C: Chọn ảnh chính theo ưu tiên
+            string imageUrl =
+                selectedCombinationImage?.ImageUrl ??
+                finishImage?.ImageUrl ??
+                fabricImage?.ImageUrl ??
+                variantImage?.ImageUrl ??
+                productDefaultImage;
+
+            // STEP 5: Tập hợp gallery ảnh theo cùng logic ưu tiên
             var allImages = new List<ProductImageDto>();
 
-            if (selectedFabric?.Images != null)
+            if (selectedCombinationImage != null)
             {
-                allImages.AddRange(selectedFabric.Images.Select(img => new ProductImageDto
+                allImages.Add(new ProductImageDto
+                {
+                    Id = selectedCombinationImage.Id,
+                    ImageUrl = selectedCombinationImage.ImageUrl,
+                    IsPrimary = true,
+                    ProductVariantId = selectedVariant.Id
+                });
+            }
+            else if (selectedFinish?.Images?.Any() == true)
+            {
+                allImages = selectedFinish.Images.Select(img => new ProductImageDto
                 {
                     Id = img.Id,
                     ImageUrl = img.ImageUrl,
                     IsPrimary = img.IsPrimary,
                     ProductVariantId = img.ProductVariantId
-                }));
+                }).ToList();
             }
-
-            if (selectedFinish?.Images != null)
+            else if (selectedFabric?.Images?.Any() == true)
             {
-                allImages.AddRange(selectedFinish.Images.Select(img => new ProductImageDto
+                allImages = selectedFabric.Images.Select(img => new ProductImageDto
                 {
                     Id = img.Id,
                     ImageUrl = img.ImageUrl,
                     IsPrimary = img.IsPrimary,
                     ProductVariantId = img.ProductVariantId
-                }));
+                }).ToList();
             }
-
-            // Nếu vẫn chưa có ảnh, dùng ảnh variant mặc định
-            if (!allImages.Any() && selectedVariant.Images != null)
+            else if (selectedVariant.Images?.Any() == true)
             {
-                allImages.AddRange(selectedVariant.Images.Select(img => new ProductImageDto
+                allImages = selectedVariant.Images.Select(img => new ProductImageDto
                 {
                     Id = img.Id,
                     ImageUrl = img.ImageUrl,
                     IsPrimary = img.IsPrimary,
                     ProductVariantId = img.ProductVariantId
-                }));
+                }).ToList();
+            }
+            else if (!string.IsNullOrEmpty(productDefaultImage))
+            {
+                allImages.Add(new ProductImageDto
+                {
+                    Id = 0,
+                    ImageUrl = productDefaultImage,
+                    IsPrimary = true,
+                    ProductVariantId = selectedVariant.Id
+                });
             }
 
+            // STEP 6: Kết quả
             var result = new VariantDto
             {
                 Id = selectedVariant.Id,
@@ -398,5 +453,6 @@ namespace eCommerce.Application.Services
 
             return ApiResponse<VariantDto>.Success(result);
         }
+
     }
 }

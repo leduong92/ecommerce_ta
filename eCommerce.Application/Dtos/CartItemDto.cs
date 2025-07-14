@@ -11,6 +11,9 @@ namespace eCommerce.Application.Dtos
         public int Id { get; set; }
         public int CartId { get; set; }
         public int ProductId { get; set; }
+        public int? SizeId { get; set; }
+        public int? FabricId { get; set; }
+        public int? FinishId { get; set; }
         public string ProductName { get; set; } = string.Empty;
         public string Sku { get; set; } = string.Empty;
         public string RegionCode { get; set; } = "";

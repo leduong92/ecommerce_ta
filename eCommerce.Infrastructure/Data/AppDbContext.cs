@@ -31,6 +31,7 @@ namespace eCommerce.Infrastructure.Data
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<ProductVariantOptionValue> ProductVariantOptionValues { get; set; }
+        public DbSet<ProductVariantCombinationImage> ProductVariantCombinationImages { get; set; } = null!;
         public DbSet<ProductCare> ProductCares { get; set; }
         public DbSet<ProductFabric> ProductFabrics { get; set; }
         public DbSet<ProductOption> ProductOptions { get; set; }
