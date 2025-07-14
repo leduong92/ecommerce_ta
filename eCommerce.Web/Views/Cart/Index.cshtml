@@ -26,34 +26,44 @@ else
             $('#cartItemsContainer').on('click', '.btn-increase-quantity', function () {
                 const productId = $(this).data('product-id');
                 const variantId = $(this).data('variant-id');
+                const sizeId = $(this).data('size-id');
+                const fabricId = $(this).data('fabric-id');
+                const finishId = $(this).data('finish-id');
                 const currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
                 let newQuantity = currentQuantity + 1;
-                updateCartItemQuantity(productId, variantId, newQuantity);
+                updateCartItemQuantity(productId, variantId, newQuantity, sizeId, fabricId, finishId);
             });
 
             // Sự kiện click cho nút giảm số lượng
             $('#cartItemsContainer').on('click', '.btn-decrease-quantity', function () {
                 const productId = $(this).data('product-id');
                 const variantId = $(this).data('variant-id');
+                const sizeId = $(this).data('size-id');
+                const fabricId = $(this).data('fabric-id');
+                const finishId = $(this).data('finish-id');
                 const currentQuantity = parseInt($(this).closest('.input-group').find('.item-quantity').val());
                 let newQuantity = currentQuantity - 1;
-                updateCartItemQuantity(productId, variantId, newQuantity);
+                updateCartItemQuantity(productId, variantId, newQuantity, sizeId, fabricId, finishId);
             });
 
             // Sự kiện khi người dùng tự nhập số lượng
             $('#cartItemsContainer').on('change', '.item-quantity', function () {
                 const productId = $(this).data('product-id');
                 const variantId = $(this).data('variant-id');
+                const sizeId = $(this).data('size-id');
+                const fabricId = $(this).data('fabric-id');
+                const finishId = $(this).data('finish-id');
+
                 const newQuantity = parseInt($(this).val());
                 if (isNaN(newQuantity) || newQuantity < 0) {
                     newQuantity = 1; // Đảm bảo số lượng hợp lệ
                     $(this).val(newQuantity);
                 }
-                updateCartItemQuantity(productId, variantId, newQuantity);
+                updateCartItemQuantity(productId, variantId, newQuantity, sizeId, fabricId, finishId);
             });
 
             // Hàm gửi AJAX request để cập nhật số lượng
-            function updateCartItemQuantity(productId, variantId, quantity) {
+            function updateCartItemQuantity(productId, variantId, quantity, sizeId, fabricId, finishId) {
 
                 $.ajax({
                     url: '@Url.Action("UpdateQuantity", "Cart")', // URL tới action UpdateQuantity
@@ -61,7 +71,10 @@ else
                     data: {
                         productId: productId,
                         quantity: quantity,
-                        variantId: variantId
+                        variantId: variantId,
+                        sizeId: sizeId,
+                        fabricId: fabricId,
+                        finishId: finishId
                     },
                     success: function (result) {
                         $('#cartItemsContainer').html(result); // Cập nhật lại phần giỏ hàng

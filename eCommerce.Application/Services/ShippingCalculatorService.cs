@@ -1,6 +1,7 @@
 ﻿using eCommerce.Application.Dtos;
 using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
+using eCommerce.Shared.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Application.Services
@@ -26,7 +27,7 @@ namespace eCommerce.Application.Services
         /// <param name="destinationFloorNumber">Optional: Floor number for delivery, for apartment surcharges (default 1).</param>
         /// <param name="isRuralArea">Optional: Flag if destination is considered rural (based on zip code mapping or external service, default false).</param>
         /// <returns>A list of available shipping options with their calculated costs.</returns>
-        public async Task<List<ShippingRouteOption>> CalculateShippingRates(
+        public async Task<ApiResponse<List<ShippingRouteOptionDto>>> CalculateShippingRates(
             string destinationCountryCode,
             string? destinationStateProvince,
             string? destinationZipCode,
@@ -37,21 +38,21 @@ namespace eCommerce.Application.Services
             int destinationFloorNumber = 1,
             bool isRuralArea = false)
         {
-            var finalShippingOptions = new List<ShippingRouteOption>();
+            var finalShippingOptions = new List<ShippingRouteOptionDto>();
 
             // 1. Aggregate product details and check inventory
             var productIds = orderDetails.Select(od => od.ProductId).Distinct().ToList();
-            var productsInOrder = await _context.Products
+            var allProducts = await _context.Products
                 .Include(p => p.ProductCategory)
                 .Include(p => p.ProductShippingProfile)
-                .Where(p => productIds.Contains(p.Id))
                 .ToListAsync();
+
+            var productsInOrder = allProducts.Where(p => productIds.Contains(p.Id)).ToList();
 
             if (productsInOrder.Count != productIds.Count)
             {
                 // Handle case where some products are not found in DB
-                Console.WriteLine("Error: One or more products in order details not found in database.");
-                return finalShippingOptions;
+                return ApiResponse<List<ShippingRouteOptionDto>>.Failure("Error: One or more products in order details not found in database");
             }
 
             // Calculate total weight, volume, and identify product shipping profiles/categories
@@ -100,17 +101,53 @@ namespace eCommerce.Application.Services
             if (destinationZone == null)
             {
                 Console.WriteLine($"Error: Destination shipping zone not found for {destinationCountryCode}.");
-                return finalShippingOptions;
+                return ApiResponse<List<ShippingRouteOptionDto>>.Failure($"Error: Destination shipping zone not found for {destinationCountryCode}.");
             }
 
             // 3. Find candidate warehouses with sufficient inventory
-            var availableWarehouses = await _context.Warehouses
+            var allWarehouses = await _context.Warehouses
                 .Include(w => w.InventoryItems)
                 .Include(w => w.ShippingZone)
-                .Where(w => w.InventoryItems!.Any(ii => productIds.Contains(ii.ProductId))) // Quick filter: warehouse has at least one product
                 .ToListAsync();
 
-            var fulfillingWarehouses = new List<Warehouse>();
+            var availableWarehouses = allWarehouses
+                .Where(w => w.InventoryItems.Any(ii => productIds.Contains(ii.ProductId)))
+                .Select(x => new WarehouseDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Address1 = x.Address1,
+                    Address2 = x.Address2,
+                    City = x.City,
+                    StateProvince = x.StateProvince,
+                    ZipCode = x.ZipCode,
+                    CountryCode = x.CountryCode,
+                    ContactPhone = x.ContactPhone,
+                    Email = x.Email,
+                    IsPrimaryWarehouseForRegion = x.IsPrimaryWarehouseForRegion,
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude,
+                    RegionId = x.RegionId,
+                    ShippingZoneId = x.ShippingZoneId,
+                    ShippingZone = x.ShippingZone != null ? new ShippingZoneDto
+                    { 
+                        Id = x.ShippingZone.Id,
+                        RegionId = x.ShippingZone.RegionId,
+                        Name = x.ShippingZone.Name
+                    } : null,
+                    InventoryItems = x.InventoryItems.Select(x => new InventoryItemDto
+                    {
+                        Id = x.Id,
+                        Stock = x.MinimumStockLevel,
+                        ProductId = x.ProductId,
+                        QuantityOnHand = x.QuantityOnHand,
+                        QuantityReserved = x.QuantityReserved,
+                        MinimumStockLevel = x.MinimumStockLevel,
+                    }).ToList()
+                })
+                .ToList();
+
+            var fulfillingWarehouses = new List<WarehouseDto>();
             foreach (var warehouse in availableWarehouses)
             {
                 bool canFulfill = true;
@@ -131,8 +168,7 @@ namespace eCommerce.Application.Services
 
             if (!fulfillingWarehouses.Any())
             {
-                Console.WriteLine("No single warehouse found with sufficient inventory for all items in the order.");
-                return finalShippingOptions;
+                return ApiResponse<List<ShippingRouteOptionDto>>.Failure($"No single warehouse found with sufficient inventory for all items in the order.");
             }
 
             // 4. Evaluate routes from each fulfilling warehouse
@@ -188,6 +224,106 @@ namespace eCommerce.Application.Services
                         )
                         .Where(r => r.ProductShippingProfileId == null || distinctProductShippingProfileIds.Contains(r.ProductShippingProfileId.Value))
                         .Where(r => r.ProductCategoryId == null || distinctProductCategoryIds.Contains(r.ProductCategoryId.Value))
+                        .Select(r => new ShippingRateRuleDto
+                        {
+                            Id = r.Id,
+                            RuleName = r.RuleName,
+                            Description = r.Description,
+                            OriginShippingZoneId = r.OriginShippingZoneId,
+                            OriginShippingZone = r.OriginShippingZone != null ? new ShippingZoneDto
+                            {
+                                Id = r.OriginShippingZone.Id,
+                                RegionId = r.OriginShippingZone.RegionId,
+                                Name = r.OriginShippingZone.Name
+                            } : null,
+                            DestinationShippingZoneId = r.DestinationShippingZoneId,
+                            DestinationShippingZone = r.DestinationShippingZone != null ? new ShippingZoneDto
+                            {
+                                Id = r.DestinationShippingZone.Id,
+                                RegionId = r.DestinationShippingZone.RegionId,
+                                Name = r.DestinationShippingZone.Name
+                            } : null,
+                            ShippingServiceLevelId = r.ShippingServiceLevelId,
+                            ShippingServiceLevel = r.ShippingServiceLevel != null ? new ShippingServiceLevelDto
+                            {
+                                Id = r.ShippingServiceLevel.Id,
+                                Name = r.ShippingServiceLevel.Name,
+                                EstimatedDeliveryDaysMin = r.ShippingServiceLevel.EstimatedDeliveryDaysMin,
+                                EstimatedDeliveryDaysMax = r.ShippingServiceLevel.EstimatedDeliveryDaysMax,
+                                DeliveryType = r.ShippingServiceLevel.DeliveryType,
+                                IncludesAssembly = r.ShippingServiceLevel.IncludesAssembly,
+                                RequiresSpecialHandling = r.ShippingServiceLevel.RequiresSpecialHandling,
+                            } : null,
+                            ProductShippingProfileId = r.ProductShippingProfileId,
+                            ProductShippingProfile = r.ProductShippingProfile != null ? new ProductShippingProfileDto
+                            {
+                                Id = r.ProductShippingProfile.Id,
+                                Name = r.ProductShippingProfile.Name,
+                                IsBulky = r.ProductShippingProfile.IsBulky,
+                                RequiresPallet = r.ProductShippingProfile.RequiresPallet,
+                                RequiresSpecialEquipment = r.ProductShippingProfile.RequiresSpecialEquipment,
+                                DefaultDimensionalFactor = r.ProductShippingProfile.DefaultDimensionalFactor,
+                            } : null,
+                            ProductCategoryId  = r.ProductCategoryId,
+                            ProductCategory = r.ProductCategory != null ? new ProductCategory
+                            {
+                                Id = r.ProductCategory.Id,
+                                Name = r.ProductCategory.Name,
+                                IsBulky = r.ProductCategory.IsBulky,
+                                RequiresAssembly = r.ProductCategory.RequiresAssembly,
+                                IsFragile = r.ProductCategory.IsFragile,
+                                DefaultDimensionalFactor = r.ProductCategory.DefaultDimensionalFactor,
+                            } : null,
+                            GlobalShippingLaneId = r.GlobalShippingLaneId,
+                            GlobalShippingLane = r.GlobalShippingLane != null ? new GlobalShippingLaneDto
+                            {
+                                Id = r.GlobalShippingLane.Id,
+                                Name = r.GlobalShippingLane.Name,
+                                OriginShippingZoneId = r.GlobalShippingLane.OriginShippingZoneId,
+                                DestinationShippingZoneId = r.GlobalShippingLane.DestinationShippingZoneId,
+                                PrimaryCarrierPartner = r.GlobalShippingLane.PrimaryCarrierPartner,
+                                TransitMode = r.GlobalShippingLane.TransitMode,
+                                EstimatedTransitDaysMin = r.GlobalShippingLane.EstimatedTransitDaysMin,
+                                EstimatedTransitDaysMax = r.GlobalShippingLane.EstimatedTransitDaysMax,
+                                SupportsConsolidation = r.GlobalShippingLane.SupportsConsolidation,
+                            } : null,
+                            BaseRate = r.BaseRate,
+                            RatePerKg = r.RatePerKg,
+                            RatePerCbm = r.RatePerCbm,
+                            RatePerItem = r.RatePerItem,
+                            MinApplicableWeightKg = r.MinApplicableWeightKg,
+                            MaxApplicableWeightKg = r.MaxApplicableWeightKg,
+                            MinApplicableCbm = r.MinApplicableCbm,
+                            MaxApplicableCbm = r.MaxApplicableCbm,
+                            MinItemsInOrder = r.MinItemsInOrder,
+                            MaxItemsInOrder = r.MaxItemsInOrder,
+                            MaxWeightKg = r.MaxWeightKg,
+                            MinWeightKg = r.MinWeightKg,
+                            MinOrderValue = r.MinOrderValue,
+                            MaxOrderValue = r.MaxOrderValue,
+                            IsFreeShippingThreshold = r.IsFreeShippingThreshold,
+                            FreeShippingMinOrderValue = r.FreeShippingMinOrderValue,
+                            FlatSurcharge = r.FlatSurcharge,
+                            PercentageSurcharge = r.PercentageSurcharge,
+                            SurchargeReason = r.SurchargeReason,
+                            ApplyFloorSurcharge = r.ApplyFloorSurcharge,
+                            MinFloorForSurcharge = r.MinFloorForSurcharge,
+                            SurchargePerFloor = r.SurchargePerFloor,
+                            MinOrderWeightOrVolume = r.MinOrderWeightOrVolume,
+                            MaxOrderWeightOrVolume = r.MaxOrderWeightOrVolume,
+                            IsRuralAreaSurcharge = r.IsRuralAreaSurcharge,
+                            RuralAreaSurchargeAmount = r.RuralAreaSurchargeAmount,
+                            ShippingRateTiers = r.ShippingRateTiers.Select(x => new ShippingRateTierDto
+                            {
+                                Id = x.Id,
+                                ShippingRateRuleId = x.ShippingRateRuleId,
+                                MinValue = x.MinValue,
+                                MaxValue = x.MaxValue,
+                                TierUnit = x.TierUnit,
+                                RatePerUnit = x.RatePerUnit,
+                                FixedTierCost = x.FixedTierCost,
+                            }).ToList()
+                        })
                         .ToListAsync();
 
                     foreach (var intlRule in internationalFreightRules)
@@ -209,6 +345,106 @@ namespace eCommerce.Application.Services
                             )
                             .Where(r => r.ProductShippingProfileId == null || distinctProductShippingProfileIds.Contains(r.ProductShippingProfileId.Value))
                             .Where(r => r.ProductCategoryId == null || distinctProductCategoryIds.Contains(r.ProductCategoryId.Value))
+                            .Select(r => new ShippingRateRuleDto
+                            {
+                                Id = r.Id,
+                                RuleName = r.RuleName,
+                                Description = r.Description,
+                                OriginShippingZoneId = r.OriginShippingZoneId,
+                                OriginShippingZone = r.OriginShippingZone != null ? new ShippingZoneDto
+                                {
+                                    Id = r.OriginShippingZone.Id,
+                                    RegionId = r.OriginShippingZone.RegionId,
+                                    Name = r.OriginShippingZone.Name
+                                } : null,
+                                DestinationShippingZoneId = r.DestinationShippingZoneId,
+                                DestinationShippingZone = r.DestinationShippingZone != null ? new ShippingZoneDto
+                                {
+                                    Id = r.DestinationShippingZone.Id,
+                                    RegionId = r.DestinationShippingZone.RegionId,
+                                    Name = r.DestinationShippingZone.Name
+                                } : null,
+                                ShippingServiceLevelId = r.ShippingServiceLevelId,
+                                ShippingServiceLevel = r.ShippingServiceLevel != null ? new ShippingServiceLevelDto
+                                {
+                                    Id = r.ShippingServiceLevel.Id,
+                                    Name = r.ShippingServiceLevel.Name,
+                                    EstimatedDeliveryDaysMin = r.ShippingServiceLevel.EstimatedDeliveryDaysMin,
+                                    EstimatedDeliveryDaysMax = r.ShippingServiceLevel.EstimatedDeliveryDaysMax,
+                                    DeliveryType = r.ShippingServiceLevel.DeliveryType,
+                                    IncludesAssembly = r.ShippingServiceLevel.IncludesAssembly,
+                                    RequiresSpecialHandling = r.ShippingServiceLevel.RequiresSpecialHandling,
+                                } : null,
+                                ProductShippingProfileId = r.ProductShippingProfileId,
+                                ProductShippingProfile = r.ProductShippingProfile != null ? new ProductShippingProfileDto
+                                {
+                                    Id = r.ProductShippingProfile.Id,
+                                    Name = r.ProductShippingProfile.Name,
+                                    IsBulky = r.ProductShippingProfile.IsBulky,
+                                    RequiresPallet = r.ProductShippingProfile.RequiresPallet,
+                                    RequiresSpecialEquipment = r.ProductShippingProfile.RequiresSpecialEquipment,
+                                    DefaultDimensionalFactor = r.ProductShippingProfile.DefaultDimensionalFactor,
+                                } : null,
+                                ProductCategoryId = r.ProductCategoryId,
+                                ProductCategory = r.ProductCategory != null ? new ProductCategory
+                                {
+                                    Id = r.ProductCategory.Id,
+                                    Name = r.ProductCategory.Name,
+                                    IsBulky = r.ProductCategory.IsBulky,
+                                    RequiresAssembly = r.ProductCategory.RequiresAssembly,
+                                    IsFragile = r.ProductCategory.IsFragile,
+                                    DefaultDimensionalFactor = r.ProductCategory.DefaultDimensionalFactor,
+                                } : null,
+                                GlobalShippingLaneId = r.GlobalShippingLaneId,
+                                GlobalShippingLane = r.GlobalShippingLane != null ? new GlobalShippingLaneDto
+                                {
+                                    Id = r.GlobalShippingLane.Id,
+                                    Name = r.GlobalShippingLane.Name,
+                                    OriginShippingZoneId = r.GlobalShippingLane.OriginShippingZoneId,
+                                    DestinationShippingZoneId = r.GlobalShippingLane.DestinationShippingZoneId,
+                                    PrimaryCarrierPartner = r.GlobalShippingLane.PrimaryCarrierPartner,
+                                    TransitMode = r.GlobalShippingLane.TransitMode,
+                                    EstimatedTransitDaysMin = r.GlobalShippingLane.EstimatedTransitDaysMin,
+                                    EstimatedTransitDaysMax = r.GlobalShippingLane.EstimatedTransitDaysMax,
+                                    SupportsConsolidation = r.GlobalShippingLane.SupportsConsolidation,
+                                } : null,
+                                BaseRate = r.BaseRate,
+                                RatePerKg = r.RatePerKg,
+                                RatePerCbm = r.RatePerCbm,
+                                RatePerItem = r.RatePerItem,
+                                MinApplicableWeightKg = r.MinApplicableWeightKg,
+                                MaxApplicableWeightKg = r.MaxApplicableWeightKg,
+                                MinApplicableCbm = r.MinApplicableCbm,
+                                MaxApplicableCbm = r.MaxApplicableCbm,
+                                MinItemsInOrder = r.MinItemsInOrder,
+                                MaxItemsInOrder = r.MaxItemsInOrder,
+                                MaxWeightKg = r.MaxWeightKg,
+                                MinWeightKg = r.MinWeightKg,
+                                MinOrderValue = r.MinOrderValue,
+                                MaxOrderValue = r.MaxOrderValue,
+                                IsFreeShippingThreshold = r.IsFreeShippingThreshold,
+                                FreeShippingMinOrderValue = r.FreeShippingMinOrderValue,
+                                FlatSurcharge = r.FlatSurcharge,
+                                PercentageSurcharge = r.PercentageSurcharge,
+                                SurchargeReason = r.SurchargeReason,
+                                ApplyFloorSurcharge = r.ApplyFloorSurcharge,
+                                MinFloorForSurcharge = r.MinFloorForSurcharge,
+                                SurchargePerFloor = r.SurchargePerFloor,
+                                MinOrderWeightOrVolume = r.MinOrderWeightOrVolume,
+                                MaxOrderWeightOrVolume = r.MaxOrderWeightOrVolume,
+                                IsRuralAreaSurcharge = r.IsRuralAreaSurcharge,
+                                RuralAreaSurchargeAmount = r.RuralAreaSurchargeAmount,
+                                ShippingRateTiers = r.ShippingRateTiers.Select(x => new ShippingRateTierDto
+                                {
+                                    Id = x.Id,
+                                    ShippingRateRuleId = x.ShippingRateRuleId,
+                                    MinValue = x.MinValue,
+                                    MaxValue = x.MaxValue,
+                                    TierUnit = x.TierUnit,
+                                    RatePerUnit = x.RatePerUnit,
+                                    FixedTierCost = x.FixedTierCost,
+                                }).ToList()
+                            })
                             .ToListAsync();
 
                         foreach (var lastMileRule in lastMileRules)
@@ -227,7 +463,7 @@ namespace eCommerce.Application.Services
                                 lastMileCost = 0m;
                             }
 
-                            finalShippingOptions.Add(new ShippingRouteOption
+                            finalShippingOptions.Add(new ShippingRouteOptionDto
                             {
                                 OriginWarehouse = originWarehouse,
                                 ServiceLevelName = $"{intlRule.ShippingServiceLevel.Name} via {intlRule.GlobalShippingLane!.TransitMode} + {lastMileRule.ShippingServiceLevel.Name}",
@@ -237,10 +473,10 @@ namespace eCommerce.Application.Services
                                 EstimatedDeliveryDaysMax = intlRule.ShippingServiceLevel.EstimatedDeliveryDaysMax + (intlRule.GlobalShippingLane?.EstimatedTransitDaysMax ?? 0) + lastMileRule.ShippingServiceLevel.EstimatedDeliveryDaysMax,
                                 TotalCost = intlCost + lastMileCost,
                                 RouteDescription = $"From {originWarehouse.Name} ({originWarehouse.CountryCode}) to {destinationPortZone.Name} ({intlRule.GlobalShippingLane!.TransitMode}) then to customer ({lastMileRule.ShippingServiceLevel.Name}).",
-                                RouteLegs = new List<ShippingRouteLeg>
+                                RouteLegs = new List<ShippingRouteLegDto>
                                 {
-                                    new ShippingRouteLeg { AppliedRule = intlRule, LegCost = intlCost, LegEstimatedDaysMin = intlRule.ShippingServiceLevel.EstimatedDeliveryDaysMin + (intlRule.GlobalShippingLane?.EstimatedTransitDaysMin ?? 0), LegEstimatedDaysMax = intlRule.ShippingServiceLevel.EstimatedDeliveryDaysMax + (intlRule.GlobalShippingLane?.EstimatedTransitDaysMax ?? 0), LegDescription = intlRule.RuleName },
-                                    new ShippingRouteLeg { AppliedRule = lastMileRule, LegCost = lastMileCost, LegEstimatedDaysMin = lastMileRule.ShippingServiceLevel.EstimatedDeliveryDaysMin, LegEstimatedDaysMax = lastMileRule.ShippingServiceLevel.EstimatedDeliveryDaysMax, LegDescription = lastMileRule.RuleName }
+                                    new ShippingRouteLegDto { AppliedRule = intlRule, LegCost = intlCost, LegEstimatedDaysMin = intlRule.ShippingServiceLevel.EstimatedDeliveryDaysMin + (intlRule.GlobalShippingLane?.EstimatedTransitDaysMin ?? 0), LegEstimatedDaysMax = intlRule.ShippingServiceLevel.EstimatedDeliveryDaysMax + (intlRule.GlobalShippingLane?.EstimatedTransitDaysMax ?? 0), LegDescription = intlRule.RuleName },
+                                    new ShippingRouteLegDto { AppliedRule = lastMileRule, LegCost = lastMileCost, LegEstimatedDaysMin = lastMileRule.ShippingServiceLevel.EstimatedDeliveryDaysMin, LegEstimatedDaysMax = lastMileRule.ShippingServiceLevel.EstimatedDeliveryDaysMax, LegDescription = lastMileRule.RuleName }
                                 }
                             });
                         }
@@ -257,16 +493,16 @@ namespace eCommerce.Application.Services
                 .OrderBy(o => o.TotalCost)
                 .ToList();
 
-            return bestOptions;
+            return ApiResponse<List<ShippingRouteOptionDto>>.Success(bestOptions);
         }
 
         // Helper to evaluate domestic routes
         private async Task EvaluateDomesticRoutes(
-            Warehouse originWarehouse, ShippingZone originZone, ShippingZone destinationZone,
+            WarehouseDto originWarehouse, ShippingZoneDto originZone, ShippingZoneDto destinationZone,
             decimal applicableWeightKg, decimal applicableVolumeCbm, int totalItemCount, decimal totalOrderValue,
             int destinationFloorNumber, bool isRuralArea,
             HashSet<int> distinctProductShippingProfileIds, HashSet<int> distinctProductCategoryIds,
-            List<ShippingRouteOption> finalShippingOptions)
+            List<ShippingRouteOptionDto> finalShippingOptions)
         {
             var domesticRules = await _context.ShippingRateRules
                 .Include(r => r.ShippingServiceLevel)
@@ -282,6 +518,106 @@ namespace eCommerce.Application.Services
                 )
                 .Where(r => r.ProductShippingProfileId == null || distinctProductShippingProfileIds.Contains(r.ProductShippingProfileId.Value))
                 .Where(r => r.ProductCategoryId == null || distinctProductCategoryIds.Contains(r.ProductCategoryId.Value))
+                .Select(r => new ShippingRateRuleDto
+                {
+                    Id = r.Id,
+                    RuleName = r.RuleName,
+                    Description = r.Description,
+                    OriginShippingZoneId = r.OriginShippingZoneId,
+                    OriginShippingZone = r.OriginShippingZone != null ? new ShippingZoneDto
+                    {
+                        Id = r.OriginShippingZone.Id,
+                        RegionId = r.OriginShippingZone.RegionId,
+                        Name = r.OriginShippingZone.Name
+                    } : null,
+                    DestinationShippingZoneId = r.DestinationShippingZoneId,
+                    DestinationShippingZone = r.DestinationShippingZone != null ? new ShippingZoneDto
+                    {
+                        Id = r.DestinationShippingZone.Id,
+                        RegionId = r.DestinationShippingZone.RegionId,
+                        Name = r.DestinationShippingZone.Name
+                    } : null,
+                    ShippingServiceLevelId = r.ShippingServiceLevelId,
+                    ShippingServiceLevel = r.ShippingServiceLevel != null ? new ShippingServiceLevelDto
+                    {
+                        Id = r.ShippingServiceLevel.Id,
+                        Name = r.ShippingServiceLevel.Name,
+                        EstimatedDeliveryDaysMin = r.ShippingServiceLevel.EstimatedDeliveryDaysMin,
+                        EstimatedDeliveryDaysMax = r.ShippingServiceLevel.EstimatedDeliveryDaysMax,
+                        DeliveryType = r.ShippingServiceLevel.DeliveryType,
+                        IncludesAssembly = r.ShippingServiceLevel.IncludesAssembly,
+                        RequiresSpecialHandling = r.ShippingServiceLevel.RequiresSpecialHandling,
+                    } : null,
+                    ProductShippingProfileId = r.ProductShippingProfileId,
+                    ProductShippingProfile = r.ProductShippingProfile != null ? new ProductShippingProfileDto
+                    {
+                        Id = r.ProductShippingProfile.Id,
+                        Name = r.ProductShippingProfile.Name,
+                        IsBulky = r.ProductShippingProfile.IsBulky,
+                        RequiresPallet = r.ProductShippingProfile.RequiresPallet,
+                        RequiresSpecialEquipment = r.ProductShippingProfile.RequiresSpecialEquipment,
+                        DefaultDimensionalFactor = r.ProductShippingProfile.DefaultDimensionalFactor,
+                    } : null,
+                    ProductCategoryId = r.ProductCategoryId,
+                    ProductCategory = r.ProductCategory != null ? new ProductCategory
+                    {
+                        Id = r.ProductCategory.Id,
+                        Name = r.ProductCategory.Name,
+                        IsBulky = r.ProductCategory.IsBulky,
+                        RequiresAssembly = r.ProductCategory.RequiresAssembly,
+                        IsFragile = r.ProductCategory.IsFragile,
+                        DefaultDimensionalFactor = r.ProductCategory.DefaultDimensionalFactor,
+                    } : null,
+                    GlobalShippingLaneId = r.GlobalShippingLaneId,
+                    GlobalShippingLane = r.GlobalShippingLane != null ? new GlobalShippingLaneDto
+                    {
+                        Id = r.GlobalShippingLane.Id,
+                        Name = r.GlobalShippingLane.Name,
+                        OriginShippingZoneId = r.GlobalShippingLane.OriginShippingZoneId,
+                        DestinationShippingZoneId = r.GlobalShippingLane.DestinationShippingZoneId,
+                        PrimaryCarrierPartner = r.GlobalShippingLane.PrimaryCarrierPartner,
+                        TransitMode = r.GlobalShippingLane.TransitMode,
+                        EstimatedTransitDaysMin = r.GlobalShippingLane.EstimatedTransitDaysMin,
+                        EstimatedTransitDaysMax = r.GlobalShippingLane.EstimatedTransitDaysMax,
+                        SupportsConsolidation = r.GlobalShippingLane.SupportsConsolidation,
+                    } : null,
+                    BaseRate = r.BaseRate,
+                    RatePerKg = r.RatePerKg,
+                    RatePerCbm = r.RatePerCbm,
+                    RatePerItem = r.RatePerItem,
+                    MinApplicableWeightKg = r.MinApplicableWeightKg,
+                    MaxApplicableWeightKg = r.MaxApplicableWeightKg,
+                    MinApplicableCbm = r.MinApplicableCbm,
+                    MaxApplicableCbm = r.MaxApplicableCbm,
+                    MinItemsInOrder = r.MinItemsInOrder,
+                    MaxItemsInOrder = r.MaxItemsInOrder,
+                    MaxWeightKg = r.MaxWeightKg,
+                    MinWeightKg = r.MinWeightKg,
+                    MinOrderValue = r.MinOrderValue,
+                    MaxOrderValue = r.MaxOrderValue,
+                    IsFreeShippingThreshold = r.IsFreeShippingThreshold,
+                    FreeShippingMinOrderValue = r.FreeShippingMinOrderValue,
+                    FlatSurcharge = r.FlatSurcharge,
+                    PercentageSurcharge = r.PercentageSurcharge,
+                    SurchargeReason = r.SurchargeReason,
+                    ApplyFloorSurcharge = r.ApplyFloorSurcharge,
+                    MinFloorForSurcharge = r.MinFloorForSurcharge,
+                    SurchargePerFloor = r.SurchargePerFloor,
+                    MinOrderWeightOrVolume = r.MinOrderWeightOrVolume,
+                    MaxOrderWeightOrVolume = r.MaxOrderWeightOrVolume,
+                    IsRuralAreaSurcharge = r.IsRuralAreaSurcharge,
+                    RuralAreaSurchargeAmount = r.RuralAreaSurchargeAmount,
+                    ShippingRateTiers = r.ShippingRateTiers.Select(x => new ShippingRateTierDto
+                    {
+                        Id = x.Id,
+                        ShippingRateRuleId = x.ShippingRateRuleId,
+                        MinValue = x.MinValue,
+                        MaxValue = x.MaxValue,
+                        TierUnit = x.TierUnit,
+                        RatePerUnit = x.RatePerUnit,
+                        FixedTierCost = x.FixedTierCost,
+                    }).ToList()
+                })
                 .ToListAsync();
 
             foreach (var rule in domesticRules)
@@ -293,7 +629,7 @@ namespace eCommerce.Application.Services
                     cost = 0m;
                 }
 
-                finalShippingOptions.Add(new ShippingRouteOption
+                finalShippingOptions.Add(new ShippingRouteOptionDto
                 {
                     OriginWarehouse = originWarehouse,
                     ServiceLevelName = rule.ShippingServiceLevel.Name,
@@ -303,8 +639,8 @@ namespace eCommerce.Application.Services
                     EstimatedDeliveryDaysMax = rule.ShippingServiceLevel.EstimatedDeliveryDaysMax,
                     TotalCost = cost,
                     RouteDescription = $"From {originWarehouse.Name} ({originWarehouse.CountryCode}) via {rule.ShippingServiceLevel.Name}.",
-                    RouteLegs = new List<ShippingRouteLeg> {
-                        new ShippingRouteLeg { AppliedRule = rule, LegCost = cost, LegEstimatedDaysMin = rule.ShippingServiceLevel.EstimatedDeliveryDaysMin, LegEstimatedDaysMax = rule.ShippingServiceLevel.EstimatedDeliveryDaysMax, LegDescription = rule.RuleName }
+                    RouteLegs = new List<ShippingRouteLegDto> {
+                        new ShippingRouteLegDto { AppliedRule = rule, LegCost = cost, LegEstimatedDaysMin = rule.ShippingServiceLevel.EstimatedDeliveryDaysMin, LegEstimatedDaysMax = rule.ShippingServiceLevel.EstimatedDeliveryDaysMax, LegDescription = rule.RuleName }
                     }
                 });
             }
@@ -313,7 +649,7 @@ namespace eCommerce.Application.Services
         /// Helper to find a ShippingZone based on location details.
         /// Priority: ZipCodePrefix -> StateProvince -> Country -> Region
         /// </summary>
-        private async Task<ShippingZone?> GetShippingZoneForLocation(string countryCode, string? stateProvince, string? zipCode)
+        private async Task<ShippingZoneDto?> GetShippingZoneForLocation(string countryCode, string? stateProvince, string? zipCode)
         {
             // Try to find by most specific first (ZipCodePrefix)
             if (!string.IsNullOrEmpty(zipCode))
@@ -322,7 +658,13 @@ namespace eCommerce.Application.Services
                     .Include(d => d.ShippingZone)
                         .ThenInclude(sz => sz.Region)
                     .Where(d => d.DetailType == ZoneDetailType.ZipCodePrefix && zipCode.StartsWith(d.Value))
-                    .Select(d => d.ShippingZone)
+                    .Select(d => d.ShippingZone).Select(x => new ShippingZoneDto
+                    {
+                        Id = x.Id,
+                        RegionId = x.RegionId,
+                        Name = x.Name,
+                        Description = x.Description
+                    })
                     .FirstOrDefaultAsync();
                 if (zone != null) return zone;
             }
@@ -334,7 +676,13 @@ namespace eCommerce.Application.Services
                     .Include(d => d.ShippingZone)
                         .ThenInclude(sz => sz.Region)
                     .Where(d => d.DetailType == ZoneDetailType.StateProvince && d.Value == stateProvince)
-                    .Select(d => d.ShippingZone)
+                    .Select(d => d.ShippingZone).Select(x => new ShippingZoneDto
+                    {
+                        Id = x.Id,
+                        RegionId = x.RegionId,
+                        Name = x.Name,
+                        Description = x.Description
+                    })
                     .FirstOrDefaultAsync();
                 if (zone != null) return zone;
             }
@@ -344,14 +692,26 @@ namespace eCommerce.Application.Services
                 .Include(d => d.ShippingZone)
                     .ThenInclude(sz => sz.Region)
                 .Where(d => d.DetailType == ZoneDetailType.Country && d.Value == countryCode)
-                .Select(d => d.ShippingZone)
+                .Select(d => d.ShippingZone).Select(x => new ShippingZoneDto
+                {
+                    Id = x.Id,
+                    RegionId = x.RegionId,
+                    Name = x.Name,
+                    Description = x.Description
+                })
                 .FirstOrDefaultAsync();
             if (countryZoneDetail != null) return countryZoneDetail;
 
             // Fallback: Find a ShippingZone that directly references the Region (country)
             return await _context.ShippingZones
                 .Include(sz => sz.Region)
-                .Where(sz => sz.Region != null && sz.Region.Code == countryCode)
+                .Where(sz => sz.Region != null && sz.Region.Code == countryCode).Select(x => new ShippingZoneDto
+                {
+                    Id = x.Id,
+                    RegionId = x.RegionId,
+                    Name = x.Name,
+                    Description = x.Description
+                })
                 .FirstOrDefaultAsync();
         }
 
@@ -383,7 +743,7 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Calculates the cost for a single shipping rate rule.
         /// </summary>
-        private decimal CalculateRuleCost(ShippingRateRule rule, decimal applicableWeightKg, decimal applicableVolumeCbm, int totalItemCount, decimal totalOrderValue, int destinationFloorNumber, bool isRuralArea)
+        private decimal CalculateRuleCost(ShippingRateRuleDto rule, decimal applicableWeightKg, decimal applicableVolumeCbm, int totalItemCount, decimal totalOrderValue, int destinationFloorNumber, bool isRuralArea)
         {
             decimal calculatedCost = rule.BaseRate;
 

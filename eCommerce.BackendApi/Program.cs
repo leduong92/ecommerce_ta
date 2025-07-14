@@ -23,7 +23,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFramew
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 builder.Services.AddScoped<ShippingCalculatorService>();
 builder.Services.AddScoped<WarehouseService>();
-builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>(); // NEW
+builder.Services.AddScoped<ICartService, CartService>(); // NEW
 builder.Services.AddScoped<IOrderService, OrderService>(); // NEW
 builder.Services.AddScoped<IProductService, ProductService>(); // NEW
 builder.Services.AddScoped<ILanguageService, LanguageService>(); // NEW

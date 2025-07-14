@@ -3,7 +3,7 @@ using eCommerce.Shared.Common;
 
 namespace eCommerce.Web.Services.IService
 {
-    public interface IShoppingCartApiClient
+    public interface ICartApiClient
     {
         Task<ApiResponse<List<CartItemDto>>> GetCartItemsAsync(string anonymousId); // Returns a list of DTOs
         Task<ApiResponse<int>> AddItemToCartAsync(AddToCartRequestDto request); // Returns new item count

@@ -4,7 +4,7 @@
     ViewData["Title"] = SharedLocalizer["Checkout"];
     var cartItems = ViewBag.CartItems as IEnumerable<CartItemDto>;
     var subtotal = ViewBag.Subtotal;
-    var shippingOptions = ViewBag.ShippingOptions as IEnumerable<ShippingOptionDto>;
+    var shippingOptions = ViewBag.ShippingOptions as List<ShippingRouteOptionDto>;
 }
 
 <h1 class="my-4">@SharedLocalizer["Checkout"]</h1>

@@ -25,6 +25,7 @@ namespace eCommerce.Application.Dtos
         public string ShippingPhoneNumber { get; set; } = string.Empty;
         public int ShippingFloorNumber { get; set; } = 1;
         public bool ShippingIsRuralArea { get; set; } = false;
+        public decimal TotalOrderValue { get; set; }
 
         // User's chosen shipping option (from a list provided by ShippingCalculatorService)
         public string ChosenShippingServiceLevelName { get; set; } = string.Empty;

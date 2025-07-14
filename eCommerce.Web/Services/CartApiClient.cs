@@ -6,11 +6,11 @@ using eCommerce.Web.Services.IService;
 
 namespace eCommerce.Web.Services
 {
-    public class ShoppingCartApiClient : IShoppingCartApiClient
+    public class CartApiClient : ICartApiClient
     {
         private readonly IBaseApiClient _baseApiClient;
 
-        public ShoppingCartApiClient(IBaseApiClient baseApiClient)
+        public CartApiClient(IBaseApiClient baseApiClient)
         {
             _baseApiClient = baseApiClient;
         }

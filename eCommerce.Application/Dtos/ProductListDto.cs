@@ -35,12 +35,6 @@ namespace eCommerce.Application.Dtos
         public List<FinishDto> FinishOptions { get; set; } = new();
         public ICollection<InventoryItemDto> InventoryItems { get; set; } = new List<InventoryItemDto>();
     }
-
-    public class InventoryItemDto
-    {
-        public int WarehouseId { get; set; }
-        public int Stock { get; set; }
-    }
     public class VariantDto
     {
         public int Id { get; set; }

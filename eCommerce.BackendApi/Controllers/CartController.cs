@@ -13,10 +13,10 @@ namespace eCommerce.BackendApi.Controllers
     [Route("api/[controller]")]
     public class CartController : Controller
     {
-        private readonly IShoppingCartService _cartService;
+        private readonly ICartService _cartService;
         private readonly ILogger<CartController> _logger;
 
-        public CartController(IShoppingCartService cartService
+        public CartController(ICartService cartService
             , ILogger<CartController> logger)
         {
             _cartService = cartService;
@@ -114,7 +114,16 @@ namespace eCommerce.BackendApi.Controllers
             var userId = GetCurrentUserId();
             try
             {
-                var cart = await _cartService.UpdateCartItemQuantityAsync(request.ProductId, request.VariantId, request.Quantity, userId, request.AnonymousId);
+                var cart = await _cartService.UpdateCartItemQuantityAsync(
+                    request.ProductId, 
+                    request.VariantId, 
+                    request.Quantity, 
+                    userId, 
+                    request.AnonymousId,
+                    request.SizeId,
+                    request.FabricId,
+                    request.FinishId
+                );
                 return Ok(new { Message = "Cart updated.", CartId = cart.Id });
             }
             catch (ArgumentException ex)

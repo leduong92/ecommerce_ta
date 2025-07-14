@@ -17,13 +17,13 @@ namespace eCommerce.Web.Controllers
     {
         private readonly IAuthApiClient _authService;
         private readonly ITokenProvider _tokenProvider;
-        private readonly IShoppingCartService _cartService;
+        private readonly ICartService _cartService;
         private readonly ILogger<AuthController> _logger;
         public AuthController(
             IAuthApiClient authService
             , ITokenProvider tokenProvider
             , ILogger<AuthController> logger
-            , IShoppingCartService cartService)
+            , ICartService cartService)
         {
             _authService = authService;
             _tokenProvider = tokenProvider;

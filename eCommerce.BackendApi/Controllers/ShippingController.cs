@@ -15,24 +15,24 @@ namespace eCommerce.BackendApi.Controllers
         {
             _shippingCalculator = shippingCalculator;
         }
-        [HttpPost("calculate")]
-        public async Task<IActionResult> CalculateShipping([FromBody] ShippingCalculationRequest request)
+        [HttpPost("calculate-shipping")]
+        public async Task<IActionResult> CalculateShipping([FromBody] CheckoutRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var options = await _shippingCalculator.CalculateShippingRates(
-                                                    request.DestinationCountryCode,
-                                                    request.DestinationStateProvince,
-                                                    request.DestinationZipCode,
-                                                    request.DestinationLatitude, // New
-                                                    request.DestinationLongitude, // New
-                                                    request.OrderItems,
+                                                    request.ShippingCountryCode,
+                                                    request.ShippingStateProvince,
+                                                    request.ShippingZipCode,
+                                                    request.ShippingLatitude, // New
+                                                    request.ShippingLongitude, // New
+                                                    request.OrderItemDetails,
                                                     request.TotalOrderValue,
-                                                    request.DestinationFloorNumber,
-                                                    request.IsRuralArea
+                                                    request.ShippingFloorNumber,
+                                                    request.ShippingIsRuralArea
                                                 );
 
-            if (options == null || !options.Any())
+            if (options == null || !options.Data.Any())
             {
                 return NotFound("No shipping options found for the specified criteria.");
             }

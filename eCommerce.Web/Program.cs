@@ -53,7 +53,9 @@ builder.Services.AddScoped<IBaseApiClient, BaseApiClient>();
 builder.Services.AddScoped<ILanguageApiClient, LanguageApiClient>();
 builder.Services.AddScoped<IRegionApiClient, RegionApiClient>();
 builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
-builder.Services.AddScoped<IShoppingCartApiClient, ShoppingCartApiClient>();
+builder.Services.AddScoped<ICartApiClient, CartApiClient>();
+builder.Services.AddScoped<IOrderApiClient, OrderApiClient>();
+builder.Services.AddScoped<IShippingApiClient, ShippingApiClient>();
 
 builder.Services.AddSession(options =>
 {

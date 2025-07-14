@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text;
 using Azure.Core;
 using eCommerce.Domain.Entities;
+using eCommerce.Shared.Common;
+using eCommerce.Web.Services.IService;
 
 namespace eCommerce.Web.Controllers
 {
@@ -12,36 +14,42 @@ namespace eCommerce.Web.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly ILogger<CheckoutController> _logger;
+        private readonly ICartApiClient _cartService;
+        private readonly IOrderApiClient _orderApiClient;
+        private readonly IShippingApiClient _shippingApiClient;
         private readonly string _apiBaseUrl;
 
-        public CheckoutController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<CheckoutController> logger)
+        public CheckoutController(
+            IHttpClientFactory httpClientFactory
+            , IConfiguration configuration
+            , ILogger<CheckoutController> logger
+            , ICartApiClient cartApiClient
+            , IOrderApiClient orderApiClient
+            , IShippingApiClient shippingApiClient )
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _logger = logger;
+            _cartService = cartApiClient;
+            _orderApiClient = orderApiClient;
+            _shippingApiClient = shippingApiClient;
             _apiBaseUrl = configuration["ApiBaseUrl"] ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient("ApiClient");
-            var sessionId = HttpContext.Session.Id;
-            if (string.IsNullOrEmpty(sessionId))
-            {
-                TempData["ErrorMessage"] = "Your cart is empty or session expired. Please add items to cart.";
-                return RedirectToAction("Index", "Cart");
-            }
+            var anonymousIdString = HttpContext.Request.Cookies[SD.AnonymousId];
+            var cartItems = new List<CartItemDto>();
 
-            // Fetch cart items to display in checkout summary
-            var cartResponse = await client.GetAsync($"{_apiBaseUrl}ShoppingCart/{sessionId}");
-            if (!cartResponse.IsSuccessStatusCode)
+            try
             {
-                TempData["ErrorMessage"] = "Could not load cart for checkout.";
-                return RedirectToAction("Index", "Cart");
+                cartItems = (await _cartService.GetCartItemsAsync(anonymousIdString)).Data;
             }
-            var cartContent = await cartResponse.Content.ReadAsStringAsync();
-            var cartItems = JsonSerializer.Deserialize<IEnumerable<CartItemDto>>(cartContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve cart items for display.");
+            }
 
             if (cartItems == null || !cartItems.Any())
             {
@@ -55,7 +63,7 @@ namespace eCommerce.Web.Controllers
             // You might want to pre-fill address if user is logged in or from previous session
             var model = new CheckoutRequest
             {
-                AnonymousId = sessionId,
+                AnonymousId = anonymousIdString,
                 // Prefill some dummy data for testing
                 ShippingFirstName = "John",
                 ShippingLastName = "Doe",
@@ -76,32 +84,23 @@ namespace eCommerce.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CalculateShipping(CheckoutRequest model)
         {
-            var sessionId = HttpContext.Session.Id;
-            if (string.IsNullOrEmpty(sessionId))
-            {
-                TempData["ErrorMessage"] = "Session expired. Please add items to cart again.";
-                return RedirectToAction("Index", "Cart");
-            }
-            model.AnonymousId = sessionId;
+            var anonymousIdString = HttpContext.Request.Cookies[SD.AnonymousId];
+            model.AnonymousId = anonymousIdString;
 
-            var client = _httpClientFactory.CreateClient("ApiClient");
-
-            // Shipping calculation might require current cart items for weight/dimensions
-            // Retrieve cart items to pass to shipping calculation
-            var cartResponse = await client.GetAsync($"{_apiBaseUrl}Cart/{model.AnonymousId}");
-            if (!cartResponse.IsSuccessStatusCode)
+            var cartItems = new List<CartItemDto>();
+            try
             {
-                TempData["ErrorMessage"] = "Could not load cart for shipping calculation.";
-                return RedirectToAction("Index", "Cart");
+                cartItems = (await _cartService.GetCartItemsAsync(anonymousIdString)).Data;
             }
-            var cartContent = await cartResponse.Content.ReadAsStringAsync();
-            var cartItems = JsonSerializer.Deserialize<IEnumerable<CartItemDto>>(cartContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to retrieve cart items for display.");
+            }
             if (cartItems == null || !cartItems.Any())
             {
                 TempData["ErrorMessage"] = "Your cart is empty. Cannot calculate shipping.";
                 return RedirectToAction("Index", "Cart");
             }
-
             // In a real app, you would populate ShippingOrderItemDetails based on CartItems
             model.OrderItemDetails = cartItems.Select(ci => new OrderItemDetailsDto // Assuming this DTO is in ECommerce.Api.Controllers
             {
@@ -109,27 +108,21 @@ namespace eCommerce.Web.Controllers
                 Quantity = ci.Quantity
             }).ToList();
 
-            var jsonContent = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"{_apiBaseUrl}Order/calculate-shipping", jsonContent);
+            var response = await _shippingApiClient.CalculateShipping(model);
 
-            ViewBag.CartItems = cartItems;
-            ViewBag.Subtotal = cartItems?.Sum(item => item.TotalPrice) ?? 0;
-
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccess)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var shippingOptions = JsonSerializer.Deserialize<List<ShippingOptionDto>>(content, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-                ViewBag.ShippingOptions = shippingOptions;
+                ViewBag.CartItems = cartItems;
+                ViewBag.Subtotal = cartItems?.Sum(item => item.TotalPrice) ?? 0;
+
+                ViewBag.ShippingOptions = response.Data;
             }
             else
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
+                var errorContent = response.Message;
                 _logger.LogError($"Error calculating shipping: {response.StatusCode} - {errorContent}");
                 ModelState.AddModelError("", $"Error calculating shipping: {errorContent}");
-                TempData["ErrorMessage"] = $"Failed to calculate shipping: {response.ReasonPhrase}. Details: {errorContent}";
+                TempData["ErrorMessage"] = $"Failed to calculate shipping: {response.Message}. Details: {errorContent}";
                 ViewBag.ShippingOptions = new List<ShippingOptionDto>(); // Clear options on error
             }
             return View("Index", model); // Return to the same checkout page with shipping options
@@ -142,13 +135,8 @@ namespace eCommerce.Web.Controllers
             {
                 return View("Index", model);
             }
-            var sessionId = HttpContext.Session.Id;
-            if (string.IsNullOrEmpty(sessionId))
-            {
-                TempData["ErrorMessage"] = "Session expired. Please add items to cart again.";
-                return RedirectToAction("Index", "Cart");
-            }
-            model.AnonymousId = sessionId;
+            var anonymousIdString = HttpContext.Request.Cookies[SD.AnonymousId];
+            model.AnonymousId = anonymousIdString;
 
             var client = _httpClientFactory.CreateClient("ApiClient");
 
@@ -181,7 +169,7 @@ namespace eCommerce.Web.Controllers
                 TempData["SuccessMessage"] = "Order placed successfully!";
 
                 // Clear cart after successful order
-                await client.DeleteAsync($"{_apiBaseUrl}Cart/{sessionId}");
+                await client.DeleteAsync($"{_apiBaseUrl}Cart/{model.AnonymousId}");
 
                 return RedirectToAction("Confirmation", new { orderId = order?.Id });
             }

@@ -10,11 +10,11 @@ namespace eCommerce.Application.Services
     public class OrderService : IOrderService
     {
         private readonly AppDbContext _context;
-        private readonly IShoppingCartService _cartService;
+        private readonly ICartService _cartService;
         private readonly ShippingCalculatorService _shippingCalculator;
 
         public OrderService(AppDbContext context
-            , IShoppingCartService cartService
+            , ICartService cartService
             , ShippingCalculatorService shippingCalculator)
         {
             _context = context;
@@ -44,7 +44,7 @@ namespace eCommerce.Application.Services
             decimal subtotal = cartItems.Sum(ci => ci.TotalPrice);
 
             // 2. Calculate shipping options based on cart contents and destination
-            var shippingOptions = await _shippingCalculator.CalculateShippingRates(
+            var shippingOptions = (await _shippingCalculator.CalculateShippingRates(
                 checkoutRequest.ShippingCountryCode,
                 checkoutRequest.ShippingStateProvince,
                 checkoutRequest.ShippingZipCode,
@@ -54,7 +54,7 @@ namespace eCommerce.Application.Services
                 subtotal, // Pass subtotal as total order value for shipping rules
                 checkoutRequest.ShippingFloorNumber,
                 checkoutRequest.ShippingIsRuralArea
-            );
+            )).Data;
 
             if (!shippingOptions.Any())
             {

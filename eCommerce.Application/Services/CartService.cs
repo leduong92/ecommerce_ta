@@ -8,12 +8,12 @@ using Microsoft.Extensions.Logging;
 
 namespace eCommerce.Application.Services
 {
-    public class ShoppingCartService : IShoppingCartService
+    public class CartService : ICartService
     {
         private readonly AppDbContext _context;
-        private readonly ILogger<ShoppingCartService> _logger;
-        public ShoppingCartService(AppDbContext context
-            , ILogger<ShoppingCartService> logger)
+        private readonly ILogger<CartService> _logger;
+        public CartService(AppDbContext context
+            , ILogger<CartService> logger)
         {
             _context = context;
             _logger = logger;
@@ -124,10 +124,15 @@ namespace eCommerce.Application.Services
         /// <summary>
         /// Updates the quantity of a product in the shopping cart.
         /// </summary>
-        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int variantId, int quantity, Guid userId, string? anonymousId)
+        public async Task<Cart> UpdateCartItemQuantityAsync(int productId, int variantId, int quantity, Guid userId, string? anonymousId, int? sizeId, int? fabricId, int? finishId)
         {
             var cart = await GetOrCreateCartAsync(userId, anonymousId);
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId && ci.ProductVariantId == variantId);
+            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId 
+                    && ci.ProductVariantId == variantId
+                    && (sizeId == null || ci.SizeId == sizeId)
+                    && (fabricId == null || ci.FabricId == fabricId)
+                    && (finishId == null || ci.FinishId == finishId)
+                    );
             if (cartItem == null)
             {
                 //throw new ArgumentException("Product not found in cart.");

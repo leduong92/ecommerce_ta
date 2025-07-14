@@ -11,5 +11,8 @@ namespace eCommerce.Application.Dtos
         public int ProductId { get; set; }
         public int VariantId { get; set; }
         public int Quantity { get; set; }
+        public int? SizeId { get; set; }
+        public int? FabricId { get; set; }
+        public int? FinishId { get; set; }
     }
 }

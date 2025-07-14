@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Application.Dtos
 {
-    public class ShippingRequestDTO
+    public class ShippingRequestDto
     {
         public int RegionId { get; set; }
-        public List<ShippingItemDTO> Items { get; set; }
+        public List<ShippingItemDto> Items { get; set; }
 
     }
 }

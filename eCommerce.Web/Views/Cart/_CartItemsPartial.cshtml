@@ -23,9 +23,14 @@ else
         <tbody>
             @foreach (var item in Model)
             {
+                <input type="text" hidden data-size-id="@item.SizeId" />
+                <input type="text" hidden data-fabric-id="@item.FabricId" />
+                <input type="text" hidden data-finish-id="@item.FinishId" />
                 <tr>
-                    <td>@item.ProductName</td>
-                    <td>@item.Sku<br /><small>@item.VariantSummary</small></td>
+                    <td>
+                        <span>@item.ProductName</span><br />
+                        <span>@item.Sku<br /><small>@item.VariantSummary</small></span>
+                    </td>
                     <td>@item.UnitPrice.ToString("N2") @item.Currency</td>
                     <td>
                         <div class="input-group" style="width: 150px;">
